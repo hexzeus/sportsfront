@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {/* Animated Logo */}
                     <div className="text-3xl md:text-5xl font-extrabold text-falcons-red tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
                         <Link href="/">
-                            <span className="cursor-pointer">Sports Mania</span>
+                            <span className="cursor-pointer">Fred&apos;s Sports Mania</span>
                         </Link>
                     </div>
 

@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
                 >
                     {/* Optimized H1 for Mobile & Desktop */}
                     <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-red-500 via-yellow-400 to-white bg-clip-text text-transparent uppercase leading-tight">
-                        Elevate Your Game
+                        Fredlevate Your Game
                     </h1>
                     <p className="text-lg md:text-2xl mb-8 font-light tracking-wide text-gray-200">
                         Precision. Strategy. Every Bet Counts.
