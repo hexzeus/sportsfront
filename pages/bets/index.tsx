@@ -32,6 +32,19 @@ export default function BetsPage() {
         loadBets();
     }, []);
 
+    // Scroll to bet when URL has a fragment (hash)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const hash = window.location.hash;
+            if (hash) {
+                const element = document.getElementById(hash.substring(1)); // Get the element by removing the '#' from hash
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' }); // Scroll to the element
+                }
+            }
+        }
+    }, [bets]); // Only run after the bets are loaded
+
     return (
         <Layout>
             <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-falcons-red p-6 md:p-8">
