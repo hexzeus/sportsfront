@@ -7,15 +7,15 @@ export default function BetList({ bets }: { bets: Bet[] }) {
     }, [bets]);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 max-w-4xl mx-auto p-4 md:p-8">
             {bets.map((bet) => (
                 <div
                     key={bet.id}
-                    className="bg-gradient-to-br from-gray-900 via-black to-falcons-red p-8 rounded-xl shadow-2xl transition-transform transform hover:scale-105 hover:shadow-3xl text-white"
+                    className="bg-gradient-to-br from-gray-900 via-black to-falcons-red p-6 md:p-8 rounded-xl shadow-2xl transition-transform transform hover:scale-105 hover:shadow-3xl text-white"
                 >
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
                         <div>
-                            <p className="text-4xl font-extrabold text-falcons-red mb-1 uppercase">{bet.team}</p>
+                            <p className="text-3xl md:text-4xl font-extrabold text-falcons-red mb-1 uppercase">{bet.team}</p>
                             <p className="text-sm text-gray-400">vs {bet.opponent}</p>
                         </div>
                         <div className="text-right">
@@ -23,7 +23,7 @@ export default function BetList({ bets }: { bets: Bet[] }) {
                             <p className="text-sm text-gray-400">{new Date(bet.date).toLocaleDateString()}</p>
                         </div>
                     </div>
-                    <div className="flex justify-between items-center text-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
                         <div>
                             <p>Amount: <span className="font-bold text-green-400">${bet.amount.toFixed(2)}</span></p>
                             <p>Odds: <span className="font-bold text-green-400">{bet.odds}</span></p>
@@ -41,7 +41,7 @@ export default function BetList({ bets }: { bets: Bet[] }) {
                         </div>
                     </div>
                     {bet.description && (
-                        <div className="mt-4">
+                        <div className="mt-6">
                             <p className="italic text-gray-300 text-center">&quot;{bet.description}&quot;</p>
                         </div>
                     )}

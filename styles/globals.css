@@ -4,12 +4,18 @@
 /* Global font settings */
 body {
   font-family: 'Oswald', sans-serif;
+  background: linear-gradient(135deg, #101820FF 0%, #A6192E 50%, #FFD100 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+  min-height: 100vh;
 }
 h1, h2, h3 {
   font-family: 'Anton', sans-serif;
   letter-spacing: 0.1em;
 }
 
+/* Tailwind base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,6 +48,7 @@ h1, h2, h3 {
     }
 }
 
+/* Animation Classes */
 .animate-zoom-in {
     animation: zoom-in 0.5s ease-in-out;
 }
