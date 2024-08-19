@@ -5,16 +5,28 @@ import Image from 'next/image';
 
 const HomePage: React.FC = () => {
     const [animated, setAnimated] = useState(false);
+    const [showIntro, setShowIntro] = useState(true); // For controlling the intro
     const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
     useEffect(() => {
+        // Start intro animation
         setAnimated(true);
 
+        // Display the time
         const timer = setInterval(() => {
             setCurrentTime(new Date());
         }, 1000);
 
-        return () => clearInterval(timer);
+        // Hide the intro after 4 seconds
+        const introTimeout = setTimeout(() => {
+            setShowIntro(false);
+        }, 4000);
+
+        // Cleanup intervals and timeouts
+        return () => {
+            clearInterval(timer);
+            clearTimeout(introTimeout);
+        };
     }, []);
 
     const formattedTime = currentTime
@@ -27,7 +39,26 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white relative overflow-hidden">
+            {/* Falcons Themed Intro */}
+            {showIntro && (
+                <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
+                    <div className="text-center animate-fadeIn">
+                        <Image
+                            src="/falcon-logo.png"
+                            alt="Atlanta Falcons Logo"
+                            width={150}
+                            height={150}
+                            className="animate-pulse"
+                        />
+                        <h1 className="text-5xl font-extrabold text-falcons-red mt-4 animate-glow uppercase">
+                            Rise Up
+                        </h1>
+                    </div>
+                </div>
+            )}
+
+            {/* Main Content */}
+            <div className={`min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white relative overflow-hidden transition-all duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
                 <div
                     className={`flex-grow flex flex-col items-center justify-center text-center transform transition-all duration-700 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                         }`}
