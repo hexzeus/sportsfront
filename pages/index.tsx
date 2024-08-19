@@ -97,7 +97,7 @@ const HomePage: React.FC = () => {
                     <nav className="mt-8">
                         <Link href="/bets">
                             <span className="inline-block bg-falcons-red text-white text-lg md:text-xl font-semibold py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:bg-black hover:text-falcons-silver transform transition-all duration-300">
-                                Get Started
+                                Join the Action
                             </span>
                         </Link>
                     </nav>
