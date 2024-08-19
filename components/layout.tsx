@@ -51,7 +51,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         {/* Title */}
                         <div className="text-2xl md:text-4xl font-extrabold text-falcons-red tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-110">
                             <Link href="/">
-                                <span className="cursor-pointer hover:text-falcons-silver">Freds Sports</span>
+                                <span className="cursor-pointer hover:text-falcons-silver">Fred&apos;s Sports</span>
                             </Link>
                         </div>
                     </div>

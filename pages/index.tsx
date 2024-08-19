@@ -12,9 +12,9 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white flex items-center justify-center relative overflow-hidden">
+            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white relative overflow-hidden">
                 <div
-                    className={`container mx-auto p-6 md:p-8 text-center transform transition-all duration-700 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                    className={`flex-grow flex flex-col items-center justify-center text-center transform transition-all duration-700 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                         }`}
                 >
                     {/* Atlanta Falcons Logo */}
@@ -44,6 +44,18 @@ const HomePage: React.FC = () => {
                         </Link>
                     </nav>
                 </div>
+
+                {/* Footer with Links */}
+                <footer className="w-full text-center mt-12 mb-4">
+                    <div className="flex flex-col items-center space-y-4">
+                        <Link href="/disclaimer">
+                            <span className="text-sm text-gray-400 hover:text-gray-200 transition duration-300">Disclaimer</span>
+                        </Link>
+                        <Link href="/policy">
+                            <span className="text-sm text-gray-400 hover:text-gray-200 transition duration-300">Policy</span>
+                        </Link>
+                    </div>
+                </footer>
 
                 {/* Background Elements for Subtle Depth */}
                 <div className="absolute top-0 left-0 w-full h-full z-[-1]">
