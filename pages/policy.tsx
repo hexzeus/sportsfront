@@ -1,4 +1,5 @@
 import Layout from '../components/layout';
+import Link from 'next/link';
 
 export default function PolicyPage() {
     return (
@@ -19,6 +20,15 @@ export default function PolicyPage() {
                         Please feel free to browse and enjoy the content without any worries about your privacy. We take pride in maintaining a secure and
                         anonymous browsing experience for all users.
                     </p>
+
+                    {/* Back to Home Button */}
+                    <div className="mt-8 text-center">
+                        <Link href="/" passHref>
+                            <span className="inline-block bg-falcons-red text-white text-lg md:text-xl font-semibold py-3 px-8 md:px-10 rounded-lg shadow-md hover:bg-red-700 hover:text-yellow-300 transform hover:scale-105 transition-all">
+                                Back to Home
+                            </span>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </Layout>
