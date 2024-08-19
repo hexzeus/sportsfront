@@ -12,11 +12,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         const handleScroll = () => {
             const currentScrollPosition = window.scrollY;
-            if (currentScrollPosition > scrollPosition) {
-                // User is scrolling down, hide the navbar
+
+            // Only hide the navbar when the user scrolls down and they are not at the top of the page
+            if (currentScrollPosition > 50 && currentScrollPosition > scrollPosition) {
                 setIsNavbarVisible(false);
             } else {
-                // User is scrolling up, show the navbar
                 setIsNavbarVisible(true);
             }
             setScrollPosition(currentScrollPosition);
