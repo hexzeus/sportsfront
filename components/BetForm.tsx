@@ -182,3 +182,4 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
         </form>
     );
 }
+

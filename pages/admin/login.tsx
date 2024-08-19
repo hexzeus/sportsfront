@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full p-3 md:p-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-falcons-red"
+                            className="w-full p-3 md:p-4 border border-falcons-red bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-falcons-red"
                             required
                         />
                     </div>
@@ -54,7 +54,7 @@ export default function AdminLoginPage() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-3 md:p-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-falcons-red"
+                            className="w-full p-3 md:p-4 border border-falcons-red bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-falcons-red"
                             required
                         />
                     </div>

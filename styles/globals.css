@@ -4,7 +4,7 @@
 /* Global font settings */
 body {
   font-family: 'Oswald', sans-serif;
-  background: linear-gradient(135deg, #101820FF 0%, #A6192E 50%, #FFD100 100%);
+  background: linear-gradient(135deg, #000000 0%, #A71930 50%, #A5ACAF 100%);
   background-attachment: fixed;
   background-size: cover;
   color: white;
@@ -63,13 +63,13 @@ h1, h2, h3 {
 
 /* Atlanta Falcons Colors */
 .bg-falcons-black {
-  background-color: #101820FF;
+  background-color: #000000;
 }
 .bg-falcons-red {
-  background-color: #A6192E;
+  background-color: #A71930;
 }
 .text-falcons-silver {
-  color: #A7A9AC;
+  color: #A5ACAF;
 }
 
 /* Button Styles */

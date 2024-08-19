@@ -182,7 +182,6 @@ function EditableBetItem({
                     className="border p-3 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-falcons-red"
                 />
             </div>
-            {/* Additional Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <input
                     type="date"
@@ -209,7 +208,6 @@ function EditableBetItem({
                     className="border p-3 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-falcons-red"
                 />
             </div>
-            {/* Result & Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <select
                     value={editableBet.result}
