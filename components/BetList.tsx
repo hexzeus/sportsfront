@@ -39,7 +39,7 @@ export default function BetList({ bets }: { bets: Bet[] }) {
                     </div>
                     {bet.description && (
                         <div className="mt-4">
-                            <p className="italic text-gray-300">"{bet.description}"</p>
+                            <p className="italic text-gray-300">&quot;{bet.description}&quot;</p>
                         </div>
                     )}
                 </div>
