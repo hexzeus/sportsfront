@@ -7,12 +7,14 @@ export default function BetList({ bets }: { bets: Bet[] }) {
     }, [bets]);
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             {bets.map((bet) => (
-                <div key={bet.id} className="border border-red-500 p-6 rounded-lg shadow-lg bg-gradient-to-br from-black to-gray-900 text-white transition-transform transform hover:scale-105 hover:shadow-2xl">
+                <div
+                    key={bet.id}
+                    className="border border-red-500 p-6 rounded-lg shadow-lg bg-gradient-to-br from-black to-gray-900 text-white transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-br hover:from-gray-900 hover:to-black">
                     <div className="flex justify-between items-center mb-4">
                         <div>
-                            <p className="text-3xl font-extrabold tracking-widest uppercase text-red-500">{bet.team}</p>
+                            <p className="text-4xl font-extrabold tracking-widest uppercase text-red-500">{bet.team}</p>
                             <p className="text-sm text-gray-400">vs {bet.opponent}</p>
                         </div>
                         <div className="text-right">
@@ -31,7 +33,7 @@ export default function BetList({ bets }: { bets: Bet[] }) {
                         </div>
                         <div className="text-right">
                             <p className="text-xl font-semibold">Result:
-                                <span className={`ml-2 p-1 rounded text-sm ${bet.result === 'win' ? 'bg-green-500' : bet.result === 'loss' ? 'bg-red-500' : 'bg-gray-500'} text-white`}>
+                                <span className={`ml-2 p-2 rounded text-sm ${bet.result === 'win' ? 'bg-green-500' : bet.result === 'loss' ? 'bg-red-500' : 'bg-gray-500'} text-white`}>
                                     {bet.result.toUpperCase()}
                                 </span>
                             </p>

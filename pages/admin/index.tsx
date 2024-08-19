@@ -88,28 +88,28 @@ export default function AdminPanel() {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-black to-red-900 text-white">
-                <p className="text-2xl">Loading...</p>
+                <p className="text-3xl font-bold">Loading...</p>
             </div>
         );
     }
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-black to-red-900 text-white">
-            <div className="container mx-auto p-6">
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-4xl font-extrabold">Admin Panel</h1>
+            <div className="container mx-auto p-8">
+                <div className="flex justify-between items-center mb-10">
+                    <h1 className="text-5xl font-extrabold tracking-wide">Admin Panel</h1>
                     <button
                         onClick={handleLogout}
-                        className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 text-sm"
+                        className="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-xl text-base font-semibold"
                     >
                         Logout
                     </button>
                 </div>
-                <div className="mb-6">
+                <div className="mb-8">
                     <BetForm onSubmit={handleCreateBet} />
                 </div>
-                {error && <p className="text-red-500 text-center mb-6">{error}</p>}
-                <ul className="space-y-4">
+                {error && <p className="text-red-500 text-center mb-8">{error}</p>}
+                <ul className="space-y-6">
                     {bets.map((bet) => (
                         <EditableBetItem
                             key={bet.id}
@@ -155,66 +155,66 @@ function EditableBetItem({
     };
 
     return (
-        <li className="p-4 bg-gray-900 rounded-lg shadow-md space-y-4">
-            <div className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0">
+        <li className="p-6 bg-gray-900 rounded-lg shadow-lg border border-red-500 space-y-6">
+            <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
                 <input
                     type="text"
                     value={editableBet.team}
                     onChange={(e) => setEditableBet({ ...editableBet, team: e.target.value })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="text"
                     value={editableBet.opponent}
                     onChange={(e) => setEditableBet({ ...editableBet, opponent: e.target.value })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="number"
                     value={editableBet.amount}
                     onChange={(e) => setEditableBet({ ...editableBet, amount: parseFloat(e.target.value) || 0 })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="text" // Update odds input to handle strings
                     value={editableBet.odds}
                     onChange={(e) => setEditableBet({ ...editableBet, odds: e.target.value })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
             </div>
             {/* Additional Fields */}
-            <div className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0">
+            <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
                 <input
                     type="date"
                     value={new Date(editableBet.date).toISOString().split('T')[0]}
                     onChange={(e) => setEditableBet({ ...editableBet, date: new Date(e.target.value) })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="text"
                     value={editableBet.betType}
                     onChange={(e) => setEditableBet({ ...editableBet, betType: e.target.value })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="number"
                     value={editableBet.ticketCost}
                     onChange={(e) => setEditableBet({ ...editableBet, ticketCost: parseFloat(e.target.value) || 0 })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <input
                     type="number"
                     value={editableBet.payout}
                     onChange={(e) => setEditableBet({ ...editableBet, payout: parseFloat(e.target.value) || 0 })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
             </div>
             {/* Result & Actions */}
-            <div className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0">
+            <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
                 <select
                     value={editableBet.result}
                     onChange={(e) => setEditableBet({ ...editableBet, result: e.target.value as 'win' | 'loss' | 'pending' })}
-                    className="border p-2 bg-gray-100 text-gray-800 rounded-lg shadow-inner flex-1"
+                    className="border p-3 bg-gray-800 text-white rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
                     <option value="win">Win</option>
                     <option value="loss">Loss</option>

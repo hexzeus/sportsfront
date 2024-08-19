@@ -32,29 +32,29 @@ export default function AdminLoginPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-black to-red-900 text-white">
-            <div className="bg-gray-800 text-white shadow-lg rounded-lg p-8 max-w-lg w-full">
-                <div className="text-center mb-6">
-                    <h1 className="text-4xl font-extrabold">Admin Login</h1>
-                    <p className="text-lg text-gray-300 mt-2">Welcome back, sports enthusiast!</p>
+            <div className="bg-gray-900 text-white shadow-lg rounded-lg p-10 max-w-lg w-full">
+                <div className="text-center mb-8">
+                    <h1 className="text-5xl font-extrabold tracking-widest">Admin Login</h1>
+                    <p className="text-lg text-gray-400 mt-4">Welcome back, sports enthusiast!</p>
                 </div>
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-300">Username</label>
+                        <label className="block text-sm font-medium text-gray-400">Username</label>
                         <input
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full p-3 border border-gray-700 bg-gray-900 rounded-lg shadow-sm focus:outline-none focus:border-red-500"
+                            className="w-full p-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                             required
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-300">Password</label>
+                        <label className="block text-sm font-medium text-gray-400">Password</label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-3 border border-gray-700 bg-gray-900 rounded-lg shadow-sm focus:outline-none focus:border-red-500"
+                            className="w-full p-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                             required
                         />
                     </div>

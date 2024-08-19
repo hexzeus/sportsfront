@@ -1,3 +1,71 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500&display=swap');
+
+/* Global font settings */
+body {
+  font-family: 'Oswald', sans-serif;
+}
+h1, h2, h3 {
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 0.1em;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Hover & Transition Animations */
+@keyframes zoom-in {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 16px rgba(255, 255, 255, 1);
+    }
+}
+
+.animate-zoom-in {
+    animation: zoom-in 0.5s ease-in-out;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-out;
+}
+
+.animate-textGlow {
+    animation: textGlow 1.5s infinite alternate;
+}
+
+/* Atlanta Falcons Colors */
+.bg-falcons-black {
+  background-color: #101820FF;
+}
+.bg-falcons-red {
+  background-color: #A6192E;
+}
+.text-falcons-silver {
+  color: #A7A9AC;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply bg-falcons-red text-white font-bold uppercase py-3 px-6 rounded-lg hover:bg-red-700 transition-all duration-300;
+}
