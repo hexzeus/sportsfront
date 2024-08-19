@@ -57,8 +57,8 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-gradient-to-r from-red-600 via-red-900 to-black p-6 rounded-lg shadow-xl text-white border border-red-500">
-            <h2 className="text-4xl font-extrabold mb-6 text-center text-red-500">Create Bet Ticket</h2>
+        <form onSubmit={handleSubmit} className="bg-falcons-black p-8 rounded-lg shadow-2xl text-white border border-falcons-red max-w-xl mx-auto">
+            <h2 className="text-4xl font-extrabold text-center mb-6 text-falcons-red">Create Bet Ticket</h2>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
             <div className="space-y-6">
@@ -68,7 +68,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                         type="text"
                         value={team}
                         onChange={(e) => setTeam(e.target.value)}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         required
                     />
                 </div>
@@ -78,7 +78,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                         type="text"
                         value={opponent}
                         onChange={(e) => setOpponent(e.target.value)}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         required
                     />
                 </div>
@@ -89,7 +89,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             type="number"
                             value={amount}
                             onChange={(e) => setAmount(parseFloat(e.target.value))}
-                            className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                            className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                             required
                         />
                     </div>
@@ -99,7 +99,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             type="text"
                             value={odds}
                             onChange={(e) => setOdds(e.target.value)}
-                            className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                            className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                             required
                             placeholder="+200 or -150"
                         />
@@ -111,7 +111,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         required
                     />
                 </div>
@@ -120,7 +120,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         rows={4}
                     />
                 </div>
@@ -129,7 +129,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                     <select
                         value={result}
                         onChange={(e) => setResult(e.target.value as 'win' | 'loss' | 'pending')}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         required
                     >
                         <option value="win">Win</option>
@@ -143,7 +143,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                         type="text"
                         value={betType}
                         onChange={(e) => setBetType(e.target.value)}
-                        className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                        className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                         required
                     />
                 </div>
@@ -154,7 +154,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             type="number"
                             value={ticketCost}
                             onChange={(e) => setTicketCost(parseFloat(e.target.value))}
-                            className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                            className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                             required
                         />
                     </div>
@@ -164,7 +164,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             type="number"
                             value={payout}
                             onChange={(e) => setPayout(parseFloat(e.target.value))}
-                            className="w-full p-3 border border-red-700 rounded-lg bg-black focus:outline-none focus:ring-2 focus:ring-red-500 text-white"
+                            className="w-full p-3 border border-falcons-red rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-falcons-red"
                             required
                         />
                     </div>
@@ -173,7 +173,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
             <button
                 type="submit"
-                className="mt-8 w-full py-3 px-6 bg-gradient-to-br from-red-500 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-extrabold rounded-lg transition-all duration-300 hover:shadow-lg"
+                className="mt-8 w-full py-4 bg-gradient-to-br from-falcons-red to-red-800 hover:from-red-600 hover:to-red-900 text-white font-bold uppercase rounded-lg shadow-lg transition-all duration-300"
             >
                 Submit Bet
             </button>
