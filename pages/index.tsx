@@ -8,18 +8,15 @@ const HomePage: React.FC = () => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
     useEffect(() => {
-        setAnimated(true); // Trigger the entrance animation when the component loads
+        setAnimated(true);
 
-        // Only set the time after the component is mounted to avoid hydration mismatch
         const timer = setInterval(() => {
             setCurrentTime(new Date());
         }, 1000);
 
-        // Clear the interval on component unmount
         return () => clearInterval(timer);
     }, []);
 
-    // Format time only if the currentTime is set
     const formattedTime = currentTime
         ? currentTime.toLocaleTimeString('en-US', {
             hour: '2-digit',
@@ -39,18 +36,16 @@ const HomePage: React.FC = () => {
                     <div className="bg-black bg-opacity-80 rounded-3xl p-6 md:p-12 shadow-2xl relative mb-12">
                         <div className="flex flex-col items-center justify-center space-y-4 md:space-y-6">
                             {/* Falcons Logo */}
-                            <Image
-                                src="/falcon-logo.png"
-                                alt="Atlanta Falcons Logo"
-                                width={100}
-                                height={100}
-                                priority
-                                className="block mx-auto"
-                            />
-                            {/* Scoreboard Title */}
-                            <h1 className="text-3xl md:text-5xl font-extrabold text-falcons-red uppercase tracking-widest glow-text">
+                            <div className="w-24 h-24 relative">
+                                <Image
+                                    src="/falcon-logo.png"
+                                    alt="Atlanta Falcons Logo"
+                                    width={100}
+                                    height={100}
+                                    priority
+                                />
+                            </div>
 
-                            </h1>
                             {/* Real-Time Clock */}
                             {formattedTime && (
                                 <div className="bg-gray-900 text-falcons-red font-mono text-3xl md:text-5xl py-2 px-6 md:py-4 md:px-8 rounded-lg shadow-lg tracking-widest glow-text">

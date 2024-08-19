@@ -43,8 +43,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <Image
                                 src="/falcon-logo.png"
                                 alt="Falcons Logo"
-                                layout="fill"
-                                objectFit="contain"
+                                width={56} // Adjusted width
+                                height={56} // Adjusted height
                                 priority
                             />
                         </div>

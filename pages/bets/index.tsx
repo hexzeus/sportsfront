@@ -3,11 +3,19 @@ import { fetchBets } from '../../lib/api';
 import { Bet } from '../../lib/types';
 import Link from 'next/link';
 import Layout from '../../components/layout';
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    RedditShareButton,
+    FacebookIcon,
+    TwitterIcon,
+    RedditIcon,
+} from 'react-share';
 
 export default function BetsPage() {
     const [bets, setBets] = useState<Bet[]>([]);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true); // Track loading state
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadBets() {
@@ -17,7 +25,7 @@ export default function BetsPage() {
             } catch (error) {
                 setError('Failed to load bets.');
             } finally {
-                setLoading(false); // Stop loading after fetching
+                setLoading(false);
             }
         }
 
@@ -32,10 +40,8 @@ export default function BetsPage() {
                         Active Bets
                     </h1>
 
-                    {loading && <p className="text-center text-gray-400">Loading...</p>} {/* Loading state */}
-
+                    {loading && <p className="text-center text-gray-400">Loading...</p>}
                     {error && <p className="text-red-500 text-center mb-6">{error}</p>}
-
                     {!loading && bets.length === 0 && !error && (
                         <p className="text-center text-gray-400">No active bets at the moment.</p>
                     )}
@@ -86,11 +92,34 @@ export default function BetsPage() {
                                         </span>
                                     </p>
                                 </div>
+
                                 {bet.description && (
                                     <div className="mt-4 text-gray-300 italic text-center">
                                         &quot;{bet.description}&quot;
                                     </div>
                                 )}
+
+                                {/* Social Sharing Buttons */}
+                                <div className="mt-6 flex justify-center space-x-4">
+                                    <FacebookShareButton
+                                        url={window.location.href}
+                                        hashtag="#FalconsBet"
+                                    >
+                                        <FacebookIcon size={32} round />
+                                    </FacebookShareButton>
+                                    <TwitterShareButton
+                                        url={window.location.href}
+                                        title={`Bet on ${bet.team} vs ${bet.opponent}!`}
+                                    >
+                                        <TwitterIcon size={32} round />
+                                    </TwitterShareButton>
+                                    <RedditShareButton
+                                        url={window.location.href}
+                                        title={`Check out this bet on ${bet.team} vs ${bet.opponent}!`}
+                                    >
+                                        <RedditIcon size={32} round />
+                                    </RedditShareButton>
+                                </div>
                             </div>
                         ))}
                     </div>
