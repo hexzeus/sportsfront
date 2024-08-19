@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <li>
                                 <Link href="/bets" passHref>
                                     <span className="relative text-white uppercase font-bold text-base md:text-lg tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 md:before:-bottom-2 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                        Fred's Picks
+                                        Fred&apos;s Picks
                                     </span>
                                 </Link>
                             </li>
