@@ -51,7 +51,7 @@ export default function BetsPage() {
                                 </div>
                                 {bet.description && (
                                     <div className="mt-4 text-gray-300 italic text-center">
-                                        "{bet.description}"
+                                        &quot;{bet.description}&quot;
                                     </div>
                                 )}
                             </div>
