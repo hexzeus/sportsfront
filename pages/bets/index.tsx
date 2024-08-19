@@ -50,6 +50,7 @@ export default function BetsPage() {
                         {bets.map((bet) => (
                             <div
                                 key={bet.id}
+                                id={`bet-${bet.id}`} // Assign an ID for scrolling
                                 className="bg-gradient-to-br from-gray-900 via-black to-falcons-red p-6 rounded-xl shadow-2xl transform transition-transform hover:scale-105 hover:shadow-3xl animate-zoom-in"
                             >
                                 <div className="text-center mb-4 md:mb-6">
@@ -102,19 +103,19 @@ export default function BetsPage() {
                                 {/* Social Sharing Buttons */}
                                 <div className="mt-6 flex justify-center space-x-4">
                                     <FacebookShareButton
-                                        url={window.location.href}
+                                        url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         hashtag="#FalconsBet"
                                     >
                                         <FacebookIcon size={32} round />
                                     </FacebookShareButton>
                                     <TwitterShareButton
-                                        url={window.location.href}
+                                        url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         title={`Bet on ${bet.team} vs ${bet.opponent}!`}
                                     >
                                         <TwitterIcon size={32} round />
                                     </TwitterShareButton>
                                     <RedditShareButton
-                                        url={window.location.href}
+                                        url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         title={`Check out this bet on ${bet.team} vs ${bet.opponent}!`}
                                     >
                                         <RedditIcon size={32} round />
