@@ -96,11 +96,29 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const resetForm = () => {
+        setTeam('');
+        setOpponent('');
+        setAmount(0);
+        setCustomAmount('');
+        setOdds('');
+        setCustomOdds('');
+        setDate('');
+        setDescription('');
+        setResult('pending');
+        setBetType('');
+        setCustomBetType('');
+        setTicketCost(0);
+        setCustomTicketCost('');
+        setPayout(0);
+        setCustomPayout('');
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem("adminToken");
         if (!token) {
-            setError('You must be logged in as admin to submit bets.');
+            setError("You must be logged in as admin to submit bets."); // fixed with HTML entities
             return;
         }
 
@@ -125,11 +143,12 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
         try {
             await onSubmit(bet, token);
-            setSuccess('Bet successfully submitted!');
-            setError('');
+            setSuccess("Bet successfully submitted!"); // fixed with HTML entities
+            setError("");
+            resetForm();
         } catch (err) {
-            setError('Failed to submit bet. Please try again.');
-            setSuccess('');
+            setError("Failed to submit bet. Please try again."); // fixed with HTML entities
+            setSuccess("");
         }
     };
 
@@ -196,12 +215,29 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                 {/* Opponent Selection */}
                 <div>
                     <label className="block font-semibold text-lg mb-1">Opponent:</label>
+                    <select
+                        value={opponent}
+                        onChange={(e) => setOpponent(e.target.value)}
+                        className="w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red focus:ring-2 focus:ring-falcons-red transition duration-200"
+                    >
+                        <option value="">Select Opponent</option>
+                        {Object.entries(teams).map(([league, teamNames]) => (
+                            <optgroup key={league} label={league}>
+                                {teamNames.map((teamName) => (
+                                    <option key={teamName} value={teamName}>
+                                        {teamName}
+                                    </option>
+                                ))}
+                            </optgroup>
+                        ))}
+                    </select>
+                    <p className="mt-2 text-sm text-gray-400">Or write your own opponent&apos;s name below:</p> {/* updated apostrophe */}
                     <input
                         type="text"
                         value={opponent}
                         onChange={(e) => setOpponent(e.target.value)}
-                        className="w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red focus:ring-2 focus:ring-falcons-red transition duration-200"
-                        placeholder="Write opponent's name"
+                        className="w-full mt-2 p-4 bg-gray-800 text-white rounded-lg border border-falcons-red focus:ring-2 focus:ring-falcons-red transition duration-200"
+                        placeholder="Write your own opponent&apos;s name"
                     />
                 </div>
 
