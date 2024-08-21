@@ -159,7 +159,7 @@ export default function CreateTicketByImage() {
                         value={team}
                         onChange={(e) => setTeam(e.target.value)}
                         className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
-                        placeholder="Enter a custom tag to easily identify this bet ticket in the admin panel"
+                        placeholder="Enter custom tag for admin panel"
                     />
 
                     {/* Display the uploaded image if present */}
