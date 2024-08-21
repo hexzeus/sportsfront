@@ -8,6 +8,7 @@ import Image from 'next/image'; // Import the Next.js Image component
 export default function CreateTicketByImage() {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null); // This stores the image URL for updates
+    const [team, setTeam] = useState<string>(''); // Custom input for team name
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isUpdateMode, setIsUpdateMode] = useState(false); // This toggles create or update mode
@@ -16,7 +17,6 @@ export default function CreateTicketByImage() {
 
     // Auto-filled fields - these are hidden from the user
     const autoFilledFields = {
-        team: "Default Team",
         opponent: "Default Opponent",
         amount: 100, // Auto-filled default amount
         odds: "+100", // Default odds
@@ -41,6 +41,7 @@ export default function CreateTicketByImage() {
                 `https://sportsback.onrender.com/api/get-ticket/${id}`
             );
             setImageUrl(data.description);
+            setTeam(data.team || ''); // Set the team name to the fetched ticket data or empty string
         } catch (err) {
             setError('Failed to load ticket details.');
         }
@@ -89,8 +90,15 @@ export default function CreateTicketByImage() {
             }
         }
 
-        // Create the payload with hidden fields and the uploaded image URL
+        // Ensure the team field is filled
+        if (!team.trim()) {
+            setError("Team name is required.");
+            return;
+        }
+
+        // Create the payload with the custom team name and the uploaded image URL
         const payload = {
+            team, // Use the custom team input
             ...autoFilledFields, // These hidden fields are sent along with the image URL
             description: uploadedImageUrl, // Store image URL in the description field
         };
@@ -129,6 +137,11 @@ export default function CreateTicketByImage() {
         }
     };
 
+    const handleBackToAdmin = () => {
+        // Navigate back to the admin panel
+        router.push('/admin');
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-r from-black to-falcons-red text-white">
             <div className="container mx-auto p-6">
@@ -140,6 +153,15 @@ export default function CreateTicketByImage() {
                 {success && <p className="text-green-500 text-center">{success}</p>}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Custom team input */}
+                    <input
+                        type="text"
+                        value={team}
+                        onChange={(e) => setTeam(e.target.value)}
+                        className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
+                        placeholder="Enter a custom tag to easily identify this bet ticket in the admin panel"
+                    />
+
                     {/* Display the uploaded image if present */}
                     {imageUrl && !imageFile && (
                         <div className="flex justify-center">
@@ -168,6 +190,16 @@ export default function CreateTicketByImage() {
                         {isUpdateMode ? 'Update Ticket' : 'Submit Ticket'}
                     </button>
                 </form>
+
+                {/* Smooth navigation back to admin panel */}
+                <div className="mt-8 text-center">
+                    <button
+                        onClick={handleBackToAdmin}
+                        className="inline-block bg-gray-800 text-white py-4 px-8 rounded-full shadow-lg hover:bg-gray-700 hover:scale-105 transform transition-transform duration-300"
+                    >
+                        Back to Admin Panel
+                    </button>
+                </div>
             </div>
         </div>
     );
