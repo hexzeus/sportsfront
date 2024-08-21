@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BetForm from '../../components/BetForm';
@@ -105,6 +103,17 @@ export default function AdminPanel() {
                         Logout
                     </button>
                 </div>
+
+                {/* Add a link to the new page */}
+                <div className="mb-6 md:mb-8 flex justify-center">
+                    <button
+                        onClick={() => router.push('/admin/createTicketByImage')}
+                        className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 text-sm font-bold uppercase transition-all"
+                    >
+                        Create Ticket by Image
+                    </button>
+                </div>
+
                 <div className="mb-6 md:mb-8">
                     <BetForm onSubmit={handleCreateBet} />
                 </div>
