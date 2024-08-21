@@ -1,3 +1,5 @@
+"use client"; // Ensure this component is rendered on the client side
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -39,7 +41,12 @@ export default function CreateTicketByImage() {
         let uploadedImageUrl = imageUrl;
 
         // Retrieve the token from localStorage or sessionStorage
-        const token = localStorage.getItem('adminToken'); // Adjust based on your storage approach
+        const token = localStorage.getItem('adminToken'); // Ensure token is stored properly
+
+        if (!token) {
+            setError("Admin token not found. Please log in again.");
+            return;
+        }
 
         // If a new image is uploaded, process it
         if (imageFile) {
@@ -77,29 +84,29 @@ export default function CreateTicketByImage() {
             if (isUpdateMode) {
                 // Update the existing ticket
                 await axios.put(
-                    `https://sportsback.onrender.com/api/update-ticket/${ticketId}`, // Updating ticket on the backend
+                    `https://sportsback.onrender.com/api/update-ticket/${ticketId}`,
                     {
-                        description: uploadedImageUrl, // Store image URL in the description field
-                        result, // Update the result (win/loss/pending)
+                        description: uploadedImageUrl,
+                        result,
                     },
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                            Authorization: `Bearer ${token}`, // Ensure token is added to the update request
                         },
                     }
                 );
                 setSuccess('Ticket successfully updated!');
             } else {
-                // Create a new ticket
+                // Create a new ticket with the image URL
                 await axios.post(
-                    'https://sportsback.onrender.com/api/create-ticket', // Creating ticket on the backend
+                    'https://sportsback.onrender.com/api/tickets/create-ticket',  // New route for creating a ticket
                     {
                         description: uploadedImageUrl, // Store image URL in the description field
-                        result, // Set result (win/loss/pending)
+                        result,                        // Set result (win/loss/pending)
                     },
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                            Authorization: `Bearer ${token}`, // Ensure token is added to the create request
                         },
                     }
                 );
