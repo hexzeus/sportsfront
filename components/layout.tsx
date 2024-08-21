@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [animated, setAnimated] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         setAnimated(true); // Trigger entrance animation for all pages
@@ -29,6 +31,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         };
     }, [scrollPosition]);
 
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-falcons-black text-white flex flex-col relative overflow-hidden">
             {/* Navigation */}
@@ -38,7 +48,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
                     {/* Logo and Title */}
                     <div className="flex items-center space-x-3 md:space-x-5">
-                        {/* Falcons Logo */}
                         <div className="w-10 md:w-14 h-10 md:h-14 relative">
                             <Image
                                 src="/falcon-logo.png"
@@ -48,41 +57,46 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 priority
                             />
                         </div>
-                        {/* Title */}
                         <div className="text-2xl md:text-4xl font-extrabold text-falcons-red tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-110">
-                            <Link href="/">
-                                <span className="cursor-pointer hover:text-falcons-silver">Fred&apos;s Sports</span>
+                            <Link href="/" passHref>
+                                <span className="cursor-pointer hover:text-falcons-silver" onClick={closeMobileMenu}>Fred&apos;s Sports</span>
                             </Link>
                         </div>
                     </div>
 
-                    {/* Responsive Navigation Menu */}
-                    <nav>
-                        <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-8 items-center">
-                            <li>
-                                <Link href="/" passHref>
-                                    <span className="relative text-white uppercase font-bold text-lg md:text-xl tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                        Home
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/bets" passHref>
-                                    <span className="relative text-white uppercase font-bold text-lg md:text-xl tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                        Bets
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/scores" passHref>
-                                    <span className="relative text-white uppercase font-bold text-lg md:text-xl tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                        Scores
-                                    </span>
-                                </Link>
-                            </li>
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex space-x-8 items-center">
+                        {['Home', 'Bets', 'Scores'].map((page) => (
+                            <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
+                                <span className="relative text-white uppercase font-bold text-lg tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
+                                    {page}
+                                </span>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* Mobile Menu Toggle */}
+                    <button className="md:hidden text-2xl text-white" onClick={toggleMobileMenu} aria-label="Toggle Mobile Menu">
+                        {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+                    </button>
+                </div>
+
+                {/* Mobile Navigation */}
+                {isMobileMenuOpen && (
+                    <nav className="md:hidden bg-black bg-opacity-90 absolute top-16 left-0 w-full z-30 py-6 shadow-lg">
+                        <ul className="flex flex-col items-center space-y-4">
+                            {['Home', 'Bets', 'Scores'].map((page) => (
+                                <li key={page}>
+                                    <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
+                                        <span className="text-xl text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver" onClick={closeMobileMenu}>
+                                            {page}
+                                        </span>
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </nav>
-                </div>
+                )}
             </header>
 
             {/* Main Content */}

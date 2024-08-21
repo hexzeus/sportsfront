@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
 
         // Hide the intro after 4 seconds
-        const introTimeout = setTimeout(() => setShowIntro(false), 3000);
+        const introTimeout = setTimeout(() => setShowIntro(false), 2000);
 
         return () => {
             clearInterval(timer);
