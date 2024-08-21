@@ -14,20 +14,20 @@ interface ApiResponse {
 
 const endpoints: Record<string, SportEndpoints> = {
     nfl: {
-        scores: 'http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard',
-        news: 'http://site.api.espn.com/apis/site/v2/sports/football/nfl/news',
+        scores: 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard',
+        news: 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news',
     },
     mlb: {
-        scores: 'http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard',
-        news: 'http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news',
+        scores: 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard',
+        news: 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news',
     },
     nba: {
-        scores: 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',
-        news: 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/news',
+        scores: 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',
+        news: 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news',
     },
     nhl: {
-        scores: 'http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard',
-        news: 'http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news',
+        scores: 'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard',
+        news: 'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news',
     },
 };
 
