@@ -7,7 +7,6 @@ import Image from 'next/image'; // Import the Next.js Image component
 
 export default function CreateTicketByImage() {
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [result, setResult] = useState<'win' | 'loss' | 'pending'>('pending');
     const [imageUrl, setImageUrl] = useState<string | null>(null); // This stores the image URL for updates
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -15,8 +14,21 @@ export default function CreateTicketByImage() {
     const router = useRouter();
     const { ticketId } = router.query; // We assume ticketId is passed via query parameters
 
+    // Auto-filled fields - these are hidden from the user
+    const autoFilledFields = {
+        team: "Default Team",
+        opponent: "Default Opponent",
+        amount: 100, // Auto-filled default amount
+        odds: "+100", // Default odds
+        date: new Date().toISOString().split('T')[0], // Current date
+        result: "pending", // Default result
+        betType: "Moneyline", // Default bet type
+        ticketCost: 10, // Default ticket cost
+        payout: 200 // Default payout
+    };
+
+    // If ticketId exists, switch to update mode and fetch the ticket data
     useEffect(() => {
-        // If there is a ticketId, fetch the ticket data to populate the form for updating
         if (ticketId) {
             setIsUpdateMode(true);
             fetchTicket(ticketId as string);
@@ -26,10 +38,9 @@ export default function CreateTicketByImage() {
     const fetchTicket = async (id: string) => {
         try {
             const { data } = await axios.get(
-                `https://sportsback.onrender.com/api/get-ticket/${id}` // Fetching from your backend
+                `https://sportsback.onrender.com/api/get-ticket/${id}`
             );
-            setImageUrl(data.description); // Assume image URL is stored in description
-            setResult(data.result);
+            setImageUrl(data.description);
         } catch (err) {
             setError('Failed to load ticket details.');
         }
@@ -41,17 +52,16 @@ export default function CreateTicketByImage() {
         let uploadedImageUrl = imageUrl;
 
         // Retrieve the token from localStorage or sessionStorage
-        const token = localStorage.getItem('adminToken'); // Ensure token is stored properly
+        const token = localStorage.getItem('adminToken');
 
         if (!token) {
             setError("Admin token not found. Please log in again.");
             return;
         }
 
-        // If a new image is uploaded, process it
+        // If the user uploads a new image, upload it to S3
         if (imageFile) {
             try {
-                // Request a presigned URL from the backend with the Authorization header
                 const { data: uploadURL } = await axios.post(
                     'https://sportsback.onrender.com/api/s3/get-upload-url',
                     {
@@ -60,19 +70,18 @@ export default function CreateTicketByImage() {
                     },
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
 
-                // Upload the image to S3 using the presigned URL
                 await axios.put(uploadURL, imageFile, {
                     headers: {
                         'Content-Type': imageFile.type,
                     },
                 });
 
-                // Extract the base URL from the presigned URL
+                // Store the uploaded image URL
                 uploadedImageUrl = uploadURL.split('?')[0];
             } catch (err) {
                 setError('Failed to upload image.');
@@ -80,33 +89,33 @@ export default function CreateTicketByImage() {
             }
         }
 
+        // Create the payload with hidden fields and the uploaded image URL
+        const payload = {
+            ...autoFilledFields, // These hidden fields are sent along with the image URL
+            description: uploadedImageUrl, // Store image URL in the description field
+        };
+
         try {
             if (isUpdateMode) {
-                // Update the existing ticket
+                // If in update mode, update the ticket
                 await axios.put(
                     `https://sportsback.onrender.com/api/update-ticket/${ticketId}`,
-                    {
-                        description: uploadedImageUrl,
-                        result,
-                    },
+                    payload,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Ensure token is added to the update request
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
                 setSuccess('Ticket successfully updated!');
             } else {
-                // Create a new ticket with the image URL
+                // Otherwise, create a new ticket
                 await axios.post(
-                    'https://sportsback.onrender.com/api/tickets/create-ticket',  // New route for creating a ticket
-                    {
-                        description: uploadedImageUrl, // Store image URL in the description field
-                        result,                        // Set result (win/loss/pending)
-                    },
+                    'https://sportsback.onrender.com/api/tickets/create-ticket',
+                    payload,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, // Ensure token is added to the create request
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
@@ -131,35 +140,26 @@ export default function CreateTicketByImage() {
                 {success && <p className="text-green-500 text-center">{success}</p>}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Display existing image if in update mode */}
+                    {/* Display the uploaded image if present */}
                     {imageUrl && !imageFile && (
                         <div className="flex justify-center">
                             <Image
                                 src={imageUrl}
                                 alt="Ticket Image"
-                                width={500}  // Set the image width
-                                height={500} // Set the image height
+                                width={500}
+                                height={500}
                                 className="rounded-lg shadow-md"
                             />
                         </div>
                     )}
 
+                    {/* File upload input */}
                     <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
                         className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
                     />
-
-                    <select
-                        value={result}
-                        onChange={(e) => setResult(e.target.value as 'win' | 'loss' | 'pending')}
-                        className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
-                    >
-                        <option value="win">Win</option>
-                        <option value="loss">Loss</option>
-                        <option value="pending">Pending</option>
-                    </select>
 
                     <button
                         type="submit"
