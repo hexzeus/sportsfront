@@ -23,7 +23,9 @@ export default function CreateTicketByImage() {
 
     const fetchTicket = async (id: string) => {
         try {
-            const { data } = await axios.get(`/api/get-ticket/${id}`);
+            const { data } = await axios.get(
+                `https://sportsback.onrender.com/api/get-ticket/${id}` // Fetching from your backend
+            );
             setImageUrl(data.description); // Assume image URL is stored in description
             setResult(data.result);
         } catch (err) {
@@ -36,14 +38,25 @@ export default function CreateTicketByImage() {
 
         let uploadedImageUrl = imageUrl;
 
+        // Retrieve the token from localStorage or sessionStorage
+        const token = localStorage.getItem('adminToken'); // Adjust based on your storage approach
+
         // If a new image is uploaded, process it
         if (imageFile) {
             try {
-                // Request a presigned URL from the backend
-                const { data: uploadURL } = await axios.post('/api/get-upload-url', {
-                    fileName: imageFile.name,
-                    fileType: imageFile.type,
-                });
+                // Request a presigned URL from the backend with the Authorization header
+                const { data: uploadURL } = await axios.post(
+                    'https://sportsback.onrender.com/api/s3/get-upload-url',
+                    {
+                        fileName: imageFile.name,
+                        fileType: imageFile.type,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                        },
+                    }
+                );
 
                 // Upload the image to S3 using the presigned URL
                 await axios.put(uploadURL, imageFile, {
@@ -63,17 +76,33 @@ export default function CreateTicketByImage() {
         try {
             if (isUpdateMode) {
                 // Update the existing ticket
-                await axios.put(`/api/update-ticket/${ticketId}`, {
-                    description: uploadedImageUrl, // Store image URL in the description field
-                    result, // Update the result (win/loss/pending)
-                });
+                await axios.put(
+                    `https://sportsback.onrender.com/api/update-ticket/${ticketId}`, // Updating ticket on the backend
+                    {
+                        description: uploadedImageUrl, // Store image URL in the description field
+                        result, // Update the result (win/loss/pending)
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                        },
+                    }
+                );
                 setSuccess('Ticket successfully updated!');
             } else {
                 // Create a new ticket
-                await axios.post('/api/create-ticket', {
-                    description: uploadedImageUrl, // Store image URL in the description field
-                    result, // Set result (win/loss/pending)
-                });
+                await axios.post(
+                    'https://sportsback.onrender.com/api/create-ticket', // Creating ticket on the backend
+                    {
+                        description: uploadedImageUrl, // Store image URL in the description field
+                        result, // Set result (win/loss/pending)
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                        },
+                    }
+                );
                 setSuccess('Ticket successfully created!');
             }
 
