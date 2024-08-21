@@ -47,13 +47,13 @@ export default function BetsPage() {
 
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-falcons-red p-6 md:p-8">
-                <div className="container mx-auto bg-gray-900 rounded-lg shadow-2xl p-6 md:p-12 mt-16 animate-fadeIn">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-center text-falcons-red animate-textGlow uppercase mb-8 md:mb-12">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-falcons-red p-6 md:p-12">
+                <div className="container mx-auto bg-gray-900 rounded-3xl shadow-2xl p-6 md:p-12 mt-16 animate-fadeIn transition-all duration-1000 ease-out">
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-center text-falcons-red animate-textGlow uppercase mb-8 md:mb-12">
                         Active Bets
                     </h1>
 
-                    {loading && <p className="text-center text-gray-400">Loading...</p>}
+                    {loading && <p className="text-center text-gray-400 animate-pulse">Loading...</p>}
                     {error && <p className="text-red-500 text-center mb-6">{error}</p>}
                     {!loading && bets.length === 0 && !error && (
                         <p className="text-center text-gray-400">No active bets at the moment.</p>
@@ -63,8 +63,8 @@ export default function BetsPage() {
                         {bets.map((bet) => (
                             <div
                                 key={bet.id}
-                                id={`bet-${bet.id}`} // Assign an ID for scrolling
-                                className="bg-gradient-to-br from-gray-900 via-black to-falcons-red p-6 rounded-xl shadow-2xl transform transition-transform hover:scale-105 hover:shadow-3xl animate-zoom-in"
+                                id={`bet-${bet.id}`}
+                                className="bg-gradient-to-br from-gray-800 via-black to-falcons-red p-6 rounded-3xl shadow-xl transform transition-transform hover:scale-105 hover:shadow-3xl animate-zoom-in hover:rotate-1"
                             >
                                 <div className="text-center mb-4 md:mb-6">
                                     <p className="text-3xl md:text-4xl font-extrabold text-falcons-red mb-2 uppercase">
@@ -95,7 +95,7 @@ export default function BetsPage() {
                                     <p className="text-white">
                                         <span className="font-semibold">Result:</span>
                                         <span
-                                            className={`ml-2 px-2 py-1 rounded ${bet.result === 'win'
+                                            className={`ml-2 px-3 py-1 rounded ${bet.result === 'win'
                                                 ? 'bg-green-500'
                                                 : bet.result === 'loss'
                                                     ? 'bg-red-500'
@@ -119,19 +119,19 @@ export default function BetsPage() {
                                         url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         hashtag="#FalconsBet"
                                     >
-                                        <FacebookIcon size={32} round />
+                                        <FacebookIcon size={40} round />
                                     </FacebookShareButton>
                                     <TwitterShareButton
                                         url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         title={`Bet on ${bet.team} vs ${bet.opponent}!`}
                                     >
-                                        <TwitterIcon size={32} round />
+                                        <TwitterIcon size={40} round />
                                     </TwitterShareButton>
                                     <RedditShareButton
                                         url={`${window.location.href}#bet-${bet.id}`} // Share the specific bet URL
                                         title={`Check out this bet on ${bet.team} vs ${bet.opponent}!`}
                                     >
-                                        <RedditIcon size={32} round />
+                                        <RedditIcon size={40} round />
                                     </RedditShareButton>
                                 </div>
                             </div>
@@ -140,8 +140,8 @@ export default function BetsPage() {
 
                     {/* Navigation back to home */}
                     <div className="mt-12 text-center">
-                        <Link href="/" passHref>
-                            <span className="inline-block bg-falcons-red text-white text-lg md:text-xl font-semibold py-3 px-8 md:px-10 rounded-lg shadow-md hover:bg-red-700 hover:text-yellow-300 transform hover:scale-105 transition-all animate-zoom-in">
+                        <Link href="/">
+                            <span className="inline-block bg-falcons-red text-white text-lg md:text-xl font-semibold py-4 px-8 md:px-12 rounded-full shadow-lg hover:bg-red-700 hover:text-yellow-300 transform hover:scale-110 transition-all animate-float">
                                 Back to Home
                             </span>
                         </Link>
