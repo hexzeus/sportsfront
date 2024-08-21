@@ -73,6 +73,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     </span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/scores" passHref>
+                                    <span className="relative text-white uppercase font-bold text-lg md:text-xl tracking-wide cursor-pointer transition-all duration-300 hover:text-falcons-silver before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-falcons-silver before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
+                                        Scores
+                                    </span>
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
                 </div>
