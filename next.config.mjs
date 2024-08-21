@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['https://alienreviewdb.s3.us-east-2.amazonaws.com/'], // Your actual S3 bucket domain
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'alienreviewdb.s3.us-east-2.amazonaws.com',
+                port: '',
+                pathname: '/**',  // This allows any image path from this domain
+            },
+        ],
     },
 };
 

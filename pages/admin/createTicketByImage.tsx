@@ -39,19 +39,20 @@ export default function CreateTicketByImage() {
         // If a new image is uploaded, process it
         if (imageFile) {
             try {
+                // Request a presigned URL from the backend
                 const { data: uploadURL } = await axios.post('/api/get-upload-url', {
                     fileName: imageFile.name,
                     fileType: imageFile.type,
                 });
 
-                // Upload the file directly to S3 using the presigned URL
+                // Upload the image to S3 using the presigned URL
                 await axios.put(uploadURL, imageFile, {
                     headers: {
                         'Content-Type': imageFile.type,
                     },
                 });
 
-                // Save the new image URL
+                // Extract the base URL from the presigned URL
                 uploadedImageUrl = uploadURL.split('?')[0];
             } catch (err) {
                 setError('Failed to upload image.');
@@ -63,15 +64,15 @@ export default function CreateTicketByImage() {
             if (isUpdateMode) {
                 // Update the existing ticket
                 await axios.put(`/api/update-ticket/${ticketId}`, {
-                    description: uploadedImageUrl, // Storing image URL in description field
+                    description: uploadedImageUrl, // Store image URL in the description field
                     result, // Update the result (win/loss/pending)
                 });
                 setSuccess('Ticket successfully updated!');
             } else {
                 // Create a new ticket
                 await axios.post('/api/create-ticket', {
-                    description: uploadedImageUrl, // Storing image URL in description field
-                    result, // Set result as win/loss/pending
+                    description: uploadedImageUrl, // Store image URL in the description field
+                    result, // Set result (win/loss/pending)
                 });
                 setSuccess('Ticket successfully created!');
             }
