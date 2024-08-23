@@ -1,11 +1,21 @@
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+// Redirect users to the intro page on page load
+export const getServerSideProps: GetServerSideProps = async () => {
+    return {
+        redirect: {
+            destination: '/intro', // Redirect to the intro page
+            permanent: false, // Temporary redirect
+        },
+    };
+};
+
 const HomePage: React.FC = () => {
     const [animated, setAnimated] = useState(false);
-    const [showIntro, setShowIntro] = useState(true);
     const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
     useEffect(() => {
@@ -14,12 +24,9 @@ const HomePage: React.FC = () => {
         // Update the time every second
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
 
-        // Hide the intro after 2 seconds
-        const introTimeout = setTimeout(() => setShowIntro(false), 2000);
-
+        // Clean up the timer on component unmount
         return () => {
             clearInterval(timer);
-            clearTimeout(introTimeout);
         };
     }, []);
 
@@ -33,26 +40,8 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            {/* Falcons Themed Intro */}
-            {showIntro && (
-                <div className="fixed inset-0 z-50 bg-black flex items-center justify-center animate-fadeIn">
-                    <div className="text-center">
-                        <Image
-                            src="/falcon-logo.png"
-                            alt="Atlanta Falcons Logo"
-                            width={120}
-                            height={120}
-                            className="animate-pulse"
-                        />
-                        <h1 className="text-5xl md:text-6xl font-extrabold text-falcons-red mt-4 animate-glow uppercase tracking-widest drop-shadow-lg">
-                            Rise Up
-                        </h1>
-                    </div>
-                </div>
-            )}
-
             {/* Main Content */}
-            <div className={`min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white transition-all duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
+            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white transition-all duration-1000 opacity-100">
                 <main className="flex-grow flex flex-col items-center justify-center text-center space-y-10 px-6 sm:px-8 md:px-12">
                     <div className={`bg-opacity-80 bg-black rounded-3xl p-6 sm:p-8 md:p-16 shadow-2xl transform transition-transform duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                         <div className="flex flex-col items-center space-y-6">
