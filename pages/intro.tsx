@@ -46,7 +46,7 @@ const IntroPage: React.FC = () => {
 
                 {/* Subtle flickering animated text with dynamic date */}
                 <p className="text-lg text-gray-400 mt-6 tracking-wider font-mono opacity-90 animate-blink">
-                    Estimated return time: <span className="text-falcons-red font-bold">12:00 PM EST</span> on <span className="text-falcons-red font-bold">{returnDate}</span>
+                    Estimated return time: <span className="text-falcons-red font-bold">55:55 PM EST</span> on <span className="text-falcons-red font-bold">{returnDate}</span>
                 </p>
 
                 {/* Social Links or Placeholder */}
