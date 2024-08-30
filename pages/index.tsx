@@ -194,10 +194,9 @@ const HomePage: React.FC = () => {
                     <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
                         Every Play. Every Bet. Every Victory. Let&apos;s turn passion into power on the field.
                     </p>
-                    <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-semibold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-xl hover:bg-black hover:text-falcons-silver transition duration-300 transform hover:scale-105 hover:shadow-2xl animate-glow">
+                    <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-extrabold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-md border-2 border-falcons-silver transition-transform duration-200 hover:bg-black hover:text-falcons-red hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-falcons-red focus:ring-opacity-75">
                         Join the Action
                     </Link>
-
                     <div className={`w-full max-w-4xl bg-opacity-80 bg-black rounded-3xl p-6 sm:p-8 md:p-16 shadow-2xl transform transition-transform duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                         <div className="flex flex-col items-center space-y-6">
                             {/* Date and Time Display */}
