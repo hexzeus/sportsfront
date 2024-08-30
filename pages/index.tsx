@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
                 yards = Math.floor(Math.random() * 20) - 5;
                 commentary = yards > 0
                     ? `${possession} completes a ${yards > 10 ? 'deep' : 'short'} pass for ${yards} yards.`
-                    : `${possession}&apos;s pass falls incomplete.`;
+                    : `${possession}'s pass falls incomplete.`;
                 break;
             case 'sack':
                 yards = -Math.floor(Math.random() * 10) - 1;
@@ -70,7 +70,7 @@ const HomePage: React.FC = () => {
             case 'special':
                 if (Math.random() < 0.5) {
                     yards = Math.floor(Math.random() * 40) + 10;
-                    commentary = `It&apos;s a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
+                    commentary = `It's a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
                 } else {
                     yards = -Math.floor(Math.random() * 15) - 5;
                     commentary = `${possession} attempts a desperate play but it backfires, losing ${Math.abs(yards)} yards!`;
@@ -94,7 +94,7 @@ const HomePage: React.FC = () => {
                         addCommentary(`${possession} kicks a field goal and scores 3 points!`);
                         possession === 'ATL' ? setHomeScore(prev => prev + 3) : setAwayScore(prev => prev + 3);
                     } else {
-                        addCommentary(`${possession}&apos;s field goal attempt is no good.`);
+                        addCommentary(`${possession}'s field goal attempt is no good.`);
                     }
                 } else {
                     addCommentary(`${possession} punts the ball.`);
