@@ -54,8 +54,7 @@ const HomePage: React.FC = () => {
                 yards = Math.floor(Math.random() * 20) - 5;
                 commentary = yards > 0
                     ? `${possession} completes a ${yards > 10 ? 'deep' : 'short'} pass for ${yards} yards.`
-                    // eslint-disable-next-line react/no-unescaped-entities
-                    : `${possession}'s pass falls incomplete.`;
+                    : `${possession}&apos;s pass falls incomplete.`;
                 break;
             case 'sack':
                 yards = -Math.floor(Math.random() * 10) - 1;
@@ -71,8 +70,7 @@ const HomePage: React.FC = () => {
             case 'special':
                 if (Math.random() < 0.5) {
                     yards = Math.floor(Math.random() * 40) + 10;
-                    // eslint-disable-next-line react/no-unescaped-entities
-                    commentary = `It's a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
+                    commentary = `It&apos;s a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
                 } else {
                     yards = -Math.floor(Math.random() * 15) - 5;
                     commentary = `${possession} attempts a desperate play but it backfires, losing ${Math.abs(yards)} yards!`;
@@ -96,8 +94,7 @@ const HomePage: React.FC = () => {
                         addCommentary(`${possession} kicks a field goal and scores 3 points!`);
                         possession === 'ATL' ? setHomeScore(prev => prev + 3) : setAwayScore(prev => prev + 3);
                     } else {
-                        // eslint-disable-next-line react/no-unescaped-entities
-                        addCommentary(`${possession}'s field goal attempt is no good.`);
+                        addCommentary(`${possession}&apos;s field goal attempt is no good.`);
                     }
                 } else {
                     addCommentary(`${possession} punts the ball.`);
@@ -177,7 +174,7 @@ const HomePage: React.FC = () => {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
     });
 
     const formattedTime = currentTime?.toLocaleTimeString('en-US', {
@@ -190,8 +187,32 @@ const HomePage: React.FC = () => {
         <Layout>
             <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white transition-all duration-1000 opacity-100">
                 <main className="flex-grow flex flex-col items-center justify-center text-center space-y-10 px-6 sm:px-8 md:px-12">
+                    {/* Headline and Call to Action */}
+                    <h1 className="mt-6 text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-falcons-red uppercase leading-tight drop-shadow-lg animate-fadeIn">
+                        Falcons Rise Up
+                    </h1>
+                    <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
+                        Every Play. Every Bet. Every Victory. Let&apos;s turn passion into power on the field.
+                    </p>
+                    <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-semibold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-xl hover:bg-black hover:text-falcons-silver transition duration-300 transform hover:scale-105 hover:shadow-2xl animate-glow">
+                        Join the Action
+                    </Link>
+
                     <div className={`w-full max-w-4xl bg-opacity-80 bg-black rounded-3xl p-6 sm:p-8 md:p-16 shadow-2xl transform transition-transform duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                         <div className="flex flex-col items-center space-y-6">
+                            {/* Date and Time Display */}
+                            <div className="text-center space-y-1">
+                                <div className="text-lg md:text-xl font-bold text-gray-400 animate-glow">
+                                    <Clock className="inline-block w-5 h-5 mr-1 animate-glow" />
+                                    {formattedTime}
+                                </div>
+                                <div className="text-sm md:text-lg font-medium text-gray-500 animate-glow">
+                                    <Calendar className="inline-block w-5 h-5 mr-1 animate-glow" />
+                                    {formattedDate}
+                                </div>
+                            </div>
+
+                            {/* Falcons Logo */}
                             <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-4">
                                 <Image
                                     src="/falcon-logo.png"
@@ -203,6 +224,7 @@ const HomePage: React.FC = () => {
                                 />
                             </div>
 
+                            {/* Scoreboard */}
                             <div className="bg-gray-900 w-full p-4 rounded-lg shadow-lg">
                                 <div className="grid grid-cols-3 gap-4 text-4xl md:text-6xl font-bold">
                                     <div className="text-falcons-red animate-glow">ATL</div>
@@ -218,12 +240,12 @@ const HomePage: React.FC = () => {
                                 {winner && (
                                     <div className="mt-4 text-3xl font-bold flex items-center justify-center animate-fadeIn">
                                         <Trophy className="w-8 h-8 mr-2 text-yellow-400" />
-                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
-                                        {winner === "TIE" ? "It's a Tie!" : `${winner} Wins!`}
+                                        {winner === "TIE" ? "It&apos;s a Tie!" : `${winner} Wins!`}
                                     </div>
                                 )}
                             </div>
 
+                            {/* Live Commentary */}
                             <div className="bg-gray-800 w-full p-4 rounded-lg shadow-lg">
                                 <div className="flex items-center justify-center mb-2 animate-fadeIn">
                                     <Radio className="w-6 h-6 mr-2 text-falcons-red animate-pulse" />
@@ -235,31 +257,8 @@ const HomePage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-
-                            <div className="flex justify-between w-full text-lg md:text-xl">
-                                <div className="flex items-center">
-                                    <Calendar className="w-6 h-6 mr-2 animate-glow" />
-                                    {formattedDate}
-                                </div>
-                                <div className="flex items-center">
-                                    <Clock className="w-6 h-6 mr-2 animate-glow" />
-                                    {formattedTime}
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-falcons-red uppercase leading-tight drop-shadow-lg animate-fadeIn">
-                        Falcons Rise Up
-                    </h1>
-                    <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
-                        {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        Every Play. Every Bet. Every Victory. Let's turn passion into power on the field.
-                    </p>
-
-                    <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-semibold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-xl hover:bg-black hover:text-falcons-silver transition duration-300 transform hover:scale-105 hover:shadow-2xl animate-glow">
-                        Join the Action
-                    </Link>
                 </main>
 
                 <footer className="w-full text-center py-10 sm:py-12 bg-black bg-opacity-50">
@@ -271,8 +270,7 @@ const HomePage: React.FC = () => {
 
                 <div className="absolute inset-0 z-[-1] overflow-hidden">
                     <div className="absolute top-1/3 left-1/4 w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 bg-gradient-to-r from-falcons-red to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-                    <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-gradient-to-r from-falcons-red to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-                    <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-40"></div>
+                    <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-40"></div>
                 </div>
             </div>
         </Layout>
