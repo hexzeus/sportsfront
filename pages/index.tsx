@@ -54,7 +54,8 @@ const HomePage: React.FC = () => {
                 yards = Math.floor(Math.random() * 20) - 5;
                 commentary = yards > 0
                     ? `${possession} completes a ${yards > 10 ? 'deep' : 'short'} pass for ${yards} yards.`
-                    : `${possession}&apos;s pass falls incomplete.`;
+                    // eslint-disable-next-line react/no-unescaped-entities
+                    : `${possession}'s pass falls incomplete.`;
                 break;
             case 'sack':
                 yards = -Math.floor(Math.random() * 10) - 1;
@@ -70,7 +71,8 @@ const HomePage: React.FC = () => {
             case 'special':
                 if (Math.random() < 0.5) {
                     yards = Math.floor(Math.random() * 40) + 10;
-                    commentary = `It&apos;s a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
+                    // eslint-disable-next-line react/no-unescaped-entities
+                    commentary = `It's a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
                 } else {
                     yards = -Math.floor(Math.random() * 15) - 5;
                     commentary = `${possession} attempts a desperate play but it backfires, losing ${Math.abs(yards)} yards!`;
@@ -94,7 +96,8 @@ const HomePage: React.FC = () => {
                         addCommentary(`${possession} kicks a field goal and scores 3 points!`);
                         possession === 'ATL' ? setHomeScore(prev => prev + 3) : setAwayScore(prev => prev + 3);
                     } else {
-                        addCommentary(`${possession}&apos;s field goal attempt is no good.`);
+                        // eslint-disable-next-line react/no-unescaped-entities
+                        addCommentary(`${possession}'s field goal attempt is no good.`);
                     }
                 } else {
                     addCommentary(`${possession} punts the ball.`);
@@ -215,7 +218,8 @@ const HomePage: React.FC = () => {
                                 {winner && (
                                     <div className="mt-4 text-3xl font-bold flex items-center justify-center animate-fadeIn">
                                         <Trophy className="w-8 h-8 mr-2 text-yellow-400" />
-                                        {winner === "TIE" ? "It&apos;s a Tie!" : `${winner} Wins!`}
+                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                                        {winner === "TIE" ? "It's a Tie!" : `${winner} Wins!`}
                                     </div>
                                 )}
                             </div>
@@ -249,7 +253,8 @@ const HomePage: React.FC = () => {
                         Falcons Rise Up
                     </h1>
                     <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
-                        Every Play. Every Bet. Every Victory. Let&apos;s turn passion into power on the field.
+                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                        Every Play. Every Bet. Every Victory. Let's turn passion into power on the field.
                     </p>
 
                     <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-semibold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-xl hover:bg-black hover:text-falcons-silver transition duration-300 transform hover:scale-105 hover:shadow-2xl animate-glow">
@@ -266,6 +271,7 @@ const HomePage: React.FC = () => {
 
                 <div className="absolute inset-0 z-[-1] overflow-hidden">
                     <div className="absolute top-1/3 left-1/4 w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 bg-gradient-to-r from-falcons-red to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+                    <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-gradient-to-r from-falcons-red to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
                     <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-40"></div>
                 </div>
             </div>
