@@ -1,17 +1,23 @@
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
+import Layout from '../components/layout';
 import Image from 'next/image';
+import Link from 'next/link';
 
-// Redirect users to the intro page on page load
-export const getServerSideProps: GetServerSideProps = async () => {
-    return {
-        redirect: {
-            destination: '/intro', // Redirect to the intro page
-            permanent: false, // Temporary redirect
-        },
-    };
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    const hasVisitedIntro = req.cookies.visitedIntro;
+
+    // Redirect to /intro if the user hasn't visited the intro page yet
+    if (!hasVisitedIntro) {
+        return {
+            redirect: {
+                destination: '/intro',
+                permanent: false,
+            },
+        };
+    }
+
+    return { props: {} };
 };
 
 const HomePage: React.FC = () => {
