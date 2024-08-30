@@ -30,7 +30,6 @@ const HomePage: React.FC = () => {
     const [gameStatus, setGameStatus] = useState("Not Started");
     const [possession, setPossession] = useState(Math.random() < 0.5 ? "ATL" : "OPP");
     const [winner, setWinner] = useState<string | null>(null);
-    const [driveTimeLeft, setDriveTimeLeft] = useState(Math.floor(Math.random() * 60) + 30);
     const [commentary, setCommentary] = useState<string[]>([]);
     const [down, setDown] = useState(1);
     const [yardsToGo, setYardsToGo] = useState(10);
@@ -70,11 +69,11 @@ const HomePage: React.FC = () => {
                 break;
             case 'special':
                 if (Math.random() < 0.5) {
-                    commentary = `It&apos;s a trick play! ${possession} surprises the defense and gains a big ${Math.floor(Math.random() * 40) + 10} yards!`;
                     yards = Math.floor(Math.random() * 40) + 10;
+                    commentary = `It&apos;s a trick play! ${possession} surprises the defense and gains a big ${yards} yards!`;
                 } else {
-                    commentary = `${possession} attempts a desperate play but it backfires, losing ${Math.floor(Math.random() * 15) + 5} yards!`;
                     yards = -Math.floor(Math.random() * 15) - 5;
+                    commentary = `${possession} attempts a desperate play but it backfires, losing ${Math.abs(yards)} yards!`;
                 }
                 break;
         }
@@ -171,22 +170,18 @@ const HomePage: React.FC = () => {
         return () => clearInterval(gameTimer);
     }, [gameStatus, quarter, generatePlay, addCommentary, determineWinner]);
 
-    const formattedDate = currentTime
-        ? currentTime.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
-        : null;
+    const formattedDate = currentTime?.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 
-    const formattedTime = currentTime
-        ? currentTime.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        })
-        : null;
+    const formattedTime = currentTime?.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
 
     return (
         <Layout>
