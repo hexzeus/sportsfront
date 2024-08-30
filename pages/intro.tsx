@@ -25,31 +25,35 @@ const IntroPage: React.FC = () => {
                 <div className="absolute w-96 h-96 rounded-full bg-red-600 opacity-20 blur-3xl animate-slow-pulse"></div>
                 <div className="absolute w-72 h-72 bg-gradient-to-r from-yellow-500 to-red-600 opacity-30 rounded-full blur-2xl animate-spin-slow"></div>
                 <div className="absolute bottom-10 right-10 w-64 h-64 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+
+                {/* Additional Layers for Depth */}
+                <div className="absolute w-80 h-80 bg-gradient-to-r from-yellow-500 to-red-600 opacity-50 rounded-full blur-2xl animate-spin-reverse"></div>
+                <div className="absolute w-96 h-96 bg-gradient-to-r from-red-600 to-yellow-400 opacity-20 rounded-full blur-3xl animate-slow-pulse-reverse"></div>
             </div>
 
-            <div className="relative z-10 text-center space-y-6">
+            <div className="relative z-10 text-center space-y-6 transform transition-all duration-1000 ease-out">
                 <Image
                     src="/file.png"
                     alt="Lock and Hammer Picks Logo"
-                    width={150}
-                    height={150}
+                    width={200}
+                    height={200}
                     className="animate-pulse drop-shadow-2xl"
                 />
-                <h1 className="text-6xl md:text-8xl font-extrabold text-red-600 mt-4 animate-glow uppercase tracking-widest drop-shadow-xl">
+                <h1 className="text-7xl md:text-9xl font-extrabold text-red-600 mt-4 animate-glow uppercase tracking-widest drop-shadow-xl">
                     Lock and Hammer Picks
                 </h1>
-                <p className="text-xl md:text-3xl text-gray-300 font-semibold tracking-wide leading-relaxed">
+                <p className="text-2xl md:text-4xl text-gray-300 font-semibold tracking-wide leading-relaxed">
                     Every Play. Every Bet. Every Victory. Let’s turn passion into power.
                 </p>
 
-                <p className="text-lg text-gray-400 mt-6 tracking-wider font-mono opacity-90 animate-blink">
+                <p className="text-lg md:text-2xl text-gray-400 mt-8 tracking-wider font-mono opacity-90 animate-blink">
                     Loading...
                 </p>
             </div>
 
             <div className="absolute inset-0 z-[-1] overflow-hidden">
-                <div className="absolute top-1/3 left-1/4 w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 bg-gradient-to-r from-red-600 to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-                <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-40"></div>
+                <div className="absolute top-1/3 left-1/4 w-44 h-44 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-gradient-to-r from-red-600 to-yellow-400 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-48 h-48 sm:w-60 sm:h-60 md:w-80 md:h-80 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-50 animate-spin"></div>
             </div>
         </div>
     );

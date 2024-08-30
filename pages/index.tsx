@@ -214,7 +214,7 @@ const HomePage: React.FC = () => {
                             {/* Lock and Hammer Picks Logo */}
                             <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-4">
                                 <Image
-                                    src="/file.png" // Update with the correct path to your logo
+                                    src="/falcon-logo.png" // Update with the correct path to your logo
                                     alt="Lock and Hammer Picks Logo"
                                     width={128}
                                     height={128}
