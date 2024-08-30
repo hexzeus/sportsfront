@@ -178,7 +178,7 @@ export default function BetsPage() {
 
                     <div className="mt-12 text-center">
                         <Link href="/">
-                            <span className="inline-block bg-falcons-red text-white text-lg md:text-xl font-semibold py-4 px-8 md:px-12 rounded-full shadow-lg hover:bg-red-700 hover:text-yellow-300 transform hover:scale-110 transition-all animate-float">
+                            <span className="inline-block bg-gradient-to-r from-falcons-red to-falcons-silver text-white text-lg md:text-xl font-semibold py-4 px-8 md:px-12 rounded-full shadow-xl hover:bg-gradient-to-r hover:from-red-700 hover:to-gray-500 hover:text-yellow-300 transform hover:scale-110 transition-transform duration-300 ease-in-out border-2 border-falcons-red animate-float">
                                 Back to Home
                             </span>
                         </Link>
