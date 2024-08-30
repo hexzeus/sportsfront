@@ -189,7 +189,7 @@ const HomePage: React.FC = () => {
                 <main className="flex-grow flex flex-col items-center justify-center text-center space-y-10 px-6 sm:px-8 md:px-12">
                     {/* Headline and Call to Action */}
                     <h1 className="mt-6 text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-falcons-red uppercase leading-tight drop-shadow-lg animate-fadeIn">
-                        Falcons Rise Up
+                        Lock and Hammer Picks
                     </h1>
                     <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
                         Every Play. Every Bet. Every Victory. Let&apos;s turn passion into power on the field.
@@ -211,11 +211,11 @@ const HomePage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Falcons Logo */}
+                            {/* Lock and Hammer Picks Logo */}
                             <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-4">
                                 <Image
-                                    src="/falcon-logo.png"
-                                    alt="Atlanta Falcons Logo"
+                                    src="/file.png" // Update with the correct path to your logo
+                                    alt="Lock and Hammer Picks Logo"
                                     width={128}
                                     height={128}
                                     priority

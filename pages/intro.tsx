@@ -29,8 +29,8 @@ const IntroPage: React.FC = () => {
 
             <div className="relative z-10 text-center space-y-6">
                 <Image
-                    src="/falcon-logo.png"
-                    alt="Atlanta Falcons Logo"
+                    src="/file.png"
+                    alt="Lock and Hammer Picks Logo"
                     width={150}
                     height={150}
                     className="animate-pulse drop-shadow-2xl"

@@ -50,8 +50,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="flex items-center space-x-3 md:space-x-5">
                         <div className="w-10 md:w-14 h-10 md:h-14 relative">
                             <Image
-                                src="/falcon-logo.png"
-                                alt="Falcons Logo"
+                                src="/file.png"
+                                alt="Lock and Hammer Picks Logo"
                                 width={56} // Adjusted width
                                 height={56} // Adjusted height
                                 priority
@@ -59,7 +59,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         </div>
                         <div className="text-2xl md:text-4xl font-extrabold text-falcons-red tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-110">
                             <Link href="/" passHref>
-                                <span className="cursor-pointer hover:text-falcons-silver" onClick={closeMobileMenu}>Fred&apos;s Sports</span>
+                                <span className="cursor-pointer hover:text-falcons-silver" onClick={closeMobileMenu}>Lock and Hammer Picks</span>
                             </Link>
                         </div>
                     </div>
