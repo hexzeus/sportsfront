@@ -175,9 +175,9 @@ export default function BetsPage() {
                     <div className="mt-12 sm:mt-16 md:mt-20 text-center">
                         <Link href="/">
                             <motion.span
-                                className="inline-block bg-gradient-to-r from-blue-700 to-blue-900 text-white text-xl font-bold py-4 px-8 rounded-lg shadow-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                className="inline-block bg-gradient-to-r from-blue-800 to-gray-900 text-white text-lg sm:text-xl font-extrabold uppercase py-4 px-10 rounded-full shadow-2xl hover:bg-gradient-to-r hover:from-blue-700 hover:to-gray-800 transition-all duration-300 ease-out transform-gpu"
+                                whileHover={{ scale: 1.1, rotate: 2 }}
+                                whileTap={{ scale: 0.95, rotate: -2 }}
                             >
                                 Back to Home
                             </motion.span>

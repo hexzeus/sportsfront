@@ -271,13 +271,19 @@ const HomePage: React.FC = () => {
                     <p className="text-lg sm:text-xl md:text-2xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
                         Dominate Every Play. Crush Every Bet. Forge Your Victory.
                     </p>
-                    <Link href="/bets" className="group relative inline-flex items-center justify-center px-8 py-3 sm:px-10 sm:py-4 overflow-hidden text-lg sm:text-xl font-semibold text-white transition-all duration-300 ease-out bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    <Link
+                        href="/bets"
+                        className="group relative inline-flex items-center justify-center px-8 py-4 sm:px-12 sm:py-6 overflow-hidden text-lg sm:text-2xl font-bold text-white uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-blue-700 via-black to-gray-900 rounded-full shadow-lg hover:from-blue-800 hover:to-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50"
+                    >
                         <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
-                        <span className="relative z-10 flex items-center">
-                            Analyze Our Picks
-                            <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
+                        <span className="absolute inset-0 w-full h-full bg-blue-800 bg-opacity-20 blur-lg rounded-full"></span>
+                        <span className="relative z-10 flex items-center space-x-3">
+                            <span className="text-xl sm:text-2xl">🏈</span>
+                            <span className="font-bold tracking-widest">Analyze Our Picks</span>
+                            <ArrowRight className="w-6 h-6 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                         </span>
                     </Link>
+
 
                     <div className={`w-full max-w-4xl bg-black bg-opacity-80 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl transform transition-all duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                         <div className="flex flex-col items-center space-y-6">
