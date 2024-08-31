@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { Lock, Hammer } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [animated, setAnimated] = useState(false);
@@ -40,24 +41,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <Image
                                 src="/file.png"
                                 alt="Lock and Hammer Picks Logo"
-                                layout="fill"
-                                objectFit="contain"
+                                fill
+                                sizes="(max-width: 768px) 32px, 40px"
+                                style={{ objectFit: 'contain' }}
                                 priority
                             />
                         </div>
-                        <div className="text-xl md:text-2xl font-extrabold text-blue-500 tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
-                            <Link href="/" passHref>
-                                <span className="cursor-pointer hover:text-blue-400" onClick={closeMobileMenu}>L&H Picks</span>
+                        <div className="flex items-center text-sm md:text-xl font-extrabold text-blue-500 tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
+                            <Link href="/" className="cursor-pointer hover:text-blue-400 flex items-center" onClick={closeMobileMenu}>
+                                <Lock className="w-4 h-4 md:w-6 md:h-6 mr-1" />
+                                <span className="mr-1">&</span>
+                                <Hammer className="w-4 h-4 md:w-6 md:h-6 mr-1" />
+                                <span>Picks</span>
                             </Link>
                         </div>
                     </div>
 
                     <nav className="hidden md:flex space-x-6 items-center">
                         {['Home', 'Bets', 'Scores'].map((page) => (
-                            <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
-                                <span className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                    {page}
-                                </span>
+                            <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
+                                {page}
                             </Link>
                         ))}
                     </nav>
@@ -70,12 +73,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {isMobileMenuOpen && (
                     <nav className="md:hidden bg-black bg-opacity-95 absolute top-14 left-0 w-full z-30 py-4 shadow-lg">
                         <ul className="flex flex-col items-center space-y-4">
-                            {['Home', 'Bets', 'Scores'].map((page) => (
+                            {['Home', 'Picks', 'Scores'].map((page) => (
                                 <li key={page}>
-                                    <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
-                                        <span className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400" onClick={closeMobileMenu}>
-                                            {page}
-                                        </span>
+                                    <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400" onClick={closeMobileMenu}>
+                                        {page}
                                     </Link>
                                 </li>
                             ))}

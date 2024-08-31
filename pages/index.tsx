@@ -302,8 +302,9 @@ const HomePage: React.FC = () => {
                                     <Image
                                         src="/file.png"
                                         alt="Lock and Hammer Picks Logo"
-                                        layout="fill"
-                                        objectFit="contain"
+                                        fill
+                                        sizes="(max-width: 768px) 64px, (max-width: 1024px) 80px, 96px"
+                                        style={{ objectFit: 'contain' }}
                                         priority
                                         className="drop-shadow-xl animate-pulse"
                                     />
