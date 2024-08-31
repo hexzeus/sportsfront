@@ -30,9 +30,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 text-white flex flex-col relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white flex flex-col relative overflow-hidden">
             <header
-                className={`bg-gradient-to-r from-black via-gray-900 to-red-900 bg-opacity-95 py-3 md:py-4 fixed top-0 w-full z-40 shadow-xl backdrop-filter backdrop-blur-lg border-b border-red-800 transition-transform duration-300 ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'}`}
+                className={`bg-gradient-to-r from-black via-gray-900 to-blue-900 bg-opacity-95 py-3 md:py-4 fixed top-0 w-full z-40 shadow-xl backdrop-filter backdrop-blur-lg border-b border-blue-800 transition-transform duration-300 ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'}`}
             >
                 <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
                     <div className="flex items-center space-x-2 md:space-x-3">
@@ -45,9 +45,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 priority
                             />
                         </div>
-                        <div className="text-xl md:text-2xl font-extrabold text-red-600 tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
+                        <div className="text-xl md:text-2xl font-extrabold text-blue-500 tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
                             <Link href="/" passHref>
-                                <span className="cursor-pointer hover:text-red-400" onClick={closeMobileMenu}>L&H Picks</span>
+                                <span className="cursor-pointer hover:text-blue-400" onClick={closeMobileMenu}>L&H Picks</span>
                             </Link>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <nav className="hidden md:flex space-x-6 items-center">
                         {['Home', 'Bets', 'Scores'].map((page) => (
                             <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
-                                <span className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-red-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-red-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
+                                <span className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
                                     {page}
                                 </span>
                             </Link>
@@ -73,7 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             {['Home', 'Bets', 'Scores'].map((page) => (
                                 <li key={page}>
                                     <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} passHref>
-                                        <span className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-red-400" onClick={closeMobileMenu}>
+                                        <span className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400" onClick={closeMobileMenu}>
                                             {page}
                                         </span>
                                     </Link>
@@ -89,7 +89,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </main>
 
             <div className="absolute top-0 left-0 w-full h-full z-[-1] opacity-30">
-                <div className="absolute top-1/4 left-1/3 w-40 md:w-64 h-40 md:h-64 bg-gradient-to-r from-red-800 to-red-600 rounded-full mix-blend-overlay blur-3xl animate-pulse-slow"></div>
+                <div className="absolute top-1/4 left-1/3 w-40 md:w-64 h-40 md:h-64 bg-gradient-to-r from-blue-800 to-blue-600 rounded-full mix-blend-overlay blur-3xl animate-pulse-slow"></div>
                 <div className="absolute bottom-1/4 right-1/3 w-48 md:w-80 h-48 md:h-80 bg-gradient-to-r from-gray-800 to-black rounded-full mix-blend-overlay blur-3xl animate-pulse-fast"></div>
             </div>
         </div>

@@ -58,23 +58,23 @@ export default function BetsPage() {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 p-4 sm:p-6 md:p-8 overflow-hidden">
+            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 p-4 sm:p-6 md:p-8 overflow-hidden">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className="container mx-auto"
                 >
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-gray-300 to-red-600 uppercase mb-8 sm:mb-12 md:mb-16 drop-shadow-2xl">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-gray-300 to-blue-500 uppercase mb-8 sm:mb-12 md:mb-16 drop-shadow-2xl">
                         Active Picks
                     </h1>
 
                     {loading && (
                         <div className="flex justify-center items-center h-64">
-                            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-600"></div>
+                            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
                         </div>
                     )}
-                    {error && <p className="text-red-500 text-center mb-6 text-xl">{error}</p>}
+                    {error && <p className="text-blue-400 text-center mb-6 text-xl">{error}</p>}
                     {!loading && bets.length === 0 && !error && (
                         <p className="text-center text-gray-400 text-2xl">No active bets. Time to make your power play!</p>
                     )}
@@ -84,7 +84,7 @@ export default function BetsPage() {
                             <motion.div
                                 key={bet.id}
                                 id={`bet-${bet.id}`}
-                                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-red-900/50"
+                                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-blue-900/50"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -110,7 +110,7 @@ export default function BetsPage() {
                                     ) : (
                                         <div>
                                             <div className="text-center mb-4">
-                                                <p className="text-3xl sm:text-4xl font-extrabold text-red-500 mb-2 uppercase">
+                                                <p className="text-3xl sm:text-4xl font-extrabold text-blue-500 mb-2 uppercase">
                                                     {bet.team}
                                                 </p>
                                                 <p className="text-xl text-gray-300">vs {bet.opponent}</p>
@@ -120,7 +120,7 @@ export default function BetsPage() {
                                             </div>
                                             <div className="space-y-3 text-lg">
                                                 <p className="text-white flex items-center justify-between">
-                                                    <span className="font-semibold flex items-center"><FaDollarSign className="mr-2 text-red-500" /> Bet Amount:</span>
+                                                    <span className="font-semibold flex items-center"><FaDollarSign className="mr-2 text-blue-500" /> Bet Amount:</span>
                                                     <span className="text-green-400">${Number(bet.amount).toFixed(2)}</span>
                                                 </p>
                                                 <p className="text-white flex items-center justify-between">
@@ -175,7 +175,7 @@ export default function BetsPage() {
                     <div className="mt-12 sm:mt-16 md:mt-20 text-center">
                         <Link href="/">
                             <motion.span
-                                className="inline-block bg-gradient-to-r from-red-700 to-red-900 text-white text-xl font-bold py-4 px-8 rounded-lg shadow-xl hover:from-red-600 hover:to-red-800 transition-all duration-300"
+                                className="inline-block bg-gradient-to-r from-blue-700 to-blue-900 text-white text-xl font-bold py-4 px-8 rounded-lg shadow-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
