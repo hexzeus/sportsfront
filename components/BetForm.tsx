@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bet } from '../lib/types';
+import { FaDollarSign, FaChartLine, FaCalendarAlt, FaClipboardList, FaTrophy } from 'react-icons/fa';
 
 interface BetFormProps {
     onSubmit: (bet: Omit<Bet, 'id'>, token: string) => Promise<void>;

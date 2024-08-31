@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import Layout from '../components/layout';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AlertCircle, Clock, Calendar, Trophy, Radio } from 'lucide-react';
+import { AlertCircle, Clock, Calendar, Trophy, Radio, ArrowRight } from 'lucide-react';
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const hasVisitedIntro = req.cookies.visitedIntro;
@@ -185,74 +185,75 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-black via-falcons-black to-falcons-red text-white transition-all duration-1000 opacity-100">
-                <main className="flex-grow flex flex-col items-center justify-center text-center space-y-10 px-6 sm:px-8 md:px-12">
-                    {/* Headline and Call to Action */}
-                    <h1 className="mt-6 text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-falcons-red uppercase leading-tight drop-shadow-lg animate-fadeIn">
+            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-gray-900 via-black to-red-900 text-white transition-all duration-1000 opacity-100">
+                <main className="flex-grow flex flex-col items-center justify-center text-center space-y-8 px-4 sm:px-6 md:px-8 py-8">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-gray-300 to-red-600 uppercase leading-tight drop-shadow-lg animate-pulse">
                         Lock and Hammer Picks
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-3xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
-                        Every Play. Every Bet. Every Victory. Let&apos;s turn passion into power on the field.
+                    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
+                        Dominate Every Play. Crush Every Bet. Forge Your Victory.
                     </p>
-                    <Link href="/bets" className="inline-block bg-falcons-red text-white text-lg sm:text-xl md:text-2xl font-extrabold py-3 sm:py-4 px-8 sm:px-10 rounded-full shadow-md border-2 border-falcons-silver transition-transform duration-200 hover:bg-black hover:text-falcons-red hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-falcons-red focus:ring-opacity-75">
-                        Join the Action
+                    <Link href="/bets" className="group relative inline-flex items-center justify-center px-8 py-3 sm:px-10 sm:py-4 overflow-hidden text-lg sm:text-xl font-semibold text-white transition-all duration-300 ease-out bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-md hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
+                        <span className="relative z-10 flex items-center">
+                            Analyze Our Picks
+                            <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
+                        </span>
                     </Link>
-                    <div className={`w-full max-w-4xl bg-opacity-80 bg-black rounded-3xl p-6 sm:p-8 md:p-16 shadow-2xl transform transition-transform duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+
+                    <div className={`w-full max-w-4xl bg-black bg-opacity-80 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl transform transition-all duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                         <div className="flex flex-col items-center space-y-6">
-                            {/* Date and Time Display */}
-                            <div className="text-center space-y-1">
-                                <div className="text-lg md:text-xl font-bold text-gray-400 animate-glow">
-                                    <Clock className="inline-block w-5 h-5 mr-1 animate-glow" />
-                                    {formattedTime}
+                            <div className="flex justify-between items-center w-full">
+                                <div className="text-center">
+                                    <div className="text-base sm:text-lg md:text-xl font-bold text-red-500 animate-pulse">
+                                        <Clock className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+                                        {formattedTime}
+                                    </div>
+                                    <div className="text-sm sm:text-base md:text-lg font-medium text-gray-400">
+                                        <Calendar className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+                                        {formattedDate}
+                                    </div>
                                 </div>
-                                <div className="text-sm md:text-lg font-medium text-gray-500 animate-glow">
-                                    <Calendar className="inline-block w-5 h-5 mr-1 animate-glow" />
-                                    {formattedDate}
+                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24">
+                                    <Image
+                                        src="/file.png"
+                                        alt="Lock and Hammer Picks Logo"
+                                        layout="fill"
+                                        objectFit="contain"
+                                        priority
+                                        className="drop-shadow-xl animate-pulse"
+                                    />
                                 </div>
                             </div>
 
-                            {/* Lock and Hammer Picks Logo */}
-                            <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-4">
-                                <Image
-                                    src="/falcon-logo.png" // Update with the correct path to your logo
-                                    alt="Lock and Hammer Picks Logo"
-                                    width={128}
-                                    height={128}
-                                    priority
-                                    className="drop-shadow-xl animate-pulse"
-                                />
-                            </div>
-
-                            {/* Scoreboard */}
-                            <div className="bg-gray-900 w-full p-4 rounded-lg shadow-lg">
-                                <div className="grid grid-cols-3 gap-4 text-4xl md:text-6xl font-bold">
-                                    <div className="text-falcons-red animate-glow">ATL</div>
+                            <div className="bg-gradient-to-r from-gray-800 to-gray-900 w-full p-4 rounded-xl shadow-lg border border-red-800">
+                                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-2xl sm:text-3xl md:text-4xl font-bold">
+                                    <div className="text-red-500 animate-pulse">HOME</div>
                                     <div className="text-white">{timeLeft}</div>
-                                    <div className="text-falcons-silver animate-glow">OPP</div>
-                                    <div className="text-falcons-red">{homeScore}</div>
-                                    <div className="text-yellow-400">Q{quarter}</div>
-                                    <div className="text-falcons-silver">{awayScore}</div>
+                                    <div className="text-gray-300 animate-pulse">AWAY</div>
+                                    <div className="text-red-500">{homeScore}</div>
+                                    <div className="text-yellow-500 text-xl sm:text-2xl md:text-3xl">Q{quarter}</div>
+                                    <div className="text-gray-300">{awayScore}</div>
                                 </div>
-                                <div className="mt-4 text-2xl font-semibold">
+                                <div className="mt-2 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold text-gray-300">
                                     {gameStatus === "In Progress" ? `${possession} ball • ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo}` : gameStatus}
                                 </div>
                                 {winner && (
-                                    <div className="mt-4 text-3xl font-bold flex items-center justify-center animate-fadeIn">
-                                        <Trophy className="w-8 h-8 mr-2 text-yellow-400" />
-                                        {winner === "TIE" ? "It&apos;s a Tie!" : `${winner} Wins!`}
+                                    <div className="mt-4 text-xl sm:text-2xl md:text-3xl font-bold flex items-center justify-center animate-bounce">
+                                        <Trophy className="w-6 h-6 sm:w-8 sm:h-8 mr-2 text-yellow-500" />
+                                        {winner === "TIE" ? "It's a Tie!" : `${winner} Triumphs!`}
                                     </div>
                                 )}
                             </div>
 
-                            {/* Live Commentary */}
-                            <div className="bg-gray-800 w-full p-4 rounded-lg shadow-lg">
-                                <div className="flex items-center justify-center mb-2 animate-fadeIn">
-                                    <Radio className="w-6 h-6 mr-2 text-falcons-red animate-pulse" />
-                                    <span className="text-xl font-bold">Live Commentary</span>
+                            <div className="bg-gradient-to-r from-gray-900 to-red-900 w-full p-4 rounded-xl shadow-lg border border-red-800">
+                                <div className="flex items-center justify-center mb-2 animate-pulse">
+                                    <Radio className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-red-500" />
+                                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300">Live Commentary</span>
                                 </div>
-                                <div className="space-y-2 h-48 overflow-y-auto">
+                                <div className="space-y-2 h-32 sm:h-40 md:h-48 overflow-y-auto text-sm sm:text-base md:text-lg">
                                     {commentary.map((comment, index) => (
-                                        <p key={index} className="text-sm md:text-base animate-glow">{comment}</p>
+                                        <p key={index} className="animate-fadeIn">{comment}</p>
                                     ))}
                                 </div>
                             </div>
@@ -260,16 +261,16 @@ const HomePage: React.FC = () => {
                     </div>
                 </main>
 
-                <footer className="w-full text-center py-10 sm:py-12 bg-black bg-opacity-50">
-                    <Link href="/disclaimer" className="flex items-center justify-center text-sm sm:text-base text-gray-400 hover:text-gray-200 transition duration-300 animate-glow">
-                        <AlertCircle className="w-4 h-4 mr-2" />
-                        Disclaimer
+                <footer className="w-full text-center py-4 sm:py-6 bg-black bg-opacity-70">
+                    <Link href="/disclaimer" className="flex items-center justify-center text-sm sm:text-base text-gray-400 hover:text-red-400 transition duration-300 animate-pulse">
+                        <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                        Betting Disclaimer
                     </Link>
                 </footer>
 
-                <div className="absolute inset-0 z-[-1] overflow-hidden">
-                    <div className="absolute top-1/3 left-1/4 w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 bg-gradient-to-r from-falcons-red to-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-                    <div className="absolute bottom-1/3 right-1/4 w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-gradient-to-r from-gray-800 to-black rounded-full blur-3xl opacity-40"></div>
+                <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+                    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-gradient-to-r from-red-900 to-gray-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-gray-800 to-red-900 rounded-full blur-3xl opacity-20 animate-spin-slow"></div>
                 </div>
             </div>
         </Layout>

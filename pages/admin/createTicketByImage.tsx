@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Image from 'next/image'; // Import the Next.js Image component
+import { motion } from 'framer-motion';
+import { FaUpload, FaArrowLeft } from 'react-icons/fa';
 
 export default function CreateTicketByImage() {
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -143,63 +145,100 @@ export default function CreateTicketByImage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-black to-falcons-red text-white">
-            <div className="container mx-auto p-6">
-                <h1 className="text-4xl font-extrabold text-center text-falcons-red mb-8">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+                <motion.h1
+                    className="text-4xl sm:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700 mb-12"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
                     {isUpdateMode ? 'Update Ticket by Image' : 'Create Ticket by Image'}
-                </h1>
+                </motion.h1>
 
-                {error && <p className="text-red-500 text-center">{error}</p>}
-                {success && <p className="text-green-500 text-center">{success}</p>}
+                {error && <p className="text-red-500 text-center mb-4 font-semibold">{error}</p>}
+                {success && <p className="text-green-500 text-center mb-4 font-semibold">{success}</p>}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Custom team input */}
-                    <input
-                        type="text"
-                        value={team}
-                        onChange={(e) => setTeam(e.target.value)}
-                        className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
-                        placeholder="Enter custom tag for admin panel"
-                    />
+                <motion.form
+                    onSubmit={handleSubmit}
+                    className="space-y-8"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                    <div className="space-y-4">
+                        <label htmlFor="team" className="block text-lg font-medium text-red-400">Custom Tag for Admin Panel</label>
+                        <input
+                            id="team"
+                            type="text"
+                            value={team}
+                            onChange={(e) => setTeam(e.target.value)}
+                            className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-red-700 focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300"
+                            placeholder="Enter custom tag"
+                        />
+                    </div>
 
-                    {/* Display the uploaded image if present */}
                     {imageUrl && !imageFile && (
-                        <div className="flex justify-center">
+                        <motion.div
+                            className="flex justify-center"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
                             <Image
                                 src={imageUrl}
                                 alt="Ticket Image"
                                 width={500}
                                 height={500}
-                                className="rounded-lg shadow-md"
+                                className="rounded-lg shadow-xl"
                             />
-                        </div>
+                        </motion.div>
                     )}
 
-                    {/* File upload input */}
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
-                        className="block w-full p-4 bg-gray-800 text-white rounded-lg border border-falcons-red"
-                    />
+                    <div className="space-y-4">
+                        <label htmlFor="image-upload" className="block text-lg font-medium text-red-400">Upload Image</label>
+                        <div className="relative">
+                            <input
+                                id="image-upload"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
+                                className="hidden"
+                            />
+                            <label
+                                htmlFor="image-upload"
+                                className="flex items-center justify-center w-full p-4 bg-gray-800 text-white rounded-lg border border-red-700 cursor-pointer hover:bg-gray-700 transition duration-300"
+                            >
+                                <FaUpload className="mr-2" />
+                                {imageFile ? imageFile.name : 'Choose an image file'}
+                            </label>
+                        </div>
+                    </div>
 
-                    <button
+                    <motion.button
                         type="submit"
-                        className="block w-full py-4 bg-falcons-red text-white rounded-lg"
+                        className="w-full py-4 bg-gradient-to-r from-red-600 to-red-800 text-white text-lg font-bold rounded-lg shadow-xl hover:from-red-700 hover:to-red-900 transition duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         {isUpdateMode ? 'Update Ticket' : 'Submit Ticket'}
-                    </button>
-                </form>
+                    </motion.button>
+                </motion.form>
 
-                {/* Smooth navigation back to admin panel */}
-                <div className="mt-8 text-center">
+                <motion.div
+                    className="mt-12 text-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                >
                     <button
                         onClick={handleBackToAdmin}
-                        className="inline-block bg-gray-800 text-white py-4 px-8 rounded-full shadow-lg hover:bg-gray-700 hover:scale-105 transform transition-transform duration-300"
+                        className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-gray-700 transition duration-300"
                     >
+                        <FaArrowLeft className="mr-2" />
                         Back to Admin Panel
                     </button>
-                </div>
+                </motion.div>
             </div>
         </div>
     );
