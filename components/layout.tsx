@@ -58,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
 
                     <nav className="hidden md:flex space-x-6 items-center">
-                        {['Home', 'Bets', 'Scores'].map((page) => (
+                        {['Home', 'Bets', 'Scores', 'Admin'].map((page) => (
                             <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
                                 {page}
                             </Link>
@@ -73,7 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {isMobileMenuOpen && (
                     <nav className="md:hidden bg-black bg-opacity-95 absolute top-14 left-0 w-full z-30 py-4 shadow-lg">
                         <ul className="flex flex-col items-center space-y-4">
-                            {['Home', 'Picks', 'Scores'].map((page) => (
+                            {['Home', 'Bets', 'Scores', 'Admin'].map((page) => (
                                 <li key={page}>
                                     <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400" onClick={closeMobileMenu}>
                                         {page}
