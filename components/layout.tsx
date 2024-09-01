@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [scrollPosition]);
 
-    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     const navItems = [
@@ -106,7 +106,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
 
                     {/* Mobile Navigation */}
-                    <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className={`md:hidden transition-max-height duration-500 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`}>
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             {navItems.map((item) => (
                                 <Link

@@ -158,7 +158,6 @@ export default function BetsPage() {
     }
 `}</style>
 
-
                     {/* Filter and Sort Controls */}
                     <motion.div
                         className="flex flex-col sm:flex-row justify-center items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0 sm:space-x-4 relative z-20"
@@ -166,7 +165,7 @@ export default function BetsPage() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
                     >
-                        <div className="bg-zinc-800 p-1 rounded-full flex space-x-2">
+                        <div className="bg-zinc-800 p-1 rounded-full flex space-x-2 z-30">
                             {['all', 'win', 'loss', 'pending'].map((f) => (
                                 <button
                                     key={f}
@@ -182,7 +181,7 @@ export default function BetsPage() {
                         </div>
                         <button
                             onClick={toggleSortOrder}
-                            className="flex items-center space-x-2 px-4 py-2 bg-zinc-800 rounded-full hover:bg-zinc-700 transition-all duration-300"
+                            className="flex items-center space-x-2 px-4 py-2 bg-zinc-800 rounded-full hover:bg-zinc-700 transition-all duration-300 z-30"
                         >
                             <TrendingUp size={18} />
                             <span>{sortOrder === 'asc' ? 'Oldest First' : 'Newest First'}</span>
