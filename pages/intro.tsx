@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { Skull, Flame, Zap, DollarSign, TrendingUp, Award } from 'lucide-react';
 
 const IntroPage = () => {
@@ -49,6 +50,17 @@ const IntroPage = () => {
 
             {/* Main Content */}
             <div className="relative z-10 text-center space-y-6 transform transition-all duration-1000 ease-out px-4 max-w-screen-lg mx-auto">
+                {/* Logo */}
+                <div className="relative mx-auto w-40 h-40 sm:w-52 sm:h-52 mb-8">
+                    <Image
+                        src="/file.png"
+                        alt="Lock and Hammer Picks Logo"
+                        fill
+                        sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-contain drop-shadow-2xl animate-fadeIn"
+                    />
+                </div>
+
                 {/* Title with animated underline */}
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow relative inline-block" style={{ fontFamily: 'Impact, sans-serif' }}>
                     Lock & Hammer
