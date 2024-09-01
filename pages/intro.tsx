@@ -50,14 +50,14 @@ const IntroPage = () => {
 
             {/* Main Content */}
             <div className="relative z-10 text-center space-y-6 transform transition-all duration-1000 ease-out px-4 max-w-screen-lg mx-auto">
-                {/* Logo */}
-                <div className="relative mx-auto w-40 h-40 sm:w-52 sm:h-52 mb-8">
+                {/* Dynamic Logo */}
+                <div className="relative mx-auto w-40 h-40 sm:w-52 sm:h-52 mb-8 animate-pulse-logo">
                     <Image
                         src="/file.png"
                         alt="Lock and Hammer Picks Logo"
                         fill
                         sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-contain drop-shadow-2xl animate-fadeIn"
+                        className="object-contain drop-shadow-2xl"
                     />
                 </div>
 
@@ -138,6 +138,17 @@ const IntroPage = () => {
                     0% { transform: translateY(0px); }
                     50% { transform: translateY(-10px); }
                     100% { transform: translateY(0px); }
+                }
+                @keyframes pulse {
+                    0%, 100% {
+                        transform: scale(1);
+                    }
+                    50% {
+                        transform: scale(1.05);
+                    }
+                }
+                .animate-pulse-logo {
+                    animation: pulse 3s ease-in-out infinite, float 6s ease-in-out infinite;
                 }
             `}</style>
         </div>
