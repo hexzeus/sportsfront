@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { Lock, Hammer } from 'lucide-react';
+import { Skull, Flame, Zap, Menu, X, Home, BarChart2, Award, Settings } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [animated, setAnimated] = useState(false);
@@ -30,68 +29,117 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+    const navItems = [
+        { name: 'Home', href: '/', icon: Home },
+        { name: 'Bets', href: '/bets', icon: BarChart2 },
+        { name: 'Scores', href: '/scores', icon: Award },
+        { name: 'Admin', href: '/admin', icon: Settings },
+    ];
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white flex flex-col relative overflow-hidden">
+        <div className="min-h-screen bg-zinc-900 text-zinc-100 flex flex-col relative overflow-hidden">
+            {/* Badass Background */}
+            <div className="fixed inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-800"></div>
+                <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+                    <filter id="noise">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                        <feColorMatrix type="saturate" values="0" />
+                    </filter>
+                    <rect width="100%" height="100%" filter="url(#noise)" />
+                </svg>
+                <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 via-transparent to-orange-700/20"></div>
+            </div>
+
+            {/* Slick Navbar */}
             <header
-                className={`bg-gradient-to-r from-black via-gray-900 to-blue-900 bg-opacity-95 py-3 md:py-4 fixed top-0 w-full z-40 shadow-xl backdrop-filter backdrop-blur-lg border-b border-blue-800 transition-transform duration-300 ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'}`}
+                className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'
+                    }`}
             >
-                <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
-                    <div className="flex items-center space-x-2 md:space-x-3">
-                        <div className="w-8 md:w-10 h-8 md:h-10 relative">
-                            <Image
-                                src="/file.png"
-                                alt="Lock and Hammer Picks Logo"
-                                fill
-                                sizes="(max-width: 768px) 32px, 40px"
-                                style={{ objectFit: 'contain' }}
-                                priority
-                            />
-                        </div>
-                        <div className="flex items-center text-sm md:text-xl font-extrabold text-blue-500 tracking-tight uppercase leading-tight drop-shadow-lg transition-all duration-300 hover:scale-105">
-                            <Link href="/" className="cursor-pointer hover:text-blue-400 flex items-center" onClick={closeMobileMenu}>
-                                <Lock className="w-4 h-4 md:w-6 md:h-6 mr-1" />
-                                <span className="mr-1">&</span>
-                                <Hammer className="w-4 h-4 md:w-6 md:h-6 mr-1" />
-                                <span>Picks</span>
+                <div className="bg-zinc-900 bg-opacity-80 backdrop-filter backdrop-blur-lg border-b border-zinc-800">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-16">
+                            {/* Logo */}
+                            <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
+                                <div className="w-10 h-10 relative">
+                                    <Image
+                                        src="/file.png"
+                                        alt="Lock and Hammer Picks Logo"
+                                        fill
+                                        sizes="40px"
+                                        style={{ objectFit: 'contain' }}
+                                        priority
+                                    />
+                                </div>
+                                <span className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500" style={{ fontFamily: 'Impact, sans-serif' }}>
+                                    L&H PICKS
+                                </span>
                             </Link>
+
+                            {/* Desktop Navigation */}
+                            <nav className="hidden md:flex space-x-8">
+                                {navItems.map((item) => (
+                                    <Link key={item.name} href={item.href} className="flex items-center space-x-2 text-zinc-300 hover:text-orange-500 transition-colors duration-200 ease-in-out group">
+                                        <item.icon className="w-5 h-5 group-hover:text-yellow-500 transition-colors duration-200 ease-in-out" />
+                                        <span className="font-bold tracking-wide group-hover:tracking-wider transition-all duration-200 ease-in-out">
+                                            {item.name.toUpperCase()}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </nav>
+
+                            {/* Mobile menu button */}
+                            <div className="md:hidden">
+                                <button
+                                    onClick={toggleMobileMenu}
+                                    className="inline-flex items-center justify-center p-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                >
+                                    <span className="sr-only">Open main menu</span>
+                                    {isMobileMenuOpen ? (
+                                        <X className="block h-6 w-6" aria-hidden="true" />
+                                    ) : (
+                                        <Menu className="block h-6 w-6" aria-hidden="true" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <nav className="hidden md:flex space-x-6 items-center">
-                        {['Home', 'Bets', 'Scores', 'Admin'].map((page) => (
-                            <Link key={page} href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="relative text-white uppercase font-bold text-base tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400 before:absolute before:-bottom-1 before:left-0 before:w-full before:h-0.5 before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100">
-                                {page}
-                            </Link>
-                        ))}
-                    </nav>
-
-                    <button className="md:hidden text-2xl text-white" onClick={toggleMobileMenu} aria-label="Toggle Mobile Menu">
-                        {isMobileMenuOpen ? <FiX /> : <FiMenu />}
-                    </button>
-                </div>
-
-                {isMobileMenuOpen && (
-                    <nav className="md:hidden bg-black bg-opacity-95 absolute top-14 left-0 w-full z-30 py-4 shadow-lg">
-                        <ul className="flex flex-col items-center space-y-4">
-                            {['Home', 'Bets', 'Scores', 'Admin'].map((page) => (
-                                <li key={page}>
-                                    <Link href={page === 'Home' ? '/' : `/${page.toLowerCase()}`} className="text-lg text-white uppercase font-bold tracking-wide cursor-pointer transition-all duration-300 hover:text-blue-400" onClick={closeMobileMenu}>
-                                        {page}
-                                    </Link>
-                                </li>
+                    {/* Mobile Navigation */}
+                    <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
+                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                            {navItems.map((item) => (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className="flex items-center space-x-3 text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                                    onClick={closeMobileMenu}
+                                >
+                                    <item.icon className="w-5 h-5 flex-shrink-0" />
+                                    <span>{item.name}</span>
+                                </Link>
                             ))}
-                        </ul>
-                    </nav>
-                )}
+                        </div>
+                    </div>
+                </div>
             </header>
 
-            <main className={`container mx-auto pt-20 md:pt-24 px-4 md:px-6 transform transition-all duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            {/* Main Content */}
+            <main className={`flex-grow pt-16 transition-all duration-1000 ${animated ? 'opacity-100' : 'opacity-0'}`}>
                 {children}
             </main>
 
-            <div className="absolute top-0 left-0 w-full h-full z-[-1] opacity-30">
-                <div className="absolute top-1/4 left-1/3 w-40 md:w-64 h-40 md:h-64 bg-gradient-to-r from-blue-800 to-blue-600 rounded-full mix-blend-overlay blur-3xl animate-pulse-slow"></div>
-                <div className="absolute bottom-1/4 right-1/3 w-48 md:w-80 h-48 md:h-80 bg-gradient-to-r from-gray-800 to-black rounded-full mix-blend-overlay blur-3xl animate-pulse-fast"></div>
+            {/* Dynamic Background Elements */}
+            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-gradient-to-r from-red-900 to-orange-800 rounded-full blur-3xl opacity-20 animate-pulse-slow"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-yellow-900 to-red-800 rounded-full blur-3xl opacity-20 animate-pulse-fast"></div>
+            </div>
+
+            {/* Footer Icons */}
+            <div className="fixed bottom-4 right-4 flex space-x-2">
+                <Skull className="w-6 h-6 text-zinc-500 animate-pulse" />
+                <Flame className="w-6 h-6 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+                <Zap className="w-6 h-6 text-yellow-500 animate-pulse" style={{ animationDelay: '1s' }} />
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import Layout from '../components/layout';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AlertCircle, Clock, Calendar, Trophy, Radio, ArrowRight } from 'lucide-react';
+import { AlertCircle, Clock, Calendar, Trophy, Radio, ArrowRight, Skull, Flame, Zap } from 'lucide-react';
 
 // List of NFL Teams
 const NFL_TEAMS = [
@@ -263,37 +263,67 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white transition-all duration-1000 opacity-100">
-                <main className="flex-grow flex flex-col items-center justify-center text-center space-y-8 px-4 sm:px-6 md:px-8 py-8">
-                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-gray-300 to-blue-500 uppercase leading-tight drop-shadow-lg animate-pulse">
-                        Lock and Hammer Picks
+            <div className="min-h-screen flex flex-col justify-between bg-zinc-900 text-zinc-100 transition-all duration-1000 opacity-100 overflow-hidden">
+                {/* Badass Background */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-800"></div>
+                    <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+                        <filter id="noise">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                            <feColorMatrix type="saturate" values="0" />
+                        </filter>
+                        <rect width="100%" height="100%" filter="url(#noise)" />
+                    </svg>
+                    <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 via-transparent to-orange-700/20"></div>
+                    <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
+                        </pattern>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                    </svg>
+                </div>
+
+                <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-8 px-4 sm:px-6 md:px-8 py-12">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow" style={{ fontFamily: 'Impact, sans-serif' }}>
+                        Lock & Hammer Picks
+                        <span className="block h-1 w-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 mt-2"></span>
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 tracking-wide leading-relaxed max-w-screen-sm md:max-w-screen-md animate-fadeIn">
-                        Dominate Every Play. Crush Every Bet. Forge Your Victory.
+
+                    <p className="text-xl sm:text-2xl md:text-3xl text-zinc-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                        <span className="text-red-500">DOMINATE.</span> <span className="text-orange-500">CRUSH.</span> <span className="text-yellow-500">CONQUER.</span>
                     </p>
+
+                    <div className="flex justify-center space-x-4 mb-6">
+                        {[Skull, Flame, Zap].map((Icon, index) => (
+                            <Icon
+                                key={index}
+                                className="w-12 h-12 sm:w-16 sm:h-16 text-zinc-300 animate-pulse"
+                                style={{ animationDelay: `${index * 150}ms` }}
+                            />
+                        ))}
+                    </div>
+
                     <Link
                         href="/bets"
-                        className="group relative inline-flex items-center justify-center px-8 py-4 sm:px-12 sm:py-6 overflow-hidden text-lg sm:text-2xl font-bold text-white uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-blue-700 via-black to-gray-900 rounded-full shadow-lg hover:from-blue-800 hover:to-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50"
+                        className="group relative inline-flex items-center justify-center px-8 py-4 sm:px-12 sm:py-6 overflow-hidden text-lg sm:text-2xl font-bold text-zinc-900 uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-lg hover:from-red-700 hover:via-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50"
                     >
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
-                        <span className="absolute inset-0 w-full h-full bg-blue-800 bg-opacity-20 blur-lg rounded-full"></span>
+                        <span className="absolute inset-0 w-full h-full bg-zinc-900 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ease-out"></span>
                         <span className="relative z-10 flex items-center space-x-3">
-                            <span className="text-xl sm:text-2xl">🏈</span>
-                            <span className="font-bold tracking-widest">Analyze Our Picks</span>
+                            <Flame className="w-6 h-6" />
+                            <span className="font-bold tracking-widest">Unleash Our Picks</span>
                             <ArrowRight className="w-6 h-6 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                         </span>
                     </Link>
 
-
-                    <div className={`w-full max-w-4xl bg-black bg-opacity-80 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl transform transition-all duration-1000 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+                    <div className="w-full max-w-4xl bg-zinc-900 bg-opacity-80 rounded-2xl p-6 sm:p-8 shadow-2xl border border-zinc-700">
                         <div className="flex flex-col items-center space-y-6">
                             <div className="flex justify-between items-center w-full">
                                 <div className="text-center">
-                                    <div className="text-base sm:text-lg md:text-xl font-bold text-blue-500 animate-pulse">
+                                    <div className="text-base sm:text-lg md:text-xl font-bold text-orange-500 animate-pulse">
                                         <Clock className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
                                         {formattedTime}
                                     </div>
-                                    <div className="text-sm sm:text-base md:text-lg font-medium text-gray-400">
+                                    <div className="text-sm sm:text-base md:text-lg font-medium text-zinc-400">
                                         <Calendar className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
                                         {formattedDate}
                                     </div>
@@ -311,16 +341,16 @@ const HomePage: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-gradient-to-r from-gray-800 to-gray-900 w-full p-4 rounded-xl shadow-lg border border-blue-800">
+                            <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-4 rounded-xl shadow-lg border border-zinc-700">
                                 <div className="grid grid-cols-3 gap-2 sm:gap-4 text-2xl sm:text-3xl md:text-4xl font-bold">
-                                    <div className="text-blue-500 animate-pulse">{homeTeam.abbreviation || "HOME"}</div>
-                                    <div className="text-white">{timeLeft}</div>
-                                    <div className="text-gray-300 animate-pulse">{awayTeam.abbreviation || "AWAY"}</div>
-                                    <div className="text-blue-500">{homeScore}</div>
+                                    <div className="text-red-500 animate-pulse">{homeTeam.abbreviation || "HOME"}</div>
+                                    <div className="text-zinc-100">{timeLeft}</div>
+                                    <div className="text-orange-500 animate-pulse">{awayTeam.abbreviation || "AWAY"}</div>
+                                    <div className="text-red-500">{homeScore}</div>
                                     <div className="text-yellow-500 text-xl sm:text-2xl md:text-3xl">Q{quarter}</div>
-                                    <div className="text-gray-300">{awayScore}</div>
+                                    <div className="text-orange-500">{awayScore}</div>
                                 </div>
-                                <div className="mt-2 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold text-gray-300">
+                                <div className="mt-2 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold text-zinc-300">
                                     {gameStatus === "In Progress" ? `${possession} ball • ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo}` : gameStatus}
                                 </div>
                                 {winner && (
@@ -331,10 +361,10 @@ const HomePage: React.FC = () => {
                                 )}
                             </div>
 
-                            <div className="bg-gradient-to-r from-gray-900 to-blue-900 w-full p-4 rounded-xl shadow-lg border border-blue-800">
+                            <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 w-full p-4 rounded-xl shadow-lg border border-zinc-700">
                                 <div className="flex items-center justify-center mb-2 animate-pulse">
-                                    <Radio className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-blue-500" />
-                                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300">Live Commentary</span>
+                                    <Radio className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-orange-500" />
+                                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-300">Live Commentary</span>
                                 </div>
                                 <div className="space-y-2 h-32 sm:h-40 md:h-48 overflow-y-auto text-sm sm:text-base md:text-lg">
                                     {commentary.map((comment, index) => (
@@ -346,17 +376,12 @@ const HomePage: React.FC = () => {
                     </div>
                 </main>
 
-                <footer className="w-full text-center py-4 sm:py-6 bg-black bg-opacity-70">
-                    <Link href="/disclaimer" className="flex items-center justify-center text-sm sm:text-base text-gray-400 hover:text-blue-400 transition duration-300 animate-pulse">
+                <footer className="relative z-10 w-full text-center py-4 sm:py-6 bg-zinc-900 bg-opacity-70">
+                    <Link href="/disclaimer" className="flex items-center justify-center text-sm sm:text-base text-zinc-400 hover:text-orange-400 transition duration-300 animate-pulse">
                         <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                         Betting Disclaimer
                     </Link>
                 </footer>
-
-                <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
-                    <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-gradient-to-r from-blue-900 to-gray-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-gray-800 to-blue-900 rounded-full blur-3xl opacity-20 animate-spin-slow"></div>
-                </div>
             </div>
         </Layout>
     );
