@@ -99,7 +99,7 @@ export default function BetsPage() {
                             Active Picks
                         </span>
                         <span
-                            className="relative z-10 text-4xl sm:text-5xl md:text-6xl bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500"
+                            className="relative z-10 bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500"
                             style={{
                                 backgroundPosition: '200% center',
                                 backgroundSize: '400%',
@@ -112,51 +112,51 @@ export default function BetsPage() {
                     </motion.h1>
 
                     <style jsx>{`
-    @keyframes gradientMove {
-        0% {
-            background-position: 0% center;
-        }
-        100% {
-            background-position: 200% center;
-        }
-    }
-
-    @keyframes glitch {
-        0% {
-            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-        }
-        10% {
-            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-        }
-        20% {
-            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-        }
-        30% {
-            text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-        }
-        40% {
-            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-        }
-        50% {
-            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-        }
-        60% {
-            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-        }
-        70% {
-            text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-        }
-        80% {
-            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-        }
-        90% {
-            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-        }
-        100% {
-            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-        }
-    }
-`}</style>
+                        @keyframes gradientMove {
+                            0% {
+                                background-position: 0% center;
+                            }
+                            100% {
+                                background-position: 200% center;
+                            }
+                        }
+    
+                        @keyframes glitch {
+                            0% {
+                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+                            }
+                            10% {
+                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+                            }
+                            20% {
+                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+                            }
+                            30% {
+                                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+                            }
+                            40% {
+                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+                            }
+                            50% {
+                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+                            }
+                            60% {
+                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+                            }
+                            70% {
+                                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+                            }
+                            80% {
+                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+                            }
+                            90% {
+                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+                            }
+                            100% {
+                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+                            }
+                        }
+                    `}</style>
 
                     {/* Filter and Sort Controls */}
                     <motion.div
@@ -250,6 +250,7 @@ export default function BetsPage() {
                                                     width={280}
                                                     height={180}
                                                     className="rounded-lg shadow-lg object-cover"
+                                                    style={{ width: '100%', height: 'auto' }}
                                                 />
                                                 <p className="text-zinc-100 mt-4 text-lg sm:text-xl font-bold">
                                                     Result:
@@ -343,4 +344,5 @@ export default function BetsPage() {
             </div>
         </Layout>
     );
+
 }
