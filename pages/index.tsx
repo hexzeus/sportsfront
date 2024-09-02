@@ -305,14 +305,19 @@ const HomePage: React.FC = () => {
 
                     <Link
                         href="/bets"
-                        className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 overflow-hidden text-md sm:text-lg font-bold text-zinc-900 uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-lg hover:from-red-700 hover:via-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50"
+                        className="group relative inline-flex items-center justify-center w-full sm:w-auto px-4 py-3 sm:px-6 sm:py-4 overflow-hidden text-sm sm:text-base font-extrabold text-white uppercase tracking-wide sm:tracking-widest transition-all duration-300 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 active:scale-95 transform hover:scale-102 hover:-translate-y-0.5"
                     >
-                        <span className="absolute inset-0 w-full h-full bg-zinc-900 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ease-out"></span>
-                        <span className="relative z-10 flex items-center space-x-3">
-                            <Flame className="w-5 h-5" />
-                            <span className="font-bold tracking-widest">Unleash Our Picks</span>
-                            <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
+                        <span className="absolute inset-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8cGF0aCBkPSJNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-10"></span>
+                        <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white to-transparent opacity-10 transform scale-150 group-hover:scale-100 transition-transform duration-300 ease-out"></span>
+                        <span className="relative z-10 flex items-center space-x-1 sm:space-x-2">
+                            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300 animate-bounce" />
+                            <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 animate-pulse" />
+                            <span className="font-black text-shadow">Unleash Our Picks</span>
+                            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                         </span>
+                        <span className="absolute inset-0 w-full h-full border-2 border-white opacity-0 group-hover:opacity-10 rounded-full scale-105 group-hover:scale-100 transition-all duration-300 ease-out"></span>
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 blur-sm transform -skew-x-12 group-hover:skew-x-12 transition-all duration-500 ease-out"></span>
                     </Link>
 
                     <div className="w-full max-w-2xl sm:max-w-3xl bg-zinc-900 bg-opacity-80 rounded-2xl p-4 sm:p-6 shadow-2xl border border-zinc-700">
