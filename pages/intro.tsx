@@ -25,7 +25,7 @@ const IntroPage = () => {
         };
     }, [router]);
 
-    const iconClasses = "w-12 h-12 sm:w-16 sm:h-16 text-zinc-300 transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-red-500";
+    const iconClasses = "w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-zinc-300 transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-red-500";
 
     return (
         <div className="fixed inset-0 z-50 bg-zinc-900 flex flex-col items-center justify-center overflow-hidden">
@@ -49,9 +49,9 @@ const IntroPage = () => {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 text-center space-y-6 transform transition-all duration-1000 ease-out px-4 max-w-screen-lg mx-auto">
+            <div className="relative z-10 text-center space-y-4 sm:space-y-6 transform transition-all duration-1000 ease-out px-4 max-w-screen-md mx-auto">
                 {/* Dynamic Logo */}
-                <div className="relative mx-auto w-40 h-40 sm:w-52 sm:h-52 mb-8 animate-pulse-logo">
+                <div className="relative mx-auto w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 mb-6 sm:mb-8 animate-pulse-logo">
                     <Image
                         src="/file.png"
                         alt="Lock and Hammer Picks Logo"
@@ -62,13 +62,13 @@ const IntroPage = () => {
                 </div>
 
                 {/* Title with animated underline */}
-                <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow relative inline-block" style={{ fontFamily: 'Impact, sans-serif' }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow relative inline-block" style={{ fontFamily: 'Impact, sans-serif' }}>
                     Lock & Hammer
                     <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 transform scale-x-0 transition-transform duration-1000 ease-in-out origin-left" style={{ animation: 'expandWidth 2s forwards' }}></span>
                 </h1>
 
                 {/* Subtitle with staggered fade-in */}
-                <p className="text-xl sm:text-2xl md:text-3xl text-zinc-300 font-bold tracking-wide leading-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold tracking-wide leading-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
                     {['DOMINATE', 'CRUSH', 'CONQUER'].map((word, index) => (
                         <span key={word} className="inline-block mx-1" style={{ animation: `fadeIn 0.5s ${index * 0.2}s forwards`, opacity: 0 }}>
                             <span className={`text-${index === 0 ? 'red' : index === 1 ? 'orange' : 'yellow'}-500`}>{word}</span>
@@ -78,7 +78,7 @@ const IntroPage = () => {
                 </p>
 
                 {/* Enhanced Icon Animation */}
-                <div className="flex justify-center space-x-4 mb-6">
+                <div className="flex justify-center space-x-2 sm:space-x-4 mb-4 sm:mb-6">
                     {[Skull, Flame, Zap, DollarSign, TrendingUp, Award].map((Icon, index) => (
                         <Icon
                             key={index}
@@ -89,21 +89,21 @@ const IntroPage = () => {
                 </div>
 
                 {/* Tagline with typing effect */}
-                <p className="text-xl sm:text-2xl md:text-3xl text-zinc-400 mt-6 tracking-wide font-bold opacity-90" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 mt-4 sm:mt-6 tracking-wide font-bold opacity-90" style={{ fontFamily: 'Arial Black, sans-serif' }}>
                     <span className="inline-block whitespace-nowrap overflow-hidden border-r-4 border-orange-500" style={{ animation: 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite' }}>
                         Unleashing Raw Sports Betting Power
                     </span>
                 </p>
 
                 {/* Pro Loading Bar */}
-                <div className="mt-8 w-full max-w-md mx-auto">
-                    <div className="bg-zinc-800 h-4 rounded-full overflow-hidden">
+                <div className="mt-6 sm:mt-8 w-full max-w-xs sm:max-w-md mx-auto">
+                    <div className="bg-zinc-800 h-3 sm:h-4 rounded-full overflow-hidden">
                         <div
                             className="h-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 transition-all duration-300 ease-out"
                             style={{ width: `${loadingProgress}%` }}
                         ></div>
                     </div>
-                    <p className="text-2xl font-bold text-zinc-300 mt-2" style={{ fontFamily: 'Impact, sans-serif' }}>
+                    <p className="text-xl sm:text-2xl font-bold text-zinc-300 mt-2" style={{ fontFamily: 'Impact, sans-serif' }}>
                         {loadingProgress}%
                     </p>
                 </div>
