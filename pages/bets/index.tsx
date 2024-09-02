@@ -83,28 +83,26 @@ export default function BetsPage() {
                     className="container mx-auto relative z-10"
                 >
                     <motion.h1
-                        className="relative text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent uppercase mb-6 sm:mb-10 md:mb-14"
+                        className="relative text-4xl sm:text-5xl md:text-6xl font-extrabold text-center uppercase mb-6 sm:mb-10 md:mb-14"
                         style={{ fontFamily: 'Impact, sans-serif' }}
                         initial={{ y: -50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
                         <span
-                            className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 bg-clip-text text-transparent drop-shadow-[0_5px_10px_rgba(255,99,71,0.75)]"
+                            className="absolute inset-0 text-black drop-shadow-[0_5px_10px_rgba(0,0,0,0.75)]"
                             style={{
-                                animation: 'glitch 2s infinite',
-                                WebkitTextStroke: '1px rgba(0,0,0,0.9)',
+                                animation: 'glitch 2s infinite, neonGlowBlack 1.5s ease-in-out infinite alternate',
+                                WebkitTextStroke: '1px rgba(255,255,255,0.9)',
                             }}
                         >
                             Active Picks
                         </span>
                         <span
-                            className="relative z-10 bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500"
+                            className="relative z-10 text-black"
                             style={{
-                                backgroundPosition: '200% center',
-                                backgroundSize: '400%',
-                                animation: 'gradientMove 5s ease infinite',
-                                WebkitTextStroke: '1px rgba(0,0,0,0.9)',
+                                animation: 'gradientMove 5s ease infinite, neonGlowBlack 1.5s ease-in-out infinite alternate',
+                                WebkitTextStroke: '1px rgba(255,255,255,0.9)',
                             }}
                         >
                             Active Picks
@@ -112,51 +110,61 @@ export default function BetsPage() {
                     </motion.h1>
 
                     <style jsx>{`
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% center;
-            }
-            100% {
-                background-position: 200% center;
-            }
+    @keyframes gradientMove {
+        0% {
+            background-position: 0% center;
         }
+        100% {
+            background-position: 200% center;
+        }
+    }
 
-        @keyframes glitch {
-            0% {
-                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-            }
-            10% {
-                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-            }
-            20% {
-                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-            }
-            30% {
-                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-            }
-            40% {
-                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-            }
-            50% {
-                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-            }
-            60% {
-                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-            }
-            70% {
-                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-            }
-            80% {
-                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-            }
-            90% {
-                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-            }
-            100% {
-                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-            }
+    @keyframes glitch {
+        0% {
+            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
         }
-    `}</style>
+        10% {
+            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+        }
+        20% {
+            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+        }
+        30% {
+            text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+        }
+        40% {
+            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+        }
+        50% {
+            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+        }
+        60% {
+            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+        }
+        70% {
+            text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+        }
+        80% {
+            text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+        }
+        90% {
+            text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+        }
+        100% {
+            text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+        }
+    }
+
+    @keyframes neonGlowBlack {
+        0%, 100% {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 0, 0, 0.6);
+        }
+        50% {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(0, 0, 0, 1);
+        }
+    }
+`}</style>
+
 
                     {/* Filter and Sort Controls */}
                     <motion.div

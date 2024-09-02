@@ -303,10 +303,14 @@ const HomePage: React.FC = () => {
                         ))}
                     </div>
 
-                    <Link href="/bets" className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold text-white uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1">
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
+
+                    <Link
+                        href="/bets"
+                        className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold text-white uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1"
+                    >
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-black via-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
                         <span className="absolute inset-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8cGF0aCBkPSJNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-10"></span>
-                        <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white to-transparent opacity-10 transform scale-150 group-hover:scale-100 transition-transform duration-500 ease-out"></span>
+                        <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-gray-900 opacity-10 transform scale-150 group-hover:scale-100 transition-transform duration-500 ease-out"></span>
                         <span className="relative z-10 flex items-center space-x-2">
                             <Trophy className="w-6 h-6 text-yellow-300 animate-bounce" />
                             <Flame className="w-6 h-6 text-orange-400 animate-pulse" />
@@ -316,6 +320,7 @@ const HomePage: React.FC = () => {
                         <span className="absolute inset-0 w-full h-full border-2 border-white opacity-0 group-hover:opacity-10 rounded-full scale-105 group-hover:scale-100 transition-all duration-500 ease-out"></span>
                         <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 blur-xl transform -skew-x-12 group-hover:skew-x-12 transition-all duration-1000 ease-out"></span>
                     </Link>
+
 
                     <div className="w-full max-w-2xl sm:max-w-3xl bg-zinc-900 bg-opacity-80 rounded-2xl p-4 sm:p-6 shadow-2xl border border-zinc-700">
                         <div className="flex flex-col items-center space-y-4 sm:space-y-6">
