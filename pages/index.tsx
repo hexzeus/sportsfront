@@ -283,21 +283,21 @@ const HomePage: React.FC = () => {
                     </svg>
                 </div>
 
-                <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-8 px-4 sm:px-6 md:px-8 py-12">
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow" style={{ fontFamily: 'Impact, sans-serif' }}>
+                <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8 px-4 sm:px-6 md:px-8 py-8 sm:py-12">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow" style={{ fontFamily: 'Impact, sans-serif' }}>
                         Lock & Hammer Picks
                         <span className="block h-1 w-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 mt-2"></span>
                     </h1>
 
-                    <p className="text-xl sm:text-2xl md:text-3xl text-zinc-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                    <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md" style={{ fontFamily: 'Arial Black, sans-serif' }}>
                         <span className="text-red-500">DOMINATE.</span> <span className="text-orange-500">CRUSH.</span> <span className="text-yellow-500">CONQUER.</span>
                     </p>
 
-                    <div className="flex justify-center space-x-4 mb-6">
+                    <div className="flex justify-center space-x-3 sm:space-x-4 mb-4 sm:mb-6">
                         {[Skull, Flame, Zap].map((Icon, index) => (
                             <Icon
                                 key={index}
-                                className="w-12 h-12 sm:w-16 sm:h-16 text-zinc-300 animate-pulse"
+                                className="w-10 h-10 sm:w-12 sm:h-12 text-zinc-300 animate-pulse"
                                 style={{ animationDelay: `${index * 150}ms` }}
                             />
                         ))}
@@ -305,35 +305,35 @@ const HomePage: React.FC = () => {
 
                     <Link
                         href="/bets"
-                        className="group relative inline-flex items-center justify-center px-8 py-4 sm:px-12 sm:py-6 overflow-hidden text-lg sm:text-2xl font-bold text-zinc-900 uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-lg hover:from-red-700 hover:via-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50"
+                        className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 overflow-hidden text-md sm:text-lg font-bold text-zinc-900 uppercase tracking-wide transition-all duration-300 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-lg hover:from-red-700 hover:via-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50"
                     >
                         <span className="absolute inset-0 w-full h-full bg-zinc-900 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ease-out"></span>
                         <span className="relative z-10 flex items-center space-x-3">
-                            <Flame className="w-6 h-6" />
+                            <Flame className="w-5 h-5" />
                             <span className="font-bold tracking-widest">Unleash Our Picks</span>
-                            <ArrowRight className="w-6 h-6 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
+                            <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                         </span>
                     </Link>
 
-                    <div className="w-full max-w-4xl bg-zinc-900 bg-opacity-80 rounded-2xl p-6 sm:p-8 shadow-2xl border border-zinc-700">
-                        <div className="flex flex-col items-center space-y-6">
+                    <div className="w-full max-w-2xl sm:max-w-3xl bg-zinc-900 bg-opacity-80 rounded-2xl p-4 sm:p-6 shadow-2xl border border-zinc-700">
+                        <div className="flex flex-col items-center space-y-4 sm:space-y-6">
                             <div className="flex justify-between items-center w-full">
                                 <div className="text-center">
-                                    <div className="text-base sm:text-lg md:text-xl font-bold text-orange-500 animate-pulse">
+                                    <div className="text-sm sm:text-base md:text-lg font-bold text-orange-500 animate-pulse">
                                         <Clock className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
                                         {formattedTime}
                                     </div>
-                                    <div className="text-sm sm:text-base md:text-lg font-medium text-zinc-400">
+                                    <div className="text-xs sm:text-sm md:text-base font-medium text-zinc-400">
                                         <Calendar className="inline-block w-4 h-4 sm:w-5 sm:h-5 mr-1" />
                                         {formattedDate}
                                     </div>
                                 </div>
-                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24">
+                                <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                                     <Image
                                         src="/file.png"
                                         alt="Lock and Hammer Picks Logo"
                                         fill
-                                        sizes="(max-width: 768px) 64px, (max-width: 1024px) 80px, 96px"
+                                        sizes="(max-width: 768px) 48px, (max-width: 1024px) 64px, 80px"
                                         style={{ objectFit: 'contain' }}
                                         priority
                                         className="drop-shadow-xl animate-pulse"
@@ -341,32 +341,32 @@ const HomePage: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-4 rounded-xl shadow-lg border border-zinc-700">
-                                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-2xl sm:text-3xl md:text-4xl font-bold">
+                            <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
+                                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-lg sm:text-2xl md:text-3xl font-bold">
                                     <div className="text-red-500 animate-pulse">{homeTeam.abbreviation || "HOME"}</div>
                                     <div className="text-zinc-100">{timeLeft}</div>
                                     <div className="text-orange-500 animate-pulse">{awayTeam.abbreviation || "AWAY"}</div>
                                     <div className="text-red-500">{homeScore}</div>
-                                    <div className="text-yellow-500 text-xl sm:text-2xl md:text-3xl">Q{quarter}</div>
+                                    <div className="text-yellow-500 text-base sm:text-xl md:text-2xl">Q{quarter}</div>
                                     <div className="text-orange-500">{awayScore}</div>
                                 </div>
-                                <div className="mt-2 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold text-zinc-300">
+                                <div className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base font-semibold text-zinc-300">
                                     {gameStatus === "In Progress" ? `${possession} ball • ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo}` : gameStatus}
                                 </div>
                                 {winner && (
-                                    <div className="mt-4 text-xl sm:text-2xl md:text-3xl font-bold flex items-center justify-center animate-bounce">
-                                        <Trophy className="w-6 h-6 sm:w-8 sm:h-8 mr-2 text-yellow-500" />
+                                    <div className="mt-4 text-lg sm:text-xl md:text-2xl font-bold flex items-center justify-center animate-bounce">
+                                        <Trophy className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-yellow-500" />
                                         {winner === "TIE" ? "It's a Tie!" : `${winner === homeTeam.abbreviation ? homeTeam.name : awayTeam.name} Triumphs!`}
                                     </div>
                                 )}
                             </div>
 
-                            <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 w-full p-4 rounded-xl shadow-lg border border-zinc-700">
+                            <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
                                 <div className="flex items-center justify-center mb-2 animate-pulse">
-                                    <Radio className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-orange-500" />
-                                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-zinc-300">Live Commentary</span>
+                                    <Radio className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-orange-500" />
+                                    <span className="text-md sm:text-lg md:text-xl font-bold text-zinc-300">Live Commentary</span>
                                 </div>
-                                <div className="space-y-2 h-32 sm:h-40 md:h-48 overflow-y-auto text-sm sm:text-base md:text-lg">
+                                <div className="space-y-2 h-24 sm:h-32 md:h-40 overflow-y-auto text-xs sm:text-sm md:text-base">
                                     {commentary.map((comment, index) => (
                                         <p key={index} className="animate-fadeIn">{comment}</p>
                                     ))}
@@ -376,8 +376,8 @@ const HomePage: React.FC = () => {
                     </div>
                 </main>
 
-                <footer className="relative z-10 w-full text-center py-4 sm:py-6 bg-zinc-900 bg-opacity-70">
-                    <Link href="/disclaimer" className="flex items-center justify-center text-sm sm:text-base text-zinc-400 hover:text-orange-400 transition duration-300 animate-pulse">
+                <footer className="relative z-10 w-full text-center py-3 sm:py-4 bg-zinc-900 bg-opacity-70">
+                    <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-zinc-400 hover:text-orange-400 transition duration-300 animate-pulse">
                         <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                         Betting Disclaimer
                     </Link>
