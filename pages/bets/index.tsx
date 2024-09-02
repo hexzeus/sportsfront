@@ -112,51 +112,51 @@ export default function BetsPage() {
                     </motion.h1>
 
                     <style jsx>{`
-                        @keyframes gradientMove {
-                            0% {
-                                background-position: 0% center;
-                            }
-                            100% {
-                                background-position: 200% center;
-                            }
-                        }
-    
-                        @keyframes glitch {
-                            0% {
-                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-                            }
-                            10% {
-                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-                            }
-                            20% {
-                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-                            }
-                            30% {
-                                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-                            }
-                            40% {
-                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-                            }
-                            50% {
-                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-                            }
-                            60% {
-                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-                            }
-                            70% {
-                                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
-                            }
-                            80% {
-                                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
-                            }
-                            90% {
-                                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
-                            }
-                            100% {
-                                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
-                            }
-                        }
-                    `}</style>
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+            }
+            10% {
+                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+            }
+            20% {
+                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+            }
+            30% {
+                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+            }
+            40% {
+                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+            }
+            50% {
+                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+            }
+            60% {
+                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+            }
+            70% {
+                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ff00;
+            }
+            80% {
+                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ff00;
+            }
+            90% {
+                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ff00;
+            }
+            100% {
+                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ff00;
+            }
+        }
+    `}</style>
 
                     {/* Filter and Sort Controls */}
                     <motion.div

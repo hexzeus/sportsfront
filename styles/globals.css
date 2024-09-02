@@ -1,9 +1,6 @@
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500&family=Impact&display=swap');
-
 /* Global font settings */
 body {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Arial Black', 'Impact', 'Verdana', sans-serif;
   background: linear-gradient(135deg, #18181b 0%, #7f1d1d 50%, #b91c1c 100%);
   background-attachment: fixed;
   background-size: cover;
@@ -12,7 +9,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: 'Impact', 'Anton', sans-serif;
+  font-family: 'Impact', 'Arial Black', sans-serif;
   letter-spacing: 0.1em;
 }
 
