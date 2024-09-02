@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Hammer, Target, Trophy, Zap, Flame, Edit, Trash2, LogOut, Plus, AlertTriangle } from 'lucide-react';
+import { Flame, Edit, Trash2, LogOut, Plus, AlertTriangle } from 'lucide-react';
 import BetForm from '../../components/BetForm';
 import { fetchBets, createBet, updateBet, deleteBet } from '../../lib/api';
 import { Bet } from '../../lib/types';
@@ -100,24 +100,26 @@ export default function AdminPanel() {
         <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-red-900 text-zinc-100 overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <div className="absolute w-full h-full bg-[url('/noise.png')] opacity-5"></div>
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-orange-800 to-red-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
+                <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-red-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-gradient-to-r from-orange-800 to-red-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
             </div>
-            <div className="relative z-10 container mx-auto p-6 md:p-8">
+            <div className="relative z-10 container mx-auto p-4 md:p-6 lg:p-8">
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="flex justify-between items-center mb-8 md:mb-10"
+                    className="flex justify-between items-center mb-6 md:mb-8"
                 >
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-orange-500 to-yellow-400 uppercase" style={{ fontFamily: 'Impact, sans-serif' }}>Admin Panel</h1>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-orange-500 to-yellow-400 uppercase">
+                        Admin Panel
+                    </h1>
                     <motion.button
                         onClick={handleLogout}
-                        className="bg-gradient-to-r from-red-600 to-orange-600 text-zinc-100 py-3 px-6 rounded-lg shadow-md hover:from-red-700 hover:to-orange-700 text-sm font-bold uppercase transition-all flex items-center"
+                        className="bg-gradient-to-r from-red-600 to-orange-600 text-zinc-100 py-2 px-4 rounded-lg shadow-md hover:from-red-700 hover:to-orange-700 text-xs md:text-sm font-bold uppercase transition-all flex items-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <LogOut className="mr-2" size={18} />
+                        <LogOut className="mr-1 md:mr-2" size={16} />
                         Logout
                     </motion.button>
                 </motion.div>
@@ -126,15 +128,15 @@ export default function AdminPanel() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="mb-6 md:mb-8 flex justify-center"
+                    className="mb-4 md:mb-6 flex justify-center"
                 >
                     <motion.button
                         onClick={() => router.push('/admin/createTicketByImage')}
-                        className="bg-gradient-to-r from-orange-500 to-red-600 text-zinc-100 py-3 px-6 rounded-lg shadow-md hover:from-orange-600 hover:to-red-700 text-sm font-bold uppercase transition-all flex items-center"
+                        className="bg-gradient-to-r from-orange-500 to-red-600 text-zinc-100 py-2 px-4 rounded-lg shadow-md hover:from-orange-600 hover:to-red-700 text-xs md:text-sm font-bold uppercase transition-all flex items-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Plus className="mr-2" size={18} />
+                        <Plus className="mr-1 md:mr-2" size={16} />
                         Create Ticket by Image
                     </motion.button>
                 </motion.div>
@@ -143,7 +145,7 @@ export default function AdminPanel() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="mb-6 md:mb-8"
+                    className="mb-4 md:mb-6"
                 >
                     <BetForm onSubmit={handleCreateBet} />
                 </motion.div>
@@ -152,7 +154,7 @@ export default function AdminPanel() {
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-red-500 text-center mb-8 flex items-center justify-center"
+                        className="text-red-500 text-center mb-6 flex items-center justify-center"
                     >
                         <AlertTriangle className="mr-2" size={18} />
                         {error}
@@ -164,7 +166,7 @@ export default function AdminPanel() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.6, duration: 0.5 }}
-                        className="space-y-6"
+                        className="space-y-4 md:space-y-6"
                     >
                         {bets.map((bet) => (
                             <EditableBetItem
@@ -213,76 +215,47 @@ function EditableBetItem({
 
     return (
         <motion.li
-            className="p-6 bg-gradient-to-br from-zinc-900 to-black rounded-lg shadow-xl border border-red-700 space-y-4 md:space-y-6 relative overflow-hidden"
+            className="p-4 md:p-6 bg-gradient-to-br from-zinc-900 to-black rounded-lg shadow-xl border border-red-700 space-y-3 md:space-y-4 relative overflow-hidden"
             whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(255, 99, 71, 0.3)" }}
             transition={{ duration: 0.2 }}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-orange-900/10 to-yellow-900/20 pointer-events-none"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
                 <input
                     type="text"
                     value={editableBet.team}
                     onChange={(e) => setEditableBet({ ...editableBet, team: e.target.value })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
+                    className="border border-red-700 p-2 md:p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500 text-sm md:text-base"
                     placeholder="Team"
                 />
                 <input
                     type="text"
                     value={editableBet.opponent}
                     onChange={(e) => setEditableBet({ ...editableBet, opponent: e.target.value })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
+                    className="border border-red-700 p-2 md:p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500 text-sm md:text-base"
                     placeholder="Opponent"
                 />
                 <input
                     type="number"
                     value={editableBet.amount}
                     onChange={(e) => setEditableBet({ ...editableBet, amount: parseFloat(e.target.value) || 0 })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
+                    className="border border-red-700 p-2 md:p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500 text-sm md:text-base"
                     placeholder="Amount"
                 />
                 <input
                     type="text"
                     value={editableBet.odds}
                     onChange={(e) => setEditableBet({ ...editableBet, odds: e.target.value })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
+                    className="border border-red-700 p-2 md:p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500 text-sm md:text-base"
                     placeholder="Odds"
-                />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
-                <input
-                    type="date"
-                    value={new Date(editableBet.date).toISOString().split('T')[0]}
-                    onChange={(e) => setEditableBet({ ...editableBet, date: new Date(e.target.value) })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-                />
-                <input
-                    type="text"
-                    value={editableBet.betType}
-                    onChange={(e) => setEditableBet({ ...editableBet, betType: e.target.value })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
-                    placeholder="Bet Type"
-                />
-                <input
-                    type="number"
-                    value={editableBet.ticketCost}
-                    onChange={(e) => setEditableBet({ ...editableBet, ticketCost: parseFloat(e.target.value) || 0 })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
-                    placeholder="Ticket Cost"
-                />
-                <input
-                    type="number"
-                    value={editableBet.payout}
-                    onChange={(e) => setEditableBet({ ...editableBet, payout: parseFloat(e.target.value) || 0 })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder-zinc-500"
-                    placeholder="Payout"
                 />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
                 <select
                     value={editableBet.result}
                     onChange={(e) => setEditableBet({ ...editableBet, result: e.target.value as 'win' | 'loss' | 'pending' })}
-                    className="border border-red-700 p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    className="border border-red-700 p-2 md:p-3 bg-zinc-800 text-zinc-100 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all text-sm md:text-base"
                 >
                     <option value="win">Win</option>
                     <option value="loss">Loss</option>
@@ -290,20 +263,20 @@ function EditableBetItem({
                 </select>
                 <motion.button
                     onClick={handleUpdate}
-                    className="bg-gradient-to-r from-orange-600 to-red-600 text-zinc-100 py-3 px-6 rounded-lg shadow-md hover:from-orange-700 hover:to-red-700 text-sm font-bold transition-all flex items-center justify-center"
+                    className="bg-gradient-to-r from-orange-600 to-red-600 text-zinc-100 py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md hover:from-orange-700 hover:to-red-700 text-xs md:text-sm font-bold transition-all flex items-center justify-center"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    <Edit className="mr-2" size={18} />
+                    <Edit className="mr-1 md:mr-2" size={16} />
                     Update Bet
                 </motion.button>
                 <motion.button
                     onClick={handleDelete}
-                    className="bg-gradient-to-r from-red-600 to-red-800 text-zinc-100 py-3 px-6 rounded-lg shadow-md hover:from-red-700 hover:to-red-900 text-sm font-bold transition-all flex items-center justify-center"
+                    className="bg-gradient-to-r from-red-600 to-red-800 text-zinc-100 py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-md hover:from-red-700 hover:to-red-900 text-xs md:text-sm font-bold transition-all flex items-center justify-center"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    <Trash2 className="mr-2" size={18} />
+                    <Trash2 className="mr-1 md:mr-2" size={16} />
                     Delete Bet
                 </motion.button>
             </div>
