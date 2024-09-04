@@ -8,11 +8,12 @@ const IntroPage = () => {
     const [loadingProgress, setLoadingProgress] = useState(0);
     const router = useRouter();
 
+
     useEffect(() => {
         setAnimated(true);
 
-        // Set the cookie with SameSite and secure attributes
-        document.cookie = "visitedIntro=true; path=/; SameSite=None; Secure";
+        // Set the localStorage item instead of a cookie
+        localStorage.setItem('visitedIntro', 'true');
 
         const timer = setTimeout(() => {
             router.push('/');
