@@ -32,10 +32,18 @@ const HomePage: React.FC = () => {
 
                 {/* Main Content */}
                 <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8 px-4 sm:px-6 md:px-8 py-8 sm:py-12">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow" style={{ fontFamily: 'Impact, sans-serif' }}>
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tight drop-shadow-3xl shadow-black transform-gpu perspective-1000 transition duration-500 ease-in-out hover:scale-105 hover:skew-y-1"
+                        style={{
+                            fontFamily: 'Impact, sans-serif',
+                            textShadow: '3px 3px 10px rgba(0, 0, 0, 0.7), -3px -3px 10px rgba(0, 0, 0, 0.5)',
+                            letterSpacing: '-0.05em',
+                        }}
+                    >
                         Lock & Hammer Picks
-                        <span className="block h-1 w-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 mt-2"></span>
+                        <span className="block h-1 w-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 mt-3"></span>
                     </h1>
+
+
 
                     <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md" style={{ fontFamily: 'Arial Black, sans-serif' }}>
                         <span className="text-red-500">DOMINATE.</span> <span className="text-orange-500">CRUSH.</span> <span className="text-yellow-500">CONQUER.</span>
