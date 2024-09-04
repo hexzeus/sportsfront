@@ -60,6 +60,7 @@ const Simulation: React.FC = () => {
     const [commentators, setCommentators] = useState<string[]>([]);
     const [lastPlay, setLastPlay] = useState<string>("");
     const [driveStatus, setDriveStatus] = useState<string>("");
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         const selectRandomTeams = () => {
@@ -290,6 +291,10 @@ const Simulation: React.FC = () => {
         second: '2-digit',
     });
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     return (
         <div className="w-full max-w-2xl sm:max-w-3xl bg-zinc-900 bg-opacity-80 rounded-2xl p-4 sm:p-6 shadow-2xl border border-zinc-700">
             <div className="flex flex-col items-center space-y-4 sm:space-y-6">
@@ -319,12 +324,20 @@ const Simulation: React.FC = () => {
 
                 <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
                     <div className="grid grid-cols-3 gap-2 sm:gap-4 text-lg sm:text-2xl md:text-3xl font-bold">
-                        <div className="text-red-500 animate-pulse" style={{ color: homeTeam.color }}>{homeTeam.abbreviation || "HOME"}</div>
+                        <div className="text-red-500 animate-pulse" style={isMounted ? { color: homeTeam.color } : undefined}>
+                            {homeTeam.abbreviation || "HOME"}
+                        </div>
                         <div className="text-zinc-100">{timeLeft}</div>
-                        <div className="text-orange-500 animate-pulse" style={{ color: awayTeam.color }}>{awayTeam.abbreviation || "AWAY"}</div>
-                        <div className="text-red-500" style={{ color: homeTeam.color }}>{homeScore}</div>
+                        <div className="text-orange-500 animate-pulse" style={isMounted ? { color: awayTeam.color } : undefined}>
+                            {awayTeam.abbreviation || "AWAY"}
+                        </div>
+                        <div className="text-red-500" style={isMounted ? { color: homeTeam.color } : undefined}>
+                            {homeScore}
+                        </div>
                         <div className="text-yellow-500 text-base sm:text-xl md:text-2xl">Q{quarter}</div>
-                        <div className="text-orange-500" style={{ color: awayTeam.color }}>{awayScore}</div>
+                        <div className="text-orange-500" style={isMounted ? { color: awayTeam.color } : undefined}>
+                            {awayScore}
+                        </div>
                     </div>
                     <div className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base font-semibold text-zinc-300">
                         {gameStatus === "In Progress" ? driveStatus : gameStatus}
