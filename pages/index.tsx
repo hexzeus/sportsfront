@@ -89,9 +89,19 @@ const HomePage: React.FC = () => {
                     <SportsAnalysisButton />
                 </main>
 
-                <footer className="relative z-10 w-full text-center py-3 sm:py-4 bg-zinc-900 bg-opacity-70">
-                    <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-zinc-400 hover:text-orange-400 transition duration-300 animate-pulse">
-                        <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                {/* Sleek Ultra Pro Footer */}
+                <footer className="relative z-10 w-full text-center py-5 sm:py-6 bg-gradient-to-r from-zinc-900 via-black to-zinc-800 text-zinc-300">
+                    <div className="flex justify-center items-center space-x-4 animate-pulse">
+                        {[Skull, Flame, Zap].map((Icon, index) => (
+                            <Icon
+                                key={index}
+                                className={`w-6 h-6 sm:w-8 sm:h-8 text-zinc-300 ${index === 0 ? 'text-red-500' : index === 1 ? 'text-orange-500' : 'text-yellow-500'}`}
+                                style={{ animationDelay: `${index * 150}ms` }}
+                            />
+                        ))}
+                    </div>
+                    <Link href="/disclaimer" className="block mt-4 text-sm sm:text-base text-zinc-400 hover:text-orange-400 transition duration-300 ease-in-out">
+                        <AlertCircle className="inline w-4 h-4 sm:w-5 sm:h-5 mr-1" />
                         Betting Disclaimer
                     </Link>
                 </footer>
