@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout';
 import Simulation from '../components/Simulation';
+import SportsAnalysisButton from '../components/SportsAnalysisButton';
 import Link from 'next/link';
 import { AlertCircle, Skull, Flame, Zap, Trophy, ArrowRight } from 'lucide-react';
 
@@ -61,8 +62,12 @@ const HomePage: React.FC = () => {
                         <span className="absolute inset-0 w-full h-full border-2 border-white opacity-0 group-hover:opacity-10 rounded-full scale-105 group-hover:scale-100 transition-all duration-500 ease-out"></span>
                     </Link>
 
+
                     {/* Add Simulation component here */}
                     <Simulation />
+
+                    {/* Add Sports Analysis Button component */}
+                    <SportsAnalysisButton />
                 </main>
 
                 <footer className="relative z-10 w-full text-center py-3 sm:py-4 bg-zinc-900 bg-opacity-70">
