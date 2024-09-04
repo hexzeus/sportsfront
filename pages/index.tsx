@@ -3,7 +3,25 @@ import Layout from '../components/layout';
 import Simulation from '../components/Simulation';
 import SportsAnalysisButton from '../components/SportsAnalysisButton';
 import Link from 'next/link';
-import { AlertCircle, Skull, Flame, Zap, Trophy, ArrowRight } from 'lucide-react';
+import { AlertCircle, Skull, Flame, Zap } from 'lucide-react';
+import { GetServerSideProps } from 'next';
+
+// GetServerSideProps to check for the intro cookie
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    const hasVisitedIntro = req.cookies.visitedIntro;
+
+    // If the cookie does not exist, redirect to the intro page
+    if (!hasVisitedIntro) {
+        return {
+            redirect: {
+                destination: '/intro',
+                permanent: false,
+            },
+        };
+    }
+
+    return { props: {} }; // No props needed, just render the homepage if cookie exists
+};
 
 const HomePage: React.FC = () => {
     return (
@@ -48,25 +66,8 @@ const HomePage: React.FC = () => {
                         ))}
                     </div>
 
-                    <Link
-                        href="/bets"
-                        className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold text-white uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1"
-                    >
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-black via-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
-                        <span className="relative z-10 flex items-center space-x-2">
-                            <Trophy className="w-6 h-6 text-yellow-300 animate-bounce" />
-                            <Flame className="w-6 h-6 text-orange-400 animate-pulse" />
-                            <span className="font-black tracking-widest text-shadow-lg">Unleash Our Picks</span>
-                            <ArrowRight className="w-6 h-6 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out" />
-                        </span>
-                        <span className="absolute inset-0 w-full h-full border-2 border-white opacity-0 group-hover:opacity-10 rounded-full scale-105 group-hover:scale-100 transition-all duration-500 ease-out"></span>
-                    </Link>
-
-
-                    {/* Add Simulation component here */}
+                    {/* Simulation and Sports Analysis Button components */}
                     <Simulation />
-
-                    {/* Add Sports Analysis Button component */}
                     <SportsAnalysisButton />
                 </main>
 

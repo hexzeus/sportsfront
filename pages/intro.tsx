@@ -10,7 +10,10 @@ const IntroPage = () => {
 
     useEffect(() => {
         setAnimated(true);
-        document.cookie = "visitedIntro=true; path=/";
+
+        // Set the cookie with SameSite and secure attributes
+        document.cookie = "visitedIntro=true; path=/; SameSite=None; Secure";
+
         const timer = setTimeout(() => {
             router.push('/');
         }, 6000);
@@ -24,6 +27,7 @@ const IntroPage = () => {
             clearInterval(interval);
         };
     }, [router]);
+
 
     const iconClasses = "w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-zinc-300 transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-red-500";
 

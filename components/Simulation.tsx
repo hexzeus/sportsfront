@@ -93,6 +93,13 @@ const Simulation: React.FC = () => {
         return `#${number} ${position}`;
     }, []);
 
+    const updateDriveStatus = useCallback(() => {
+        const currentTeam = possession === homeTeam.abbreviation ? homeTeam : awayTeam;
+        const yardLine = fieldPosition > 50 ? 100 - fieldPosition : fieldPosition;
+        const side = fieldPosition > 50 ? "opponent's" : "own";
+        setDriveStatus(`${currentTeam.name} ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo} at ${side} ${yardLine}`);
+    }, [possession, homeTeam, awayTeam, down, yardsToGo, fieldPosition]);
+
     const generatePlay = useCallback(() => {
         if (!homeTeam.abbreviation || !awayTeam.abbreviation) return;
 
@@ -212,15 +219,9 @@ const Simulation: React.FC = () => {
         addCommentary,
         homeTeam,
         awayTeam,
-        getRandomPlayer
+        getRandomPlayer,
+        updateDriveStatus // Added this missing dependency
     ]);
-
-    const updateDriveStatus = useCallback(() => {
-        const currentTeam = possession === homeTeam.abbreviation ? homeTeam : awayTeam;
-        const yardLine = fieldPosition > 50 ? 100 - fieldPosition : fieldPosition;
-        const side = fieldPosition > 50 ? "opponent's" : "own";
-        setDriveStatus(`${currentTeam.name} ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo} at ${side} ${yardLine}`);
-    }, [possession, homeTeam, awayTeam, down, yardsToGo, fieldPosition]);
 
     const determineWinner = useCallback(() => {
         if (homeScore > awayScore) {
