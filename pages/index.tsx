@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import Simulation from '../components/Simulation';
 import SportsAnalysisButton from '../components/SportsAnalysisButton';
 import Link from 'next/link';
-import { AlertCircle, Skull, Flame, Zap } from 'lucide-react';
+import { AlertCircle, Skull, Flame, Zap, Trophy, ArrowRight } from 'lucide-react';
 import { GetServerSideProps } from 'next';
 
 // GetServerSideProps to check for the intro cookie
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
     return (
         <Layout>
             <div className="min-h-screen flex flex-col justify-between bg-zinc-900 text-zinc-100 transition-all duration-1000 opacity-100 overflow-hidden">
-                {/* Background and other styling remains intact */}
+                {/* Background styling */}
                 <div className="absolute inset-0 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-800"></div>
                     <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
@@ -65,6 +65,24 @@ const HomePage: React.FC = () => {
                             />
                         ))}
                     </div>
+
+                    {/* Bets Button */}
+                    <Link
+                        href="/bets"
+                        className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold text-white uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-full shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1"
+                    >
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-black via-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
+                        <span className="absolute inset-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8cGF0aCBkPSJNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-10"></span>
+                        <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-gray-900 opacity-10 transform scale-150 group-hover:scale-100 transition-transform duration-500 ease-out"></span>
+                        <span className="relative z-10 flex items-center space-x-2">
+                            <Trophy className="w-6 h-6 text-yellow-300 animate-bounce" />
+                            <Flame className="w-6 h-6 text-orange-400 animate-pulse" />
+                            <span className="font-black tracking-widest text-shadow-lg">Unleash Our Picks</span>
+                            <ArrowRight className="w-6 h-6 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out" />
+                        </span>
+                        <span className="absolute inset-0 w-full h-full border-2 border-white opacity-0 group-hover:opacity-10 rounded-full scale-105 group-hover:scale-100 transition-all duration-500 ease-out"></span>
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 blur-xl transform -skew-x-12 group-hover:skew-x-12 transition-all duration-1000 ease-out"></span>
+                    </Link>
 
                     {/* Simulation and Sports Analysis Button components */}
                     <Simulation />
