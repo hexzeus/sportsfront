@@ -368,8 +368,12 @@ const Simulation: React.FC = () => {
                         <Activity className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500" />
                         <span className="text-md sm:text-lg md:text-xl font-bold text-zinc-300">Last Play</span>
                     </div>
-                    <p className="text-xs sm:text-sm md:text-base text-zinc-300">{lastPlay}</p>
+                    {/* Set a fixed height and allow overflow to scroll */}
+                    <div className="text-xs sm:text-sm md:text-base text-zinc-300 h-16 sm:h-20 md:h-24 overflow-y-auto">
+                        <p>{lastPlay}</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     );
