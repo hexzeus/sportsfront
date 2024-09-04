@@ -144,7 +144,7 @@ const HomePage: React.FC = () => {
                 <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-zinc-400 hover:text-orange-400 transition duration-300 animate-pulse">
                     <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     <span className="text-shadow-lg">
-                        Betting Disclaimer - Ensure Responsible Gaming
+                        Disclaimer
                     </span>
                 </Link>
             </footer>
