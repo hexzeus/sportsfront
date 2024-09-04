@@ -1,18 +1,14 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import Layout from '../components/layout'; // Import your layout component
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                {/* Apple-specific meta tags */}
+                {/* Logo icons */}
                 <link rel="apple-touch-icon" sizes="180x180" href="/lockandhammer.png" />  {/* App icon for Apple devices */}
-                <meta name="apple-mobile-web-app-capable" content="yes" />  {/* Enable standalone app mode on iOS */}
-                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />  {/* Black status bar style */}
-                <meta name="apple-mobile-web-app-title" content="L&H PICKS" />  {/* App title for iOS */}
-                <meta name="format-detection" content="telephone=no" />  {/* Disable auto-detection of phone numbers */}
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  {/* Optimized view for mobile, prevent zooming */}
 
                 {/* General Meta Tags for SEO and App Optimization */}
                 <meta name="theme-color" content="#000000" />  {/* Theme color for status bars on Android/Windows */}
@@ -34,7 +30,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <meta property="og:url" content="https://lockandhammerpicks.vercel.app" />  {/* URL for social sharing */}
                 <meta name="twitter:card" content="summary_large_image" />  {/* Twitter card config */}
             </Head>
-            <Component {...pageProps} />
+
+            {/* Wrap the entire app in the Layout component */}
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
         </>
     );
 }

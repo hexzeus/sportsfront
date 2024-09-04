@@ -1,86 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Home, BarChart2, Settings, Menu, X, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { Skull, Flame, Zap, Trophy, ArrowRight } from 'lucide-react';
 import Simulation from '../components/Simulation';
 import SportsAnalysisButton from '../components/SportsAnalysisButton';
 
-// Define the navigation items
-const navItems = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'Live Scores', href: '/scores', icon: BarChart2 },
-    { name: 'Bets', href: '/bets', icon: BarChart2 },
-    { name: 'Admin', href: '/admin', icon: Settings },
-];
-
 const HomePage: React.FC = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
     return (
         <div className="min-h-screen flex flex-col justify-between bg-zinc-900 text-zinc-100 transition-all duration-1000 opacity-100 overflow-hidden relative">
-            {/* Navbar */}
-            <nav className="fixed w-full z-50 bg-zinc-900/90 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
-                        <div className="flex items-center">
-                            <Link href="/" passHref legacyBehavior>
-                                <a className="flex-shrink-0 flex items-center space-x-2">
-                                    <div className="relative w-10 h-10">
-                                        <Image
-                                            src="/file.png"
-                                            alt="L&H Picks Logo"
-                                            fill
-                                            className="rounded-full"
-                                            style={{ objectFit: 'contain' }}
-                                        />
-                                    </div>
-                                    <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-yellow-500">
-                                        L&H PICKS
-                                    </span>
-                                </a>
-                            </Link>
-                        </div>
-                        {/* Desktop Menu */}
-                        <div className="hidden md:flex items-center space-x-4">
-                            {navItems.map((item) => (
-                                <Link href={item.href} key={item.name} className="text-sm font-medium text-gray-300 hover:bg-orange-600/20 hover:text-white px-3 py-2 rounded-md">
-                                    <item.icon className="w-5 h-5 inline mr-1" />
-                                    {item.name}
-                                </Link>
-                            ))}
-                        </div>
-                        {/* Mobile Menu Button */}
-                        <div className="md:hidden">
-                            <button
-                                onClick={toggleMobileMenu}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                            >
-                                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <div className="md:hidden bg-zinc-900 backdrop-blur-md p-4">
-                        {navItems.map((item) => (
-                            <Link href={item.href} key={item.name} className="block px-4 py-2 text-gray-300 hover:bg-orange-600/20 hover:text-white rounded-md">
-                                <item.icon className="w-5 h-5 inline mr-1" />
-                                {item.name}
-                            </Link>
-                        ))}
-                    </div>
-                )}
-            </nav>
-
-            {/* Add margin below navbar */}
-            <div className="h-16"></div>
-
             {/* Background styling with the grid continuing */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-800 h-full"></div>
