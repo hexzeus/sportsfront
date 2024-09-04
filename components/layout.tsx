@@ -17,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
 
+    // Handles scrolling effect to add background when scrolled
     const handleScroll = useCallback(() => {
         setIsScrolled(window.scrollY > 10);
     }, []);
@@ -33,8 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-zinc-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-                }`}
+            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-zinc-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}
         >
             {children}
         </motion.nav>
@@ -87,11 +87,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 </motion.a>
                             </Link>
                         </div>
+                        {/* Desktop Menu */}
                         <div className="hidden md:flex items-center space-x-4">
                             {navItems.map((item) => (
                                 <NavItem key={item.name} item={item} />
                             ))}
                         </div>
+                        {/* Mobile Menu Button */}
                         <div className="md:hidden">
                             <motion.button
                                 onClick={toggleMobileMenu}
@@ -125,9 +127,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 )}
             </AnimatePresence>
 
-            <main className="pt-16">{children}</main>
+            {/* Main content */}
+            <main className="pt-16 flex-grow">{children}</main>
 
-            {/* Skull, Flame, Zap icons - Dynamic, animated like homepage */}
+            {/* Fixed Bottom Icons */}
             <motion.div
                 className="fixed bottom-4 right-4 flex space-x-2"
                 initial={{ opacity: 0, y: 20 }}
