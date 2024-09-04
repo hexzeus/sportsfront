@@ -1,7 +1,6 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import Layout from '../components/layout'; // Import your layout component
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -30,11 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <meta property="og:url" content="https://lockandhammerpicks.vercel.app" />  {/* URL for social sharing */}
                 <meta name="twitter:card" content="summary_large_image" />  {/* Twitter card config */}
             </Head>
-
-            {/* Wrap the entire app in the Layout component */}
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
         </>
     );
 }
