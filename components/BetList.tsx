@@ -118,3 +118,4 @@ export default function BetList({ bets }: { bets: Bet[] }) {
         </div>
     );
 }
+

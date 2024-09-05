@@ -1,49 +1,70 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import IntroPage from './intro';
+import Layout from '../components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
+    const [showIntro, setShowIntro] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Check if the user has visited the intro page before
-        const hasVisitedIntro = localStorage.getItem('visitedIntro');
+        const checkIntroVisited = () => {
+            const visitedIntro = localStorage.getItem('visitedIntro');
+            if (visitedIntro) {
+                setShowIntro(false);
+            } else {
+                setShowIntro(true);
+                if (router.pathname !== '/intro') {
+                    router.push('/intro');
+                }
+            }
+            setIsLoading(false);
+        };
 
-        // If the intro page hasn't been visited, redirect to '/intro'
-        if (!hasVisitedIntro && router.pathname !== '/intro') {
-            router.push('/intro');
-        }
+        checkIntroVisited();
+
+        const handleRouteChange = () => {
+            checkIntroVisited();
+        };
+
+        router.events.on('routeChangeComplete', handleRouteChange);
+
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange);
+        };
     }, [router]);
+
+    const handleIntroComplete = () => {
+        localStorage.setItem('visitedIntro', 'true');
+        setShowIntro(false);
+        router.push('/');
+    };
+
+    if (isLoading) {
+        return null; // or a loading spinner
+    }
 
     return (
         <>
             <Head>
-                {/* Logo icons */}
-                <link rel="apple-touch-icon" sizes="180x180" href="/lockandhammer.png" />  {/* App icon for Apple devices */}
-
-                {/* General Meta Tags for SEO and App Optimization */}
-                <meta name="theme-color" content="#000000" />  {/* Theme color for status bars on Android/Windows */}
-                <meta name="description" content="Lock & Hammer Picks - Dominate, Crush, Conquer in sports betting with our expert picks." />  {/* SEO Description */}
-
-                {/* Favicon */}
-                <link rel="icon" href="/lockandhammer.png" type="image/png" sizes="32x32" />  {/* General favicon for desktop */}
-
-                {/* PWA Configuration */}
-                <link rel="manifest" href="/manifest.json" />  {/* Manifest for PWA */}
-
-                {/* Title */}
-                <title>Lock & Hammer Picks - Dominate, Crush, Conquer</title>  {/* Professional title for both SEO and appearance */}
-
-                {/* Open Graph Meta Tags for Social Sharing */}
-                <meta property="og:title" content="Lock & Hammer Picks - Dominate, Crush, Conquer" />
-                <meta property="og:description" content="Get expert sports betting picks with Lock & Hammer. Take your game to the next level." />
-                <meta property="og:image" content="/lockandhammer.png" />  {/* Social sharing image */}
-                <meta property="og:url" content="https://lockandhammerpicks.vercel.app" />  {/* URL for social sharing */}
-                <meta name="twitter:card" content="summary_large_image" />  {/* Twitter card config */}
+                <link rel="apple-touch-icon" sizes="180x180" href="/lockandhammer.png" />
+                <meta name="theme-color" content="#000000" />
+                <meta name="description" content="Lock & Hammer Picks - Dominate, Crush, Conquer in sports betting with our expert picks." />
+                <link rel="icon" href="/lockandhammer.png" type="image/png" sizes="32x32" />
+                <link rel="manifest" href="/manifest.json" />
+                <title>Lock & Hammer Picks - Dominate, Crush, Conquer</title>
             </Head>
-            <Component {...pageProps} />
+            {showIntro ? (
+                <IntroPage onComplete={handleIntroComplete} />
+            ) : (
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            )}
         </>
     );
 }
