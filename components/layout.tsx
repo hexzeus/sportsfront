@@ -30,10 +30,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const NavbarContainer = ({ children }: { children: React.ReactNode }) => (
         <motion.nav
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-zinc-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}
+            className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-zinc-900/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+                }`}
         >
             {children}
         </motion.nav>
@@ -44,11 +45,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return (
             <Link href={item.href} passHref legacyBehavior>
                 <motion.a
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-blue-600/20 hover:text-white'
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${isActive
+                            ? 'bg-blue-600 text-white'
+                            : 'text-gray-300 hover:bg-blue-600/20 hover:text-white'
                         } ${mobile ? 'w-full' : ''}`}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     whileTap={{ scale: 0.95 }}
                 >
                     <item.icon className="w-5 h-5" />
@@ -87,7 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </Link>
                         </div>
                         {/* Desktop Menu */}
-                        <div className="hidden md:flex items-center space-x-4">
+                        <div className="hidden md:flex items-center space-x-1">
                             {navItems.map((item) => (
                                 <NavItem key={item.name} item={item} />
                             ))}
@@ -96,7 +97,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <div className="md:hidden">
                             <motion.button
                                 onClick={toggleMobileMenu}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
@@ -111,13 +112,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        className="md:hidden fixed inset-0 z-40 bg-zinc-900/95 backdrop-blur-md"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="md:hidden fixed inset-x-0 top-16 z-40 bg-zinc-900/95 backdrop-blur-md overflow-hidden"
                     >
-                        <div className="pt-20 pb-3 space-y-1 px-4">
+                        <div className="px-2 pt-2 pb-3 space-y-1">
                             {navItems.map((item) => (
                                 <NavItem key={item.name} item={item} mobile />
                             ))}
@@ -134,17 +135,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 className="fixed bottom-4 right-4 flex space-x-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
             >
                 {[Skull, Flame, Zap].map((Icon, index) => (
                     <motion.div
                         key={index}
-                        whileHover={{ scale: 1.2 }}
+                        whileHover={{ scale: 1.2, rotate: 15 }}
                         whileTap={{ scale: 0.8 }}
-                        className="p-2 bg-zinc-800 rounded-full shadow-lg animate-pulse"
+                        className="p-2 bg-zinc-800/80 rounded-full shadow-lg backdrop-blur-sm"
                         style={{ animationDelay: `${index * 150}ms` }}
                     >
-                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-gray-500' : 'text-gray-400'}`} />
+                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-orange-500' : 'text-yellow-400'}`} />
                     </motion.div>
                 ))}
             </motion.div>
