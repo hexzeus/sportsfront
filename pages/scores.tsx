@@ -87,14 +87,14 @@ export default function ScoresPage() {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-red-900 text-zinc-100 px-4 md:px-6 pt-10 md:pt-16 relative overflow-hidden">
+            <div className="min-h-screen bg-gradient-to-br from-black via-dark-blue to-slate-900 text-gray-200 px-4 md:px-6 pt-10 md:pt-16 relative overflow-hidden">
                 <div className="absolute inset-0 bg-noise opacity-5"></div>
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-red-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-orange-800 to-red-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
+                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-electric-blue rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-blue-800 to-slate-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
 
                 <div className="container mx-auto py-6 md:py-10 relative z-10">
                     <motion.h1
-                        className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 uppercase mb-6 sm:mb-8 tracking-wider"
+                        className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-gray-500 to-gray-200 uppercase mb-6 sm:mb-8 tracking-wider"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
@@ -116,8 +116,8 @@ export default function ScoresPage() {
                                 <motion.button
                                     key={sportKey}
                                     className={`flex-none text-sm sm:text-lg font-bold uppercase tracking-wide px-4 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg transition-all duration-300 flex items-center whitespace-nowrap ${activeSport === sportKey
-                                        ? 'bg-gradient-to-r from-red-600 to-orange-600 text-zinc-100'
-                                        : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                                        ? 'bg-gradient-to-r from-blue-500 to-gray-500 text-gray-100'
+                                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                                         }`}
                                     onClick={() => setActiveSport(sportKey as keyof typeof endpoints)}
                                     whileHover={{ scale: 1.05 }}
@@ -132,7 +132,7 @@ export default function ScoresPage() {
 
                     {loading ? (
                         <motion.div
-                            className="text-center text-zinc-400 flex items-center justify-center"
+                            className="text-center text-gray-400 flex items-center justify-center"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5 }}
@@ -149,11 +149,11 @@ export default function ScoresPage() {
                         >
                             {/* Scores Section */}
                             <motion.div
-                                className="bg-gradient-to-br from-zinc-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-red-700"
+                                className="bg-gradient-to-br from-slate-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-blue-700"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <h2 className="text-xl sm:text-2xl font-bold text-orange-500 mb-3 tracking-wide flex items-center">
+                                <h2 className="text-xl sm:text-2xl font-bold text-blue-400 mb-3 tracking-wide flex items-center">
                                     <Trophy className="mr-2" size={20} />
                                     Latest Scores
                                 </h2>
@@ -162,38 +162,38 @@ export default function ScoresPage() {
                                         scores.map((game, index) => (
                                             <motion.div
                                                 key={index}
-                                                className="mb-4 border-b border-zinc-700 pb-3"
+                                                className="mb-4 border-b border-gray-700 pb-3"
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
                                                 transition={{ duration: 0.3, delay: index * 0.1 }}
                                             >
                                                 <div className="flex justify-between items-center">
-                                                    <p className="text-lg text-zinc-100 font-semibold tracking-wider">
+                                                    <p className="text-lg text-gray-100 font-semibold tracking-wider">
                                                         {game.shortName}
                                                     </p>
-                                                    <p className="text-md sm:text-lg text-orange-500 font-bold">
+                                                    <p className="text-md sm:text-lg text-blue-400 font-bold">
                                                         {game.competitions?.[0].competitors?.[0]?.score} - {game.competitions?.[0].competitors?.[1]?.score}
                                                     </p>
                                                 </div>
-                                                <p className="text-xs text-zinc-400">
+                                                <p className="text-xs text-gray-400">
                                                     {new Date(game.date).toLocaleDateString()}
                                                 </p>
                                             </motion.div>
                                         ))
                                     ) : (
-                                        <p className="text-zinc-400">No scores available</p>
+                                        <p className="text-gray-400">No scores available</p>
                                     )}
                                 </AnimatePresence>
                             </motion.div>
 
                             {/* News Section */}
                             <motion.div
-                                className="bg-gradient-to-br from-zinc-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-red-700"
+                                className="bg-gradient-to-br from-slate-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-blue-700"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <h2 className="text-xl sm:text-2xl font-bold text-orange-500 mb-3 tracking-wide flex items-center">
+                                <h2 className="text-xl sm:text-2xl font-bold text-blue-400 mb-3 tracking-wide flex items-center">
                                     <Newspaper className="mr-2" size={20} />
                                     Latest News
                                 </h2>
@@ -202,7 +202,7 @@ export default function ScoresPage() {
                                         news.map((article, index) => (
                                             <motion.div
                                                 key={index}
-                                                className="mb-4 border-b border-zinc-700 pb-3"
+                                                className="mb-4 border-b border-gray-700 pb-3"
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
@@ -210,29 +210,29 @@ export default function ScoresPage() {
                                             >
                                                 <a
                                                     href={article.links?.web?.href}
-                                                    className="text-lg text-orange-500 font-bold hover:underline tracking-wider flex items-center"
+                                                    className="text-lg text-blue-400 font-bold hover:underline tracking-wider flex items-center"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >
                                                     <Flame className="mr-2" size={18} />
                                                     {article.headline}
                                                 </a>
-                                                <p className="text-xs text-zinc-400 mt-2">{article.description}</p>
+                                                <p className="text-xs text-gray-400 mt-2">{article.description}</p>
                                             </motion.div>
                                         ))
                                     ) : (
-                                        <p className="text-zinc-400">No news available</p>
+                                        <p className="text-gray-400">No news available</p>
                                     )}
                                 </AnimatePresence>
                             </motion.div>
 
                             {/* Teams Section */}
                             <motion.div
-                                className="bg-gradient-to-br from-zinc-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-red-700"
+                                className="bg-gradient-to-br from-slate-900 to-black rounded-xl shadow-lg p-4 sm:p-6 border border-blue-700"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <h2 className="text-xl sm:text-2xl font-bold text-orange-500 mb-3 tracking-wide flex items-center">
+                                <h2 className="text-xl sm:text-2xl font-bold text-blue-400 mb-3 tracking-wide flex items-center">
                                     <Trophy className="mr-2" size={20} />
                                     Teams
                                 </h2>
@@ -241,7 +241,7 @@ export default function ScoresPage() {
                                         teams.map((team, index) => (
                                             <motion.div
                                                 key={index}
-                                                className="mb-4 flex items-center border-b border-zinc-700 pb-3"
+                                                className="mb-4 flex items-center border-b border-gray-700 pb-3"
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
@@ -255,15 +255,15 @@ export default function ScoresPage() {
                                                     className="w-12 h-12 mr-4"
                                                 />
                                                 <div>
-                                                    <p className="text-lg text-zinc-100 font-semibold tracking-wider">
+                                                    <p className="text-lg text-gray-100 font-semibold tracking-wider">
                                                         {team.displayName}
                                                     </p>
-                                                    <p className="text-sm text-zinc-400">{team.location}</p>
+                                                    <p className="text-sm text-gray-400">{team.location}</p>
                                                 </div>
                                             </motion.div>
                                         ))
                                     ) : (
-                                        <p className="text-zinc-400">No teams available</p>
+                                        <p className="text-gray-400">No teams available</p>
                                     )}
                                 </AnimatePresence>
                             </motion.div>

@@ -17,7 +17,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
 
-    // Handles scrolling effect to add background when scrolled
     const handleScroll = useCallback(() => {
         setIsScrolled(window.scrollY > 10);
     }, []);
@@ -29,11 +28,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-    // Check if user has visited the intro page before
     useEffect(() => {
         const hasVisitedIntro = localStorage.getItem('visitedIntro');
         if (!hasVisitedIntro && router.pathname !== '/intro') {
-            router.push('/intro'); // Redirect to the intro page if not visited before
+            router.push('/intro');
         }
     }, [router]);
 
@@ -54,8 +52,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link href={item.href} passHref legacyBehavior>
                 <motion.a
                     className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isActive
-                        ? 'bg-orange-600 text-white'
-                        : 'text-gray-300 hover:bg-orange-600/20 hover:text-white'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-blue-600/20 hover:text-white'
                         } ${mobile ? 'w-full' : ''}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -68,7 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-zinc-800 text-white">
+        <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-dark-blue to-zinc-800 text-gray-200">
             {/* Navbar */}
             <NavbarContainer>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +87,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                             style={{ objectFit: 'contain' }}
                                         />
                                     </div>
-                                    <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-yellow-500">
+                                    <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-gray-500">
                                         L&H PICKS
                                     </span>
                                 </motion.a>
@@ -153,7 +151,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         className="p-2 bg-zinc-800 rounded-full shadow-lg animate-pulse"
                         style={{ animationDelay: `${index * 150}ms` }}
                     >
-                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-red-500' : index === 1 ? 'text-orange-500' : 'text-yellow-500'}`} />
+                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-gray-500' : 'text-gray-400'}`} />
                     </motion.div>
                 ))}
             </motion.div>
