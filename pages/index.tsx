@@ -52,15 +52,17 @@ const HomePage: React.FC = () => {
                     {/* "Bets" Button */}
                     <Link
                         href="/bets"
-                        className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold text-black uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-blue-400 via-steel-gray to-gray-200 rounded-full shadow-2xl hover:shadow-3xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transform hover:scale-110 hover:-translate-y-1"
+                        className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 overflow-hidden text-base sm:text-lg font-extrabold uppercase tracking-widest transition-all duration-500 ease-out bg-gradient-to-r from-blue-900 via-steel-700 to-gray-500 rounded-full shadow-2xl hover:shadow-3xl focus:outline-none focus:ring-4 focus:ring-blue-700 focus:ring-opacity-50 transform hover:scale-110 hover:-translate-y-1"
                     >
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-800 to-steel-900 opacity-80 transform skew-x-12 group-hover:skew-x-0 transition-all duration-700 ease-in-out"></span>
                         <span className="relative z-10 flex items-center space-x-2">
-                            <Trophy className="w-6 h-6 text-gray-300 animate-bounce" />
-                            <Flame className="w-6 h-6 text-steel-gray animate-pulse" />
-                            <span className="font-black tracking-widest text-shadow-lg">Unleash Our Picks</span>
-                            <ArrowRight className="w-6 h-6 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out" />
+                            <Trophy className="w-6 h-6 text-gray-200 animate-bounce" />
+                            <Flame className="w-6 h-6 text-blue-300 animate-pulse" />
+                            <span className="font-black tracking-widest text-shadow-md text-gray-200">Unleash Our Picks</span>
+                            <ArrowRight className="w-6 h-6 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out text-gray-300" />
                         </span>
                     </Link>
+
 
                     {/* Simulation and Sports Analysis Button components */}
                     <Simulation />

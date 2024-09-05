@@ -6,19 +6,19 @@ import { Flame, AlertTriangle } from 'lucide-react';
 export default function DisclaimerPage() {
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-zinc-900 via-black to-red-900 text-zinc-100 p-4 sm:p-6 md:p-8 lg:p-12 relative overflow-hidden">
+            <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-zinc-900 via-black to-zinc-900 text-zinc-100 p-4 sm:p-6 md:p-8 lg:p-12 relative overflow-hidden">
                 <div className="absolute inset-0 bg-noise opacity-5"></div>
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-red-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-orange-800 to-red-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
+                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-blue-800 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-r from-gray-800 to-blue-900 rounded-full blur-3xl opacity-30 animate-spin-slow"></div>
 
                 <motion.div
-                    className="bg-gradient-to-br from-zinc-900 to-black p-4 sm:p-6 md:p-8 lg:p-10 rounded-xl shadow-2xl max-w-xl sm:max-w-2xl md:max-w-3xl w-full mx-auto relative z-10 border border-red-700"
+                    className="bg-gradient-to-br from-zinc-900 to-black p-4 sm:p-6 md:p-8 lg:p-10 rounded-xl shadow-2xl max-w-xl sm:max-w-2xl md:max-w-3xl w-full mx-auto relative z-10 border border-blue-700"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     whileHover={{ scale: 1.02 }}
                 >
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 mb-6 sm:mb-8 text-center uppercase drop-shadow-md tracking-wide" style={{ fontFamily: 'Impact, sans-serif' }}>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-gray-500 to-blue-700 mb-6 sm:mb-8 text-center uppercase drop-shadow-md tracking-wide" style={{ fontFamily: 'Impact, sans-serif' }}>
                         Disclaimer
                     </h1>
                     <motion.div
@@ -40,6 +40,7 @@ export default function DisclaimerPage() {
                             here. Your use of the website constitutes your agreement to this disclaimer.
                         </p>
                     </motion.div>
+
                     {/* Back to Home Button */}
                     <motion.div
                         className="mt-8 sm:mt-10 text-center"
@@ -49,7 +50,7 @@ export default function DisclaimerPage() {
                     >
                         <Link href="/" passHref>
                             <motion.span
-                                className="inline-flex items-center bg-gradient-to-r from-red-600 to-orange-600 text-zinc-100 text-md sm:text-lg font-bold py-3 px-6 sm:px-8 rounded-full shadow-xl hover:from-red-700 hover:to-orange-700 transition-all duration-300 border-2 border-red-700"
+                                className="inline-flex items-center bg-gradient-to-r from-blue-600 to-gray-600 text-zinc-100 text-md sm:text-lg font-bold py-3 px-6 sm:px-8 rounded-full shadow-xl hover:from-blue-700 hover:to-gray-700 transition-all duration-300 border-2 border-blue-700"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >

@@ -55,7 +55,7 @@ const SportsAnalysisButton: React.FC = () => {
         <div className="relative">
             <button
                 onClick={toggleModal}
-                className="group relative inline-flex items-center justify-center px-3 py-2 text-xs sm:text-sm font-semibold text-white uppercase tracking-widest transition-all duration-300 ease-out bg-transparent border border-gray-600 rounded-full hover:bg-gray-800 hover:bg-opacity-90 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 transform hover:scale-105"
+                className="group relative inline-flex items-center justify-center px-3 py-2 text-xs sm:text-sm font-semibold text-white uppercase tracking-widest transition-all duration-300 ease-out bg-transparent border border-blue-600 rounded-full hover:bg-blue-800 hover:bg-opacity-90 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transform hover:scale-105"
             >
                 <PieChart className="w-3 h-3 sm:w-4 sm:h-4 text-white mr-2" />
                 <span className="font-semibold tracking-tight">Simulation Analysis</span>
@@ -64,10 +64,10 @@ const SportsAnalysisButton: React.FC = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300">
                     <div className="relative bg-zinc-900 text-white rounded-lg shadow-lg max-w-md w-full p-4 sm:max-w-2xl sm:p-6 overflow-hidden">
-                        <button onClick={toggleModal} className="absolute top-4 right-4 text-white hover:text-red-400">
+                        <button onClick={toggleModal} className="absolute top-4 right-4 text-white hover:text-blue-400">
                             <X className="w-6 h-6" />
                         </button>
-                        <h2 className="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-red-500 uppercase text-center mb-4">
+                        <h2 className="text-xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-gray-500 uppercase text-center mb-4">
                             Simulation Insights
                         </h2>
                         <div className="flex justify-around mb-4">
