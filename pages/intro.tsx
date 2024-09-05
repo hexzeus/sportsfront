@@ -8,7 +8,6 @@ const IntroPage = () => {
     const [loadingProgress, setLoadingProgress] = useState(0);
     const router = useRouter();
 
-
     useEffect(() => {
         setAnimated(true);
 
@@ -29,8 +28,7 @@ const IntroPage = () => {
         };
     }, [router]);
 
-
-    const iconClasses = "w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-zinc-300 transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-red-500";
+    const iconClasses = "w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-zinc-300 transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500";
 
     return (
         <div className="fixed inset-0 z-50 bg-zinc-900 flex flex-col items-center justify-center overflow-hidden">
@@ -44,7 +42,7 @@ const IntroPage = () => {
                     </filter>
                     <rect width="100%" height="100%" filter="url(#noise)" />
                 </svg>
-                <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 via-transparent to-orange-700/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-sky-700/20"></div>
                 <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
                     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                         <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
@@ -67,16 +65,16 @@ const IntroPage = () => {
                 </div>
 
                 {/* Title with animated underline */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 uppercase tracking-tighter drop-shadow-glow relative inline-block" style={{ fontFamily: 'Impact, sans-serif' }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-500 to-teal-500 uppercase tracking-tighter drop-shadow-glow relative inline-block" style={{ fontFamily: 'Impact, sans-serif' }}>
                     Lock & Hammer
-                    <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 transform scale-x-0 transition-transform duration-1000 ease-in-out origin-left" style={{ animation: 'expandWidth 2s forwards' }}></span>
+                    <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-sky-500 to-teal-500 transform scale-x-0 transition-transform duration-1000 ease-in-out origin-left" style={{ animation: 'expandWidth 2s forwards' }}></span>
                 </h1>
 
                 {/* Subtitle with staggered fade-in */}
                 <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold tracking-wide leading-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
                     {['DOMINATE', 'CRUSH', 'CONQUER'].map((word, index) => (
                         <span key={word} className="inline-block mx-1" style={{ animation: `fadeIn 0.5s ${index * 0.2}s forwards`, opacity: 0 }}>
-                            <span className={`text-${index === 0 ? 'red' : index === 1 ? 'orange' : 'yellow'}-500`}>{word}</span>
+                            <span className={`text-${index === 0 ? 'blue' : index === 1 ? 'sky' : 'teal'}-500`}>{word}</span>
                             {index < 2 && '.'}
                         </span>
                     ))}
@@ -95,7 +93,7 @@ const IntroPage = () => {
 
                 {/* Tagline with typing effect */}
                 <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 mt-4 sm:mt-6 tracking-wide font-bold opacity-90" style={{ fontFamily: 'Arial Black, sans-serif' }}>
-                    <span className="inline-block whitespace-nowrap overflow-hidden border-r-4 border-orange-500" style={{ animation: 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite' }}>
+                    <span className="inline-block whitespace-nowrap overflow-hidden border-r-4 border-sky-500" style={{ animation: 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite' }}>
                         Unleashing Raw Sports Betting Power
                     </span>
                 </p>
@@ -104,7 +102,7 @@ const IntroPage = () => {
                 <div className="mt-6 sm:mt-8 w-full max-w-xs sm:max-w-md mx-auto">
                     <div className="bg-zinc-800 h-3 sm:h-4 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 transition-all duration-300 ease-out"
+                            className="h-full bg-gradient-to-r from-blue-600 via-sky-500 to-teal-500 transition-all duration-300 ease-out"
                             style={{ width: `${loadingProgress}%` }}
                         ></div>
                     </div>
@@ -134,7 +132,7 @@ const IntroPage = () => {
                 }
                 @keyframes blink-caret {
                     from, to { border-color: transparent }
-                    50% { border-color: orange; }
+                    50% { border-color: skyblue; }
                 }
                 .animate-float {
                     animation: float 3s ease-in-out infinite;
