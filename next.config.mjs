@@ -8,6 +8,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',  // This allows any image path from this domain
             },
+            {
+                protocol: 'https',
+                hostname: 'a.espncdn.com',  // ESPN images hostname
+                port: '',
+                pathname: '/**',  // This allows any image path from this domain
+            },
         ],
     },
 };
