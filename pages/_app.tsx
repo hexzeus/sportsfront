@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import IntroPage from './intro';
-import Layout from '../components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -61,9 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             {showIntro ? (
                 <IntroPage onComplete={handleIntroComplete} />
             ) : (
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <Component {...pageProps} />
             )}
         </>
     );
