@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
 
             {/* Dynamic Betting Disclaimer Footer */}
             <footer className="relative z-10 w-full text-center py-3 sm:py-4 bg-black/80 backdrop-blur-md">
-                <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-gray-400 hover:text-blue-400 transition duration-300 animate-pulse">
+                <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-yellow-500 hover:text-blue-400 transition duration-300 animate-pulse">
                     <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     <span className="text-shadow-lg">
                         Disclaimer

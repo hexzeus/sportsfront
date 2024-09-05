@@ -380,12 +380,12 @@ const Simulation: React.FC = () => {
                 </div>
 
                 <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
-                    <div className="flex items-center justify-center mb-2">
+                    <div className="flex items-center mb-2">
                         <Activity className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500" />
-                        <span className="text-md sm:text-lg md:text-xl font-bold text-zinc-300">Last Play</span>
+                        <span className="text-md sm:text-lg font-bold text-zinc-300">Last Play</span>
                     </div>
-                    <div className="text-xs sm:text-sm md:text-base text-zinc-300 h-16 sm:h-20 md:h-24 overflow-y-auto">
-                        <p>{lastPlay}</p>
+                    <div className="text-xs sm:text-sm text-zinc-300 h-10 sm:h-12 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-transparent">
+                        <p className="leading-relaxed">{lastPlay}</p>
                     </div>
                 </div>
 
