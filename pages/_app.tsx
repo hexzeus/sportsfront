@@ -1,8 +1,22 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+
+    useEffect(() => {
+        // Check if the user has visited the intro page before
+        const hasVisitedIntro = localStorage.getItem('visitedIntro');
+
+        // If the intro page hasn't been visited, redirect to '/intro'
+        if (!hasVisitedIntro && router.pathname !== '/intro') {
+            router.push('/intro');
+        }
+    }, [router]);
+
     return (
         <>
             <Head>
