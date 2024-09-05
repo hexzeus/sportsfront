@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
-import { Skull, Flame, Zap, Trophy, ArrowRight } from 'lucide-react';
+import { Lock, Flame, Trophy, ArrowRight, Hammer } from 'lucide-react';
 import Simulation from '../components/Simulation';
 import SportsAnalysisButton from '../components/SportsAnalysisButton';
 
@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
                 </p>
 
                 <div className="flex justify-center space-x-3 sm:space-x-4 mb-4 sm:mb-6">
-                    {[Skull, Flame, Zap].map((Icon, index) => (
+                    {[Lock, Hammer, Trophy].map((Icon, index) => (
                         <Icon
                             key={index}
                             className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-gray-400 animate-pulse"

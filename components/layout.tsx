@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Home, BarChart2, Settings, Menu, X, Flame, Zap, TrendingUp, Skull } from 'lucide-react';
+import { Home, BarChart2, Settings, Menu, X, Flame, Trophy, TrendingUp, Skull, Lock, Hammer, Target } from 'lucide-react';
+
 
 const navItems = [
     { name: 'Home', href: '/', icon: Home },
@@ -33,7 +34,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-zinc-900/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+            className={`fixed w-full z-50 transition-all duration-500 ${isScrolled
+                ? 'bg-gradient-to-r from-zinc-900/90 via-dark-blue/90 to-zinc-800/90 backdrop-blur-md shadow-lg'
+                : 'bg-transparent'
                 }`}
         >
             {children}
@@ -45,15 +48,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return (
             <Link href={item.href} passHref legacyBehavior>
                 <motion.a
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-blue-600/20 hover:text-white'
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300 ${isActive
+                        ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white shadow-lg'
+                        : 'text-gray-300 hover:bg-gradient-to-r hover:from-red-600/20 hover:to-orange-500/20 hover:text-white'
                         } ${mobile ? 'w-full' : ''}`}
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     whileTap={{ scale: 0.95 }}
                 >
                     <item.icon className="w-5 h-5" />
-                    <span>{item.name}</span>
+                    <span className="uppercase tracking-wider">{item.name}</span>
                 </motion.a>
             </Link>
         );
@@ -61,10 +64,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-dark-blue to-zinc-800 text-gray-200">
+            {/* Texture Overlay */}
+            <div className="fixed inset-0 z-0 opacity-5 pointer-events-none">
+                <Image src="/subtle-texture.png" alt="Texture" layout="fill" objectFit="cover" />
+            </div>
+
             {/* Navbar */}
             <NavbarContainer>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center justify-between h-20">
                         <div className="flex items-center">
                             <Link href="/" passHref legacyBehavior>
                                 <motion.a
@@ -72,7 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    <div className="relative w-10 h-10">
+                                    <div className="relative w-12 h-12">
                                         <Image
                                             src="/file.png"
                                             alt="L&H Picks Logo"
@@ -81,7 +89,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                             style={{ objectFit: 'contain' }}
                                         />
                                     </div>
-                                    <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-gray-500">
+                                    <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500">
                                         L&H PICKS
                                     </span>
                                 </motion.a>
@@ -97,7 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <div className="md:hidden">
                             <motion.button
                                 onClick={toggleMobileMenu}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gradient-to-r hover:from-red-600/20 hover:to-orange-500/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
@@ -116,7 +124,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="md:hidden fixed inset-x-0 top-16 z-40 bg-zinc-900/95 backdrop-blur-md overflow-hidden"
+                        className="md:hidden fixed inset-x-0 top-20 z-40 bg-gradient-to-b from-zinc-900/95 to-dark-blue/95 backdrop-blur-md overflow-hidden border-t border-gray-700"
                     >
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             {navItems.map((item) => (
@@ -128,7 +136,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </AnimatePresence>
 
             {/* Main content */}
-            <main className="pt-16 flex-grow">{children}</main>
+            <main className="pt-20 flex-grow">{children}</main>
 
             {/* Fixed Bottom Icons */}
             <motion.div
@@ -137,18 +145,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
             >
-                {[Skull, Flame, Zap].map((Icon, index) => (
+                {[Lock, Hammer, Trophy].map((Icon, index) => (
                     <motion.div
                         key={index}
                         whileHover={{ scale: 1.2, rotate: 15 }}
                         whileTap={{ scale: 0.8 }}
-                        className="p-2 bg-zinc-800/80 rounded-full shadow-lg backdrop-blur-sm"
+                        className="p-2 bg-gradient-to-br from-zinc-800/80 to-dark-blue/80 rounded-full shadow-lg backdrop-blur-sm"
                         style={{ animationDelay: `${index * 150}ms` }}
                     >
-                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-orange-500' : 'text-yellow-400'}`} />
+                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-yellow-400' : 'text-green-500'}`} />
                     </motion.div>
                 ))}
             </motion.div>
         </div>
     );
-} 
+}
