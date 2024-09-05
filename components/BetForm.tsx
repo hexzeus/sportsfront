@@ -119,7 +119,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
         e.preventDefault();
         const token = localStorage.getItem("adminToken");
         if (!token) {
-            setError("You must be logged in as admin to submit bets."); // fixed with HTML entities
+            setError("You must be logged in as admin to submit bets.");
             return;
         }
 
@@ -144,11 +144,11 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
         try {
             await onSubmit(bet, token);
-            setSuccess("Bet successfully submitted!"); // fixed with HTML entities
+            setSuccess("Bet successfully submitted!");
             setError("");
             resetForm();
         } catch (err) {
-            setError("Failed to submit bet. Please try again."); // fixed with HTML entities
+            setError("Failed to submit bet. Please try again.");
             setSuccess("");
         }
     };
@@ -158,19 +158,19 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
             onSubmit={handleSubmit}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-zinc-900 to-black p-4 sm:p-6 md:p-10 rounded-lg shadow-2xl text-zinc-100 border border-red-700 max-w-xl md:max-w-2xl mx-auto space-y-6 sm:space-y-8 relative overflow-hidden"
+            className="bg-gradient-to-br from-[#1e1e1e] to-[#0c0c0c] p-4 sm:p-6 md:p-10 rounded-lg shadow-2xl text-[#e0e0e0] border border-[#1a73e8] max-w-xl md:max-w-2xl mx-auto space-y-6 sm:space-y-8 relative overflow-hidden"
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-orange-900/10 to-yellow-900/20 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c0c]/50 via-[#1e1e1e]/20 to-[#111111]/50 pointer-events-none"></div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 mb-6 sm:mb-8 relative z-10" style={{ fontFamily: 'Impact, sans-serif' }}>
-                Create Bet Ticket
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#007acc] via-[#005f99] to-[#003f66] mb-6 sm:mb-8 relative z-10" style={{ fontFamily: 'Impact, sans-serif' }}>
+                CREATE BET TICKET
             </h2>
 
             {error && (
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-red-500 text-center font-bold bg-red-900/20 py-2 rounded-md"
+                    className="text-[#ff4c4c] text-center font-bold bg-[#ff4c4c]/20 py-2 rounded-md"
                 >
                     {error}
                 </motion.p>
@@ -179,7 +179,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-green-500 text-center font-bold bg-green-900/20 py-2 rounded-md"
+                    className="text-[#00cc66] text-center font-bold bg-[#00cc66]/20 py-2 rounded-md"
                 >
                     {success}
                 </motion.p>
@@ -188,11 +188,11 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
             <div className="space-y-4 sm:space-y-6 relative z-10">
                 {/* Team Selection */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Team:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Team:</label>
                     <select
                         value={team}
                         onChange={(e) => setTeam(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                     >
                         <option value="">Select Team</option>
                         {Object.entries(teams).map(([league, teamNames]) => (
@@ -205,23 +205,23 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             </optgroup>
                         ))}
                     </select>
-                    <p className="mt-2 text-sm text-zinc-400">Or write your own team name below:</p>
+                    <p className="mt-2 text-sm text-[#b0b0b0]">Or write your own team name below:</p>
                     <input
                         type="text"
                         value={team}
                         onChange={(e) => setTeam(e.target.value)}
-                        className="w-full mt-2 p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full mt-2 p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         placeholder="Write your own team name"
                     />
                 </div>
 
                 {/* Opponent Selection */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Opponent:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Opponent:</label>
                     <select
                         value={opponent}
                         onChange={(e) => setOpponent(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                     >
                         <option value="">Select Opponent</option>
                         {Object.entries(teams).map(([league, teamNames]) => (
@@ -234,12 +234,12 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             </optgroup>
                         ))}
                     </select>
-                    <p className="mt-2 text-sm text-zinc-400">Or write your own opponent&apos;s name below:</p>
+                    <p className="mt-2 text-sm text-[#b0b0b0]">Or write your own opponent&apos;s name below:</p>
                     <input
                         type="text"
                         value={opponent}
                         onChange={(e) => setOpponent(e.target.value)}
-                        className="w-full mt-2 p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full mt-2 p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         placeholder="Write your own opponent's name"
                     />
                 </div>
@@ -247,12 +247,12 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                 {/* Amount and Odds Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block font-semibold text-lg mb-1 text-orange-400">Amount:</label>
+                        <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Amount:</label>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <select
                                 value={amount}
                                 onChange={(e) => setAmount(parseFloat(e.target.value))}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             >
                                 <option value="">Select Amount</option>
                                 {commonAmounts.map((amount) => (
@@ -266,18 +266,18 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                                 placeholder="Custom amount"
                                 value={customAmount}
                                 onChange={(e) => setCustomAmount(e.target.value)}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block font-semibold text-lg mb-1 text-orange-400">Odds:</label>
+                        <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Odds:</label>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <select
                                 value={odds}
                                 onChange={(e) => setOdds(e.target.value)}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             >
                                 <option value="">Select Odds</option>
                                 {commonOdds.map((odds) => (
@@ -291,7 +291,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                                 placeholder="Custom odds"
                                 value={customOdds}
                                 onChange={(e) => setCustomOdds(e.target.value)}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             />
                         </div>
                     </div>
@@ -299,23 +299,23 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
                 {/* Date Selection */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Date:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Date:</label>
                     <input
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         required
                     />
                 </div>
 
                 {/* Description */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Description:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Description:</label>
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         rows={4}
                         placeholder="Describe the bet"
                     />
@@ -323,11 +323,11 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
                 {/* Result Selection */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Result:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Result:</label>
                     <select
                         value={result}
                         onChange={(e) => setResult(e.target.value as 'win' | 'loss' | 'pending')}
-                        className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                        className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         required
                     >
                         <option value="win">Win</option>
@@ -338,12 +338,12 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
 
                 {/* Bet Type Selection */}
                 <div>
-                    <label className="block font-semibold text-lg mb-1 text-orange-400">Bet Type:</label>
+                    <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Bet Type:</label>
                     <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                         <select
                             value={betType}
                             onChange={(e) => setBetType(e.target.value)}
-                            className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                            className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         >
                             <option value="">Select Bet Type</option>
                             {commonBetTypes.map((type) => (
@@ -357,7 +357,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                             placeholder="Custom bet type"
                             value={customBetType}
                             onChange={(e) => setCustomBetType(e.target.value)}
-                            className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                            className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                         />
                     </div>
                 </div>
@@ -365,12 +365,12 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                 {/* Ticket Cost and Payout Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block font-semibold text-lg mb-1 text-orange-400">Ticket Cost:</label>
+                        <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Ticket Cost:</label>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <select
                                 value={ticketCost}
                                 onChange={(e) => setTicketCost(parseFloat(e.target.value))}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             >
                                 <option value="">Select Ticket Cost</option>
                                 {commonTicketCosts.map((cost) => (
@@ -384,18 +384,18 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                                 placeholder="Custom ticket cost"
                                 value={customTicketCost}
                                 onChange={(e) => setCustomTicketCost(e.target.value)}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block font-semibold text-lg mb-1 text-orange-400">Payout:</label>
+                        <label className="block font-semibold text-lg mb-1 text-[#1a73e8]">Payout:</label>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <select
                                 value={payout}
                                 onChange={(e) => setPayout(parseFloat(e.target.value))}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             >
                                 <option value="">Select Payout</option>
                                 {commonPayouts.map((payout) => (
@@ -409,7 +409,7 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
                                 placeholder="Custom payout"
                                 value={customPayout}
                                 onChange={(e) => setCustomPayout(e.target.value)}
-                                className="w-full p-3 sm:p-4 bg-zinc-800 text-zinc-100 rounded-lg border border-red-700 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
+                                className="w-full p-3 sm:p-4 bg-[#111111] text-[#e0e0e0] rounded-lg border border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8] transition duration-200"
                             />
                         </div>
                     </div>
@@ -417,10 +417,10 @@ export default function BetForm({ onSubmit, initialData = {} }: BetFormProps) {
             </div>
 
             <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(255, 99, 71, 0.5)" }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(26, 115, 232, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="mt-6 sm:mt-8 w-full py-3 sm:py-4 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-zinc-100 text-lg font-bold uppercase rounded-lg shadow-lg transition-all duration-300 relative z-10"
+                className="mt-6 sm:mt-8 w-full py-3 sm:py-4 bg-gradient-to-r from-[#1a73e8] to-[#005f99] hover:from-[#007acc] hover:to-[#003f66] text-[#e0e0e0] text-lg font-bold uppercase rounded-lg shadow-lg transition-all duration-300 relative z-10"
             >
                 Submit Bet
             </motion.button>

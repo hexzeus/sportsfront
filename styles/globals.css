@@ -1,16 +1,17 @@
 /* Global font settings */
 body {
   font-family: 'Arial Black', 'Impact', 'Verdana', sans-serif;
-  background: linear-gradient(135deg, #18181b 0%, #7f1d1d 50%, #b91c1c 100%);
+  background: linear-gradient(135deg, #0d0d0d 0%, #1e3a8a 50%, #374151 100%);
   background-attachment: fixed;
   background-size: cover;
-  color: #fafafa;
+  color: #e5e7eb; /* Light gray text */
   min-height: 100vh;
 }
 
 h1, h2, h3 {
   font-family: 'Impact', 'Arial Black', sans-serif;
   letter-spacing: 0.1em;
+  color: #e2e8f0; /* Light gray for headers */
 }
 
 /* Tailwind base, components, and utilities */
@@ -39,10 +40,10 @@ h1, h2, h3 {
 
 @keyframes textGlow {
     0%, 100% {
-        text-shadow: 0 0 8px rgba(255, 99, 71, 0.5);
+        text-shadow: 0 0 8px rgba(96, 165, 250, 0.5); /* Blue glow */
     }
     50% {
-        text-shadow: 0 0 16px rgba(255, 99, 71, 1);
+        text-shadow: 0 0 16px rgba(96, 165, 250, 1); /* Stronger blue glow */
     }
 }
 
@@ -72,40 +73,40 @@ h1, h2, h3 {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Ultra-Badass Theme Colors */
+/* Blue-Black-Gray Theme Colors */
 .bg-ultra-black {
-  background-color: #18181b;
+  background-color: #0d0d0d;
 }
 
-.bg-ultra-red {
-  background-color: #b91c1c;
+.bg-ultra-blue {
+  background-color: #1e3a8a;
 }
 
-.bg-ultra-orange {
-  background-color: #ea580c;
+.bg-ultra-gray {
+  background-color: #374151;
 }
 
 .text-ultra-silver {
-  color: #e5e5e5;
+  color: #d1d5db; /* Soft gray for text */
 }
 
 /* Button Styles */
 .btn-primary {
-  @apply bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold uppercase py-3 px-6 rounded-lg hover:from-red-700 hover:to-orange-700 transition-all duration-300 shadow-lg;
+  @apply bg-gradient-to-r from-blue-600 to-gray-600 text-white font-bold uppercase py-3 px-6 rounded-lg hover:from-blue-700 hover:to-gray-700 transition-all duration-300 shadow-lg;
 }
 
 /* Custom Utilities */
-.text-shadow-fire {
-  text-shadow: 0 0 10px rgba(255, 99, 71, 0.8);
+.text-shadow-blue {
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.8); /* Blue text shadow */
 }
 
-.border-fire {
-  border-color: #b91c1c;
-  box-shadow: 0 0 10px rgba(255, 99, 71, 0.5);
+.border-blue-glow {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
 }
 
-.bg-gradient-fire {
-  background-image: linear-gradient(135deg, #b91c1c 0%, #ea580c 100%);
+.bg-gradient-blue {
+  background-image: linear-gradient(135deg, #1e3a8a 0%, #374151 100%);
 }
 
 /* Noise Texture */
