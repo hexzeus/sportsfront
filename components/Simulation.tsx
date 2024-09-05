@@ -347,11 +347,16 @@ const Simulation: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Coin Toss Animation */}
                 {showCoinAnimation && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="w-24 h-24 rounded-full bg-yellow-500 animate-spin flex items-center justify-center">
-                            <span className="text-2xl font-bold">COIN</span>
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+                        <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64">
+                            <Image
+                                src="/coin.png"  // Assuming you've added a coin.png to your public folder
+                                alt="Coin Toss"
+                                fill
+                                sizes="(max-width: 640px) 128px, (max-width: 768px) 192px, 256px"
+                                className="object-contain animate-spin-slow"  // You'll need to define this animation in your CSS
+                            />
                         </div>
                     </div>
                 )}
