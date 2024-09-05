@@ -28,14 +28,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-    // Ensure user is redirected to /intro page on first visit
-    useEffect(() => {
-        const hasVisitedIntro = localStorage.getItem('visitedIntro');
-        if (!hasVisitedIntro && router.pathname !== '/intro') {
-            router.push('/intro'); // Redirect to /intro if the intro page hasn't been visited
-        }
-    }, [router]);
-
     const NavbarContainer = ({ children }: { children: React.ReactNode }) => (
         <motion.nav
             initial={{ y: -100 }}
