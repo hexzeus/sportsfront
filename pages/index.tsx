@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
                 >
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-800 to-steel-900 opacity-80 transform skew-x-12 group-hover:skew-x-0 transition-all duration-700 ease-in-out"></span>
                     <span className="relative z-10 flex items-center space-x-2">
-                        <Trophy className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-gray-200 animate-bounce" />
+                        <Trophy className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-yellow-500 animate-bounce" />
                         <Flame className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-blue-300 animate-pulse" />
                         <span className="font-black tracking-widest text-shadow-md text-gray-200">Unleash Our Picks</span>
                         <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out text-gray-300" />
