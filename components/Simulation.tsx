@@ -1,49 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Clock, Calendar, Trophy, Radio, Activity } from 'lucide-react';
 import Image from 'next/image';
+import axios from 'axios';
 
-const NFL_TEAMS = [
-    { name: "Arizona Cardinals", abbreviation: "ARI", color: "#97233F" },
-    { name: "Atlanta Falcons", abbreviation: "ATL", color: "#A71930" },
-    { name: "Baltimore Ravens", abbreviation: "BAL", color: "#241773" },
-    { name: "Buffalo Bills", abbreviation: "BUF", color: "#00338D" },
-    { name: "Carolina Panthers", abbreviation: "CAR", color: "#0085CA" },
-    { name: "Chicago Bears", abbreviation: "CHI", color: "#0B162A" },
-    { name: "Cincinnati Bengals", abbreviation: "CIN", color: "#FB4F14" },
-    { name: "Cleveland Browns", abbreviation: "CLE", color: "#311D00" },
-    { name: "Dallas Cowboys", abbreviation: "DAL", color: "#003594" },
-    { name: "Denver Broncos", abbreviation: "DEN", color: "#FB4F14" },
-    { name: "Detroit Lions", abbreviation: "DET", color: "#0076B6" },
-    { name: "Green Bay Packers", abbreviation: "GB", color: "#203731" },
-    { name: "Houston Texans", abbreviation: "HOU", color: "#03202F" },
-    { name: "Indianapolis Colts", abbreviation: "IND", color: "#002C5F" },
-    { name: "Jacksonville Jaguars", abbreviation: "JAX", color: "#006778" },
-    { name: "Kansas City Chiefs", abbreviation: "KC", color: "#E31837" },
-    { name: "Las Vegas Raiders", abbreviation: "LV", color: "#000000" },
-    { name: "Los Angeles Chargers", abbreviation: "LAC", color: "#0080C6" },
-    { name: "Los Angeles Rams", abbreviation: "LA", color: "#003594" },
-    { name: "Miami Dolphins", abbreviation: "MIA", color: "#008E97" },
-    { name: "Minnesota Vikings", abbreviation: "MIN", color: "#4F2683" },
-    { name: "New England Patriots", abbreviation: "NE", color: "#002244" },
-    { name: "New Orleans Saints", abbreviation: "NO", color: "#D3BC8D" },
-    { name: "New York Giants", abbreviation: "NYG", color: "#0B2265" },
-    { name: "New York Jets", abbreviation: "NYJ", color: "#125740" },
-    { name: "Philadelphia Eagles", abbreviation: "PHI", color: "#004C54" },
-    { name: "Pittsburgh Steelers", abbreviation: "PIT", color: "#FFB612" },
-    { name: "San Francisco 49ers", abbreviation: "SF", color: "#AA0000" },
-    { name: "Seattle Seahawks", abbreviation: "SEA", color: "#002244" },
-    { name: "Tampa Bay Buccaneers", abbreviation: "TB", color: "#D50A0A" },
-    { name: "Tennessee Titans", abbreviation: "TEN", color: "#0C2340" },
-    { name: "Washington Commanders", abbreviation: "WAS", color: "#5A1414" },
-];
+const ESPN_NFL_TEAMS_API = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams';
 
 const COMMENTATORS = [
     "Joe Buck", "Troy Aikman", "Al Michaels", "Cris Collinsworth", "Jim Nantz", "Tony Romo"
 ];
 
 const Simulation: React.FC = () => {
-    const [homeTeam, setHomeTeam] = useState<{ name: string; abbreviation: string; color: string }>({ name: "", abbreviation: "", color: "" });
-    const [awayTeam, setAwayTeam] = useState<{ name: string; abbreviation: string; color: string }>({ name: "", abbreviation: "", color: "" });
+    const [homeTeam, setHomeTeam] = useState<any>(null);
+    const [awayTeam, setAwayTeam] = useState<any>(null);
+    const [teams, setTeams] = useState<any[]>([]);
     const [homeScore, setHomeScore] = useState(0);
     const [awayScore, setAwayScore] = useState(0);
     const [quarter, setQuarter] = useState(1);
@@ -62,25 +31,47 @@ const Simulation: React.FC = () => {
     const [driveStatus, setDriveStatus] = useState<string>("");
     const [isMounted, setIsMounted] = useState(false);
 
+    // Fetch teams from ESPN API
     useEffect(() => {
-        const selectRandomTeams = () => {
-            let home = NFL_TEAMS[Math.floor(Math.random() * NFL_TEAMS.length)];
-            let away = NFL_TEAMS[Math.floor(Math.random() * NFL_TEAMS.length)];
-            while (away.abbreviation === home.abbreviation) {
-                away = NFL_TEAMS[Math.floor(Math.random() * NFL_TEAMS.length)];
+        const fetchTeams = async () => {
+            try {
+                const response = await axios.get(ESPN_NFL_TEAMS_API);
+                const teamData = response.data.sports[0].leagues[0].teams.map((team: any) => ({
+                    name: team.team.displayName,
+                    abbreviation: team.team.abbreviation,
+                    color: `#${team.team.color}`,
+                    logo: team.team.logos[0].href
+                }));
+                setTeams(teamData);
+            } catch (error) {
+                console.error('Error fetching NFL teams:', error);
             }
-            setHomeTeam(home);
-            setAwayTeam(away);
-            setPossession(Math.random() < 0.5 ? home.abbreviation : away.abbreviation);
         };
-        selectRandomTeams();
-
-        const selectCommentators = () => {
-            const shuffled = COMMENTATORS.sort(() => 0.5 - Math.random());
-            setCommentators(shuffled.slice(0, 2));
-        };
-        selectCommentators();
+        fetchTeams();
     }, []);
+
+    // Select random teams when teams are loaded
+    useEffect(() => {
+        if (teams.length > 0) {
+            const selectRandomTeams = () => {
+                let home = teams[Math.floor(Math.random() * teams.length)];
+                let away = teams[Math.floor(Math.random() * teams.length)];
+                while (away.abbreviation === home.abbreviation) {
+                    away = teams[Math.floor(Math.random() * teams.length)];
+                }
+                setHomeTeam(home);
+                setAwayTeam(away);
+                setPossession(Math.random() < 0.5 ? home.abbreviation : away.abbreviation);
+            };
+            selectRandomTeams();
+
+            const selectCommentators = () => {
+                const shuffled = COMMENTATORS.sort(() => 0.5 - Math.random());
+                setCommentators(shuffled.slice(0, 2));
+            };
+            selectCommentators();
+        }
+    }, [teams]);
 
     const addCommentary = useCallback((message: string) => {
         setCommentary(prev => [message, ...prev.slice(0, 4)]);
@@ -94,14 +85,14 @@ const Simulation: React.FC = () => {
     }, []);
 
     const updateDriveStatus = useCallback(() => {
-        const currentTeam = possession === homeTeam.abbreviation ? homeTeam : awayTeam;
+        const currentTeam = possession === homeTeam?.abbreviation ? homeTeam : awayTeam;
         const yardLine = fieldPosition > 50 ? 100 - fieldPosition : fieldPosition;
         const side = fieldPosition > 50 ? "opponent's" : "own";
-        setDriveStatus(`${currentTeam.name} ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo} at ${side} ${yardLine}`);
+        setDriveStatus(`${currentTeam?.name} ${down}${['st', 'nd', 'rd'][down - 1] || 'th'} & ${yardsToGo} at ${side} ${yardLine}`);
     }, [possession, homeTeam, awayTeam, down, yardsToGo, fieldPosition]);
 
     const generatePlay = useCallback(() => {
-        if (!homeTeam.abbreviation || !awayTeam.abbreviation) return;
+        if (!homeTeam || !awayTeam) return;
 
         const playTypes = ['run', 'pass', 'sack', 'turnover', 'special'];
         const playType = playTypes[Math.floor(Math.random() * playTypes.length)];
@@ -113,6 +104,7 @@ const Simulation: React.FC = () => {
         const offensivePlayer = getRandomPlayer();
         const defensivePlayer = getRandomPlayer();
 
+        // Generate commentary based on play type
         switch (playType) {
             case 'run':
                 yards = Math.floor(Math.random() * 15) - 2;
@@ -171,6 +163,7 @@ const Simulation: React.FC = () => {
                 break;
         }
 
+        // Manage field position, down, and play outcome
         if (playType !== 'turnover' && playType !== 'special') {
             setFieldPosition(prev => Math.min(Math.max(prev + yards, 0), 100));
             setYardsToGo(prev => Math.max(prev - yards, 0));
@@ -199,6 +192,7 @@ const Simulation: React.FC = () => {
             }
         }
 
+        // Touchdown scenario
         if (fieldPosition >= 100) {
             commentary = `Touchdown ${currentTeam.name}! The crowd goes wild!`;
             currentTeam.abbreviation === homeTeam.abbreviation ? setHomeScore(prev => prev + 7) : setAwayScore(prev => prev + 7);
@@ -220,7 +214,7 @@ const Simulation: React.FC = () => {
         homeTeam,
         awayTeam,
         getRandomPlayer,
-        updateDriveStatus // Added this missing dependency
+        updateDriveStatus
     ]);
 
     const determineWinner = useCallback(() => {
@@ -243,7 +237,7 @@ const Simulation: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if (gameStatus === "Not Started" && homeTeam.abbreviation && awayTeam.abbreviation) {
+        if (gameStatus === "Not Started" && homeTeam && awayTeam) {
             setGameStatus("In Progress");
             addCommentary(`Welcome to this exciting matchup between ${homeTeam.name} and ${awayTeam.name}!`);
             addCommentary(`I'm ${commentators[0]} joined by ${commentators[1]}. We're in for a treat today!`);
@@ -310,6 +304,7 @@ const Simulation: React.FC = () => {
                             {formattedDate}
                         </div>
                     </div>
+                    {/* Main logo */}
                     <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
                         <Image
                             src="/file.png"
@@ -323,30 +318,51 @@ const Simulation: React.FC = () => {
                     </div>
                 </div>
 
+                {/* Scoreboard with logos above team names */}
                 <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
                     <div className="grid grid-cols-3 gap-2 sm:gap-4 text-lg sm:text-2xl md:text-3xl font-bold">
-                        <div className="text-red-500 animate-pulse" style={isMounted ? { color: homeTeam.color } : undefined}>
-                            {homeTeam.abbreviation || "HOME"}
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src={homeTeam?.logo || '/fallback.png'}
+                                alt={`${homeTeam?.name} logo`}
+                                width={64}
+                                height={64}
+                                className="object-contain mb-2"
+                            />
+                            <span className="text-red-500 animate-pulse" style={isMounted ? { color: homeTeam?.color } : undefined}>
+                                {homeTeam?.abbreviation || "HOME"}
+                            </span>
                         </div>
-                        <div className="text-zinc-100">{timeLeft}</div>
-                        <div className="text-orange-500 animate-pulse" style={isMounted ? { color: awayTeam.color } : undefined}>
-                            {awayTeam.abbreviation || "AWAY"}
+                        <div className="text-zinc-100 flex items-center justify-center">
+                            {timeLeft}
                         </div>
-                        <div className="text-red-500" style={isMounted ? { color: homeTeam.color } : undefined}>
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src={awayTeam?.logo || '/fallback.png'}
+                                alt={`${awayTeam?.name} logo`}
+                                width={64}
+                                height={64}
+                                className="object-contain mb-2"
+                            />
+                            <span className="text-orange-500 animate-pulse" style={isMounted ? { color: awayTeam?.color } : undefined}>
+                                {awayTeam?.abbreviation || "AWAY"}
+                            </span>
+                        </div>
+                        <div className="text-red-500 text-center" style={isMounted ? { color: homeTeam?.color } : undefined}>
                             {homeScore}
                         </div>
-                        <div className="text-yellow-500 text-base sm:text-xl md:text-2xl">Q{quarter}</div>
-                        <div className="text-orange-500" style={isMounted ? { color: awayTeam.color } : undefined}>
+                        <div className="text-yellow-500 text-base sm:text-xl md:text-2xl text-center">Q{quarter}</div>
+                        <div className="text-orange-500 text-center" style={isMounted ? { color: awayTeam?.color } : undefined}>
                             {awayScore}
                         </div>
                     </div>
-                    <div className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base font-semibold text-zinc-300">
+                    <div className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base font-semibold text-zinc-300 text-center">
                         {gameStatus === "In Progress" ? driveStatus : gameStatus}
                     </div>
                     {winner && (
                         <div className="mt-4 text-lg sm:text-xl md:text-2xl font-bold flex items-center justify-center animate-bounce">
                             <Trophy className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-yellow-500" />
-                            {winner === "TIE" ? "It's a Tie!" : `${winner === homeTeam.abbreviation ? homeTeam.name : awayTeam.name} Wins!`}
+                            {winner === "TIE" ? "It's a Tie!" : `${winner === homeTeam?.abbreviation ? homeTeam?.name : awayTeam?.name} Wins!`}
                         </div>
                     )}
                 </div>
@@ -368,7 +384,6 @@ const Simulation: React.FC = () => {
                         <Activity className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500" />
                         <span className="text-md sm:text-lg md:text-xl font-bold text-zinc-300">Last Play</span>
                     </div>
-                    {/* Set a fixed height and allow overflow to scroll */}
                     <div className="text-xs sm:text-sm md:text-base text-zinc-300 h-16 sm:h-20 md:h-24 overflow-y-auto">
                         <p>{lastPlay}</p>
                     </div>
