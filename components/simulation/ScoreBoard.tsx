@@ -37,16 +37,15 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
 
                 {/* Timer & Quarter */}
                 <div className="text-center relative">
-                    <div className="bg-gradient-to-b from-gray-900 to-black rounded-lg px-2 py-1 sm:px-2 sm:py-2 shadow-inner border-t-2 border-gray-700">
-                        <span className="font-digital text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-yellow-400 pulse-timer shadow-timer">
+                    <div className="bg-gradient-to-b from-gray-900 to-black rounded-lg px-2 py-2 shadow-inner border-t-2 border-gray-700">
+                        <span className="font-digital text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-yellow-400 pulse-timer shadow-timer">
                             {gameState.timeLeft}
                         </span>
                     </div>
-                    <span className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-500 mt-1 sm:mt-2 block">
+                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-500 mt-2 block">
                         Q{gameState.quarter}
                     </span>
                 </div>
-
 
                 {/* Away Team */}
                 <TeamDisplay team={awayTeam} />
