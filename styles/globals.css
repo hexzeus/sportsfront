@@ -135,3 +135,26 @@ h1, h2, h3 {
 .animate-spin-slow {
   animation: spin-slow 2s linear infinite;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap'); /* Another digital font */
+
+.scoreboard {
+  background-color: #1C1C1C; /* Dark background for scoreboard */
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  border: 2px solid #333; /* Slight border to make it pop like an actual scoreboard */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8); /* Shadow for more depth */
+  display: inline-block;
+  text-align: center;
+}
+
+.font-digital {
+  font-family: 'Orbitron', sans-serif; /* Digital font for scoreboard feel */
+}
+
+.shadow-timer {
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Deeper shadow for the timer */
+  color: #FFD700; /* Bright yellow-gold color resembling NFL scoreboard */
+  letter-spacing: 0.05em;
+}
+

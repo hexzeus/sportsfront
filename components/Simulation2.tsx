@@ -632,9 +632,17 @@ const Simulation: React.FC = () => {
                                 </span>
                             </span>
                         </div>
+
+
                         <div className="text-zinc-100 flex items-center justify-center">
-                            {gameState.timeLeft}
+                            <div className="scoreboard text-center">
+                                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-300 font-digital tracking-wider shadow-timer">
+                                    {gameState.timeLeft}
+                                </span>
+                            </div>
                         </div>
+
+
                         <div className="flex flex-col items-center">
                             <Image
                                 src={awayTeam?.logo || '/fallback.png'}
