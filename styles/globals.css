@@ -138,23 +138,42 @@ h1, h2, h3 {
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap'); /* Another digital font */
 
+/* Unique pulse class for the game timer */
+.pulse-timer {
+  animation: pulse-timer 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-timer {
+  from {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Rest of the timer styling */
 .scoreboard {
-  background-color: #1C1C1C; /* Dark background for scoreboard */
-  padding: 0.25em 0.5em;
-  border-radius: 0.25em;
-  border: 2px solid #333; /* Slight border to make it pop like an actual scoreboard */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8); /* Shadow for more depth */
+  background-color: #0D0D0D;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  border: 3px solid #444;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
   display: inline-block;
   text-align: center;
 }
 
 .font-digital {
-  font-family: 'Orbitron', sans-serif; /* Digital font for scoreboard feel */
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
 }
 
 .shadow-timer {
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Deeper shadow for the timer */
-  color: #FFD700; /* Bright yellow-gold color resembling NFL scoreboard */
-  letter-spacing: 0.05em;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.85);
+  color: #FFFFFF;
+  letter-spacing: 0.08em;
 }
+
+
+
 

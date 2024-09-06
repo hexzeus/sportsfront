@@ -656,11 +656,12 @@ const Simulation: React.FC = () => {
 
                         <div className="text-zinc-100 flex items-center justify-center">
                             <div className="scoreboard text-center">
-                                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-300 font-digital tracking-wider shadow-timer">
+                                <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-digital shadow-timer pulse-timer">
                                     {gameState.timeLeft}
                                 </span>
                             </div>
                         </div>
+
 
 
                         <div className="flex flex-col items-center">
