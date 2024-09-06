@@ -269,9 +269,10 @@ export default function BetsPage() {
                                     ) : (
                                         <div className="relative z-10">
                                             <div className="text-center mb-4">
-                                                <p className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-gray-500 to-slate-400 mb-2 uppercase">
+                                                <p className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500 mb-2 uppercase">
                                                     {bet.team}
                                                 </p>
+
                                                 <p className="text-lg sm:text-xl text-gray-300">vs {bet.opponent}</p>
                                                 <p className="text-sm sm:text-md text-gray-400">
                                                     {new Date(bet.date).toLocaleDateString()}
