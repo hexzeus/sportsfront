@@ -56,15 +56,11 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 <span className="text-center" style={{ color: homeTeam?.color }}>
                     {gameState.homeScore}
                 </span>
-                {/* Smaller, more professional "VS" */}
-                <span className="text-center text-yellow-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-widest">
-                    VS
-                </span>
+                <span className="text-center text-yellow-400 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">VS</span>
                 <span className="text-center" style={{ color: awayTeam?.color }}>
                     {gameState.awayScore}
                 </span>
             </div>
-
 
             {/* Possession */}
             <div className="text-center text-sm sm:text-base md:text-lg mt-2 text-gray-300">
