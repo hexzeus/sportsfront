@@ -16,7 +16,7 @@ const CoinTossAnimation: React.FC<CoinTossAnimationProps> = ({ showCoinAnimation
                     alt="Coin Toss"
                     fill
                     sizes="(max-width: 640px) 128px, (max-width: 768px) 192px, 256px"
-                    className="object-contain animate-coin-toss"
+                    className="object-contain animate-coin-toss coin"
                 />
             </div>
         </div>
