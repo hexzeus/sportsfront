@@ -195,3 +195,9 @@ h1, h2, h3 {
 }
 
 
+@media (max-width: 640px) {
+  .scoreboard {
+    padding: 0.2em;
+    font-size: 0.8rem;
+  }
+}
