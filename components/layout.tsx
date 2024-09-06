@@ -3,8 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Home, BarChart2, Settings, Menu, X, Flame, Trophy, TrendingUp, Skull, Lock, Hammer, Target } from 'lucide-react';
-
+import { Home, BarChart2, Settings, Menu, X, Lock, Hammer, Trophy, TrendingUp } from 'lucide-react';
 
 const navItems = [
     { name: 'Home', href: '/', icon: Home },
@@ -27,6 +26,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [handleScroll]);
 
+    // Close mobile menu on route change
+    useEffect(() => {
+        const handleRouteChange = () => setIsMobileMenuOpen(false);
+        router.events.on('routeChangeComplete', handleRouteChange);
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange);
+        };
+    }, [router.events]);
+
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
     const NavbarContainer = ({ children }: { children: React.ReactNode }) => (
@@ -45,6 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const NavItem = ({ item, mobile = false }: { item: typeof navItems[0]; mobile?: boolean }) => {
         const isActive = router.pathname === item.href;
+
         return (
             <Link href={item.href} passHref legacyBehavior>
                 <motion.a
@@ -54,6 +63,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         } ${mobile ? 'w-full' : ''}`}
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     whileTap={{ scale: 0.95 }}
+                    // If mobile, close the menu when an item is clicked
+                    onClick={() => mobile && setIsMobileMenuOpen(false)}
                 >
                     <item.icon className="w-5 h-5" />
                     <span className="uppercase tracking-wider">{item.name}</span>

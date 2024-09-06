@@ -123,18 +123,38 @@ h1, h2, h3 {
   z-index: -1;
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotateY(0deg);
+@keyframes coin-toss {
+  0% {
+    transform: scale(0.5) rotateY(0deg) translateY(0);
+    opacity: 0.85;
   }
-  to {
-    transform: rotateY(720deg);
+  15% {
+    transform: scale(0.8) rotateY(180deg) translateY(-50px); /* Smoother initial lift-off */
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1) rotateY(360deg) translateY(-120px); /* Full flip */
+  }
+  50% {
+    transform: scale(1.2) rotateY(540deg) translateY(-180px); /* Maximum height and rotation */
+  }
+  70% {
+    transform: scale(1.1) rotateY(630deg) translateY(-120px); /* Smooth descent begins */
+  }
+  85% {
+    transform: scale(1) rotateY(700deg) translateY(-60px); /* Slowing down before landing */
+  }
+  100% {
+    transform: scale(0.9) rotateY(720deg) translateY(0); /* Final landing */
+    opacity: 0.9;
   }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 2s linear infinite;
+.animate-coin-toss {
+  animation: coin-toss 1.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
+
+
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap'); /* Another digital font */
 
