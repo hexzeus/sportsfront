@@ -53,13 +53,21 @@ const GameLogic: React.FC<GameLogicProps> = ({
     setCrowd,
     setShowCoinAnimation
 }) => {
+    // Enhanced getRandomPlayer with dynamic player names and numbers
     const getRandomPlayer = useCallback(() => {
         const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'P', 'CB', 'S', 'LB', 'DE', 'DT'];
+        const firstNames = ['Mike', 'John', 'Aaron', 'Chris', 'David', 'Tyler', 'Jamal', 'Trey'];
+        const lastNames = ['Smith', 'Johnson', 'Brown', 'Williams', 'Jones', 'Taylor', 'Miller', 'Davis'];
+
         const position = positions[Math.floor(Math.random() * positions.length)];
         const number = Math.floor(Math.random() * 99) + 1;
-        return `#${number} ${position}`;
+        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+        return `#${number} ${firstName} ${lastName} (${position})`;
     }, []);
 
+    // Enhanced updateDriveStatus with pro NFL commentary
     const updateDriveStatus = useCallback((state: GameState) => {
         const currentTeam = state.possession === 'home' ? homeTeam : awayTeam;
         const yardLine = state.fieldPosition > 50 ? 100 - state.fieldPosition : state.fieldPosition;
@@ -67,15 +75,28 @@ const GameLogic: React.FC<GameLogicProps> = ({
         const down = `${state.down}${['st', 'nd', 'rd'][state.down - 1] || 'th'}`;
         const driveStr = `${currentTeam?.name} ${down} & ${state.yardsToGo} at ${side} ${yardLine}`;
 
-        // Add Exciting Commentary
+        // Enhanced commentary based on game situations
+        if (yardLine <= 20) {
+            addCommentary(`${currentTeam?.name} is in the red zone! They're threatening to score.`);
+        }
+
+        if (yardLine <= 10) {
+            addCommentary(`${currentTeam?.name} is knocking on the door! Only ${yardLine} yards to go.`);
+        }
+
         if (state.yardsToGo <= 1) {
-            addCommentary(`${currentTeam?.name} faces a crucial ${down} and short.`);
+            addCommentary(`${currentTeam?.name} faces a crucial ${down} and short. Every inch counts.`);
         } else if (state.down === 4 && state.yardsToGo > 5) {
-            addCommentary(`${currentTeam?.name} faces a challenging ${down} and long.`);
+            addCommentary(`${currentTeam?.name} faces a challenging ${down} and long. A gutsy call if they go for it!`);
+        }
+
+        if (state.down === 4 && state.fieldPosition > 50 && state.yardsToGo <= 3) {
+            addCommentary(`It's 4th and short, and ${currentTeam?.name} is going for it! This could be a game-changer.`);
         }
 
         return driveStr;
     }, [homeTeam, awayTeam, addCommentary]);
+
 
     const coinToss = useCallback(() => {
         setShowCoinAnimation(true);

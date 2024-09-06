@@ -37,12 +37,18 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
 
                 {/* Timer & Quarter */}
                 <div className="text-center relative">
-                    <div className="bg-gradient-to-b from-gray-900 to-black rounded-lg px-2 py-2 shadow-inner border-t-2 border-gray-700">
-                        <span className="font-digital text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-yellow-400 pulse-timer shadow-timer">
-                            {gameState.timeLeft}
-                        </span>
+                    {/* Outer frame for 3D effect with mobile adjustments */}
+                    <div className="relative bg-gradient-to-b from-gray-800 to-black rounded-lg p-2 sm:p-4 shadow-3xl border-4 border-gray-700 transform transition-all duration-300 hover:scale-105 hover:shadow-4xl">
+                        {/* Inner glowing edges and timer with refined scaling for mobile */}
+                        <div className="bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-md shadow-inner border-2 border-yellow-900">
+                            <span className="font-digital text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-yellow-300 pulse-timer shadow-glow tracking-wide">
+                                {gameState.timeLeft}
+                            </span>
+                        </div>
                     </div>
-                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-500 mt-2 block">
+
+                    {/* Quarter Display */}
+                    <span className="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-500 bg-black bg-opacity-60 p-1 sm:p-2 rounded-md shadow-md transform transition-all hover:scale-105 hover:text-yellow-300">
                         Q{gameState.quarter}
                     </span>
                 </div>

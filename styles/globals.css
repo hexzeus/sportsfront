@@ -201,3 +201,40 @@ h1, h2, h3 {
     font-size: 0.8rem;
   }
 }
+
+/* Custom 3D shadow for the scoreboard frame */
+.shadow-3xl {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.shadow-4xl {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 1), 0 4px 15px rgba(0, 0, 0, 0.9);
+}
+
+/* Glowing shadow for the timer text */
+.shadow-glow {
+  text-shadow: 0 0 8px rgba(255, 255, 200, 0.8), 0 0 15px rgba(255, 255, 200, 0.5);
+}
+
+/* Pulse animation for the timer */
+@keyframes pulse-timer {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+}
+
+.pulse-timer {
+  animation: pulse-timer 1s ease-in-out infinite;
+}
+
+/* Hover effects for subtle 3D scaling */
+.hover\\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.hover\\:shadow-4xl:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 1), 0 4px 15px rgba(0, 0, 0, 0.9);
+}
