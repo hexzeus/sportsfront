@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Clock, Flag } from 'lucide-react';
 
 interface Team {
     name: string;
@@ -16,6 +17,7 @@ interface GameState {
     possession: 'home' | 'away';
     penalties: { home: number; away: number };
     turnovers: { home: number; away: number };
+    timeoutsLeft: { home: number; away: number };
 }
 
 interface ScoreBoardProps {
@@ -67,6 +69,33 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
             <div className="flex justify-between text-xs sm:text-sm md:text-base text-gray-400 px-4">
                 <span>Penalties: {gameState.penalties.home} - {gameState.penalties.away}</span>
                 <span>Turnovers: {gameState.turnovers.home} - {gameState.turnovers.away}</span>
+            </div>
+
+            {/* Timeouts with Tooltip */}
+            <div className="flex justify-between items-center text-xs sm:text-sm md:text-base text-gray-300 px-4">
+                <div className="flex items-center space-x-1 relative group">
+                    <Flag className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                    <span className="text-gray-400">TO</span>
+                    <span className="text-yellow-500"> {gameState.timeoutsLeft.home}</span>
+                    <span className="text-gray-300">(Home)</span>
+
+                    {/* Tooltip */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transition-all duration-200 ease-out bg-black text-white text-xs rounded-lg shadow-lg px-2 py-1">
+                        Timeouts Remaining
+                    </div>
+                </div>
+
+                <div className="flex items-center space-x-1 relative group">
+                    <Flag className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                    <span className="text-gray-400">TO</span>
+                    <span className="text-yellow-500"> {gameState.timeoutsLeft.away}</span>
+                    <span className="text-gray-300">(Away)</span>
+
+                    {/* Tooltip */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transition-all duration-200 ease-out bg-black text-white text-xs rounded-lg shadow-lg px-2 py-1">
+                        Timeouts Remaining
+                    </div>
+                </div>
             </div>
         </div>
     );
