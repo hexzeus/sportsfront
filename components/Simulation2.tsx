@@ -218,44 +218,61 @@ const Simulation: React.FC = () => {
 
     const handleFourthDown = useCallback((state: GameState): GameState => {
         const currentTeam = state.possession === 'home' ? homeTeam : awayTeam;
-        if (state.fieldPosition > 65 && state.yardsToGo <= 4) {
+        const fieldGoalRange = 65; // Close enough for a field goal attempt
+        const shortYards = 4; // Close enough to attempt conversion
+
+        if (state.fieldPosition > fieldGoalRange && state.yardsToGo <= shortYards) {
+            // Field goal attempt if within range and short yards
             const specialTeamsRating = currentTeam?.specialTeams || 80;
             const successRate = specialTeamsRating / 100;
+
             if (Math.random() < successRate) {
-                const newState: GameState = {
-                    ...state,
-                    homeScore: state.possession === 'home' ? state.homeScore + 3 : state.homeScore,
-                    awayScore: state.possession === 'away' ? state.awayScore + 3 : state.awayScore,
-                    playType: 'kickoff',
-                    possession: state.possession === 'home' ? 'away' : 'home'
-                };
                 addCommentary(`${currentTeam?.name} successfully kicks a field goal!`);
-                return newState;
-            } else {
-                addCommentary(`${currentTeam?.name}'s field goal attempt is no good!`);
                 return {
                     ...state,
-                    possession: state.possession === 'home' ? 'away' : 'home',
-                    fieldPosition: 100 - state.fieldPosition,
+                    homeScore: state.possession === 'home' ? state.homeScore + 3 : state.awayScore + 3, // Add 3 points
+                    playType: 'kickoff', // Successful field goal, so kickoff follows
+                    possession: state.possession === 'home' ? 'away' : 'home', // Change possession
                     down: 1,
-                    yardsToGo: 10
+                    yardsToGo: 10,
+                    fieldPosition: 35 // Receiving team starts at the 35-yard line after kickoff
+                };
+            } else {
+                // Field goal fails, so it's a turnover
+                addCommentary(`${currentTeam?.name}'s field goal attempt is no good! Turnover on downs.`);
+                return {
+                    ...state,
+                    possession: state.possession === 'home' ? 'away' : 'home', // Turnover on downs
+                    down: 1,
+                    yardsToGo: 10,
+                    fieldPosition: 100 - state.fieldPosition // Ball is turned over at the spot of the kick
                 };
             }
-        } else if (state.fieldPosition > 50 || (state.yardsToGo <= 2 && state.fieldPosition > 40)) {
-            addCommentary(`${currentTeam?.name} is going for it on 4th down!`);
-            return state;
-        } else {
+        }
+
+        // Punt if too far or field goal not attempted
+        if (state.fieldPosition < fieldGoalRange || state.yardsToGo > shortYards) {
             const puntDistance = Math.floor(Math.random() * 20) + 40;
             const newFieldPosition = Math.max(20, Math.min(100 - state.fieldPosition - puntDistance, 80));
-            addCommentary(`${currentTeam?.name} punts the ball. The receiving team will start at their own ${newFieldPosition}-yard line.`);
+            addCommentary(`${currentTeam?.name} punts the ball. The receiving team starts at their own ${newFieldPosition}-yard line.`);
             return {
                 ...state,
                 fieldPosition: newFieldPosition,
-                possession: state.possession === 'home' ? 'away' : 'home',
+                possession: state.possession === 'home' ? 'away' : 'home', // Change possession
                 down: 1,
                 yardsToGo: 10
             };
         }
+
+        // Turnover if they fail to convert on 4th down
+        addCommentary(`${currentTeam?.name} fails to convert on 4th down! Turnover on downs.`);
+        return {
+            ...state,
+            possession: state.possession === 'home' ? 'away' : 'home', // Change possession
+            down: 1,
+            yardsToGo: 10,
+            fieldPosition: 100 - state.fieldPosition // Ball is turned over at the spot of the turnover
+        };
     }, [homeTeam, awayTeam, addCommentary]);
 
     const generateWeather = useCallback(() => {
@@ -321,9 +338,29 @@ const Simulation: React.FC = () => {
         return options[options.length - 1];
     };
 
+    const useTimeout = useCallback((state: GameState): GameState => {
+        const teamInPossession = state.possession === 'home' ? 'home' : 'away';
+        const timeoutsLeft = state.timeoutsLeft[teamInPossession];
+
+        if (timeoutsLeft > 0 && state.quarter === 4 && Math.abs(state.homeScore - state.awayScore) < 7 && parseInt(state.timeLeft.split(':')[0]) < 2) {
+            const newTimeoutsLeft = { ...state.timeoutsLeft, [teamInPossession]: timeoutsLeft - 1 };
+            addCommentary(`${teamInPossession === 'home' ? homeTeam?.name : awayTeam?.name} uses a timeout!`);
+            return {
+                ...state,
+                timeoutsLeft: newTimeoutsLeft,
+                timeLeft: "02:00" // Simulating the timeout stops the clock for 2 minutes
+            };
+        }
+        return state;
+    }, [homeTeam, awayTeam, addCommentary]);
+
     const generatePlay = useCallback((state: GameState): GameState => {
         if (!homeTeam || !awayTeam) return state;
 
+        // Apply timeouts logic
+        state = useTimeout(state);
+
+        // Handle special play types
         if (state.playType === 'kickoff') return kickoff(state);
         if (state.playType === 'extraPoint') return extraPoint(state);
         if (state.playType === 'twoPointConversion') return twoPointConversion(state);
@@ -331,6 +368,7 @@ const Simulation: React.FC = () => {
         const offenseTeam = state.possession === 'home' ? homeTeam : awayTeam;
         const defenseTeam = state.possession === 'home' ? awayTeam : homeTeam;
 
+        // Define play options and select one
         const playOptions = ['run', 'shortPass', 'longPass', 'sack'];
         const playWeights = [0.4, 0.3, 0.2, 0.1];
         const selectedPlay = weightedRandomChoice(playOptions, playWeights);
@@ -342,6 +380,7 @@ const Simulation: React.FC = () => {
         const offensivePlayer = getRandomPlayer();
         const defensivePlayer = getRandomPlayer();
 
+        // Calculate play success based on offense and defense ratings
         const offenseRating = offenseTeam.offense;
         const defenseRating = defenseTeam.defense;
         const playSuccess = Math.random() * (offenseRating + defenseRating) < offenseRating;
@@ -438,7 +477,7 @@ const Simulation: React.FC = () => {
     }, [
         homeTeam, awayTeam, kickoff, extraPoint, twoPointConversion, getRandomPlayer,
         handleFourthDown, generateInjury, generatePenalty, generateWeather, updateCrowd,
-        addCommentary, updateDriveStatus
+        addCommentary, updateDriveStatus, useTimeout
     ]);
 
     const determineWinner = useCallback(() => {
