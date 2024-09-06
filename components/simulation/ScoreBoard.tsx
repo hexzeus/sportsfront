@@ -36,20 +36,21 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 {/* Home Team */}
                 <TeamDisplay team={homeTeam} />
 
+
                 {/* Timer & Quarter */}
                 <div className="text-center relative">
-                    {/* Outer frame for 3D effect with mobile adjustments */}
-                    <div className="relative bg-gradient-to-b from-gray-800 to-black rounded-lg p-2 sm:p-4 shadow-3xl border-4 border-gray-700 transform transition-all duration-300 hover:scale-105 hover:shadow-4xl">
-                        {/* Inner glowing edges and timer with refined scaling for mobile */}
-                        <div className="bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-md shadow-inner border-2 border-yellow-900">
-                            <span className="font-digital text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-yellow-300 pulse-timer shadow-glow tracking-wide">
+                    {/* Outer frame with rustic sports black background */}
+                    <div className="relative bg-gradient-to-b from-black to-gray-900 rounded-lg p-1.5 sm:p-2 md:p-3 shadow-2xl border-2 sm:border-4 border-black transform transition-all duration-300 hover:scale-105 hover:shadow-3xl">
+                        {/* Inner glowing edges and timer with a more intense glowing effect */}
+                        <div className="bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-lg shadow-inner border-2 border-gray-700 p-1 sm:p-2">
+                            <span className="font-digital text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-yellow-300 tracking-wider drop-shadow-lg">
                                 {gameState.timeLeft}
                             </span>
                         </div>
                     </div>
 
-                    {/* Quarter Display */}
-                    <span className="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-500 bg-black bg-opacity-60 p-1 sm:p-2 rounded-md shadow-md transform transition-all hover:scale-105 hover:text-yellow-300">
+                    {/* Quarter Display with bold, rugged NFL style */}
+                    <span className="mt-2 sm:mt-3 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-400 bg-black bg-opacity-80 p-1 sm:p-2 rounded-md border border-yellow-600 shadow-lg sm:shadow-2xl transform transition-all hover:scale-110 hover:text-yellow-200 hover:border-yellow-400">
                         Q{gameState.quarter}
                     </span>
                 </div>
@@ -59,18 +60,19 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
             </div>
 
             {/* Score Display */}
-            <div className="grid grid-cols-3 items-center gap-4">
-                <span className="text-center font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl" style={{ color: homeTeam?.color }}>
+            <div className="grid grid-cols-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold">
+                <span className="text-center" style={{ color: homeTeam?.color }}>
                     {gameState.homeScore}
                 </span>
-                {/* Professional, smaller "VS" */}
-                <span className="text-center text-gray-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-wider">
+                {/* Smaller, more professional "VS" */}
+                <span className="text-center text-yellow-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-widest">
                     VS
                 </span>
-                <span className="text-center font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl" style={{ color: awayTeam?.color }}>
+                <span className="text-center" style={{ color: awayTeam?.color }}>
                     {gameState.awayScore}
                 </span>
             </div>
+
 
             {/* Possession */}
             <div className="text-center text-sm sm:text-base md:text-lg mt-2 text-gray-300">
@@ -84,6 +86,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                     <span className="text-yellow-400">{`at ${gameState.possession === 'home' ? 'HOME' : 'AWAY'} ${gameState.fieldPosition} yd line`}</span>
                 </p>
             </div>
+
 
             {/* Penalties and Turnovers */}
             <div className="flex justify-between text-xs sm:text-sm md:text-base text-gray-400 px-4">
