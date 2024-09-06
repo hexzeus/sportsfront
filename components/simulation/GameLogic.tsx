@@ -211,16 +211,17 @@ const GameLogic: React.FC<GameLogicProps> = ({
                     ...state,
                     homeScore: state.possession === 'home' ? state.homeScore + 3 : state.homeScore,
                     awayScore: state.possession === 'away' ? state.awayScore + 3 : state.awayScore,
-                    playType: 'kickoff',
+                    playType: 'normal',  // Reset to normal to avoid extra point logic issues
                     possession: state.possession === 'home' ? 'away' : 'home',
                     down: 1,
                     yardsToGo: 10,
-                    fieldPosition: 35, // Reset to kickoff
+                    fieldPosition: 35, // Reset for kickoff
                 };
             } else {
                 addCommentary(`${currentTeam?.name} lines up for a field goal... but it's no good! The kick sails wide.`);
                 return {
                     ...state,
+                    playType: 'normal',  // Ensure playType is reset
                     possession: state.possession === 'home' ? 'away' : 'home',
                     down: 1,
                     yardsToGo: 10,
@@ -234,8 +235,10 @@ const GameLogic: React.FC<GameLogicProps> = ({
             const puntDistance = Math.floor(Math.random() * 20) + 40;
             const newFieldPosition = Math.max(20, Math.min(100 - state.fieldPosition - puntDistance, 80));
             addCommentary(`${currentTeam?.name} punts the ball. The receiving team will start at their own ${newFieldPosition}-yard line.`);
+
             return {
                 ...state,
+                playType: 'normal',  // Reset playType after punt
                 fieldPosition: newFieldPosition,
                 possession: state.possession === 'home' ? 'away' : 'home',
                 down: 1,
@@ -247,10 +250,11 @@ const GameLogic: React.FC<GameLogicProps> = ({
         addCommentary(`${currentTeam?.name} goes for it on 4th down... and they don't get it! Turnover on downs.`);
         return {
             ...state,
+            playType: 'normal',  // Reset playType after turnover on downs
             possession: state.possession === 'home' ? 'away' : 'home',
             down: 1,
             yardsToGo: 10,
-            fieldPosition: 100 - state.fieldPosition,
+            fieldPosition: 100 - state.fieldPosition,  // Flip the field position
         };
     }, [homeTeam, awayTeam, addCommentary]);
 
