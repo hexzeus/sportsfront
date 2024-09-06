@@ -338,44 +338,52 @@ const Simulation: React.FC = () => {
         return options[options.length - 1];
     };
 
-    const useTimeout = useCallback((state: GameState): GameState => {
+    // Step 1: Define applyTimeoutLogic using useCallback
+    const applyTimeoutLogic = useCallback((state: GameState): GameState => {
         const teamInPossession = state.possession === 'home' ? 'home' : 'away';
         const timeoutsLeft = state.timeoutsLeft[teamInPossession];
 
-        if (timeoutsLeft > 0 && state.quarter === 4 && Math.abs(state.homeScore - state.awayScore) < 7 && parseInt(state.timeLeft.split(':')[0]) < 2) {
+        if (
+            timeoutsLeft > 0 &&
+            state.quarter === 4 &&
+            Math.abs(state.homeScore - state.awayScore) < 7 &&
+            parseInt(state.timeLeft.split(':')[0]) < 2
+        ) {
             const newTimeoutsLeft = { ...state.timeoutsLeft, [teamInPossession]: timeoutsLeft - 1 };
             addCommentary(`${teamInPossession === 'home' ? homeTeam?.name : awayTeam?.name} uses a timeout!`);
+
             return {
                 ...state,
                 timeoutsLeft: newTimeoutsLeft,
-                timeLeft: "02:00" // Simulating the timeout stops the clock for 2 minutes
+                timeLeft: "02:00", // Simulating the timeout stops the clock for 2 minutes
             };
         }
         return state;
-    }, [homeTeam, awayTeam, addCommentary]);
+    }, [homeTeam, awayTeam, addCommentary]); // Ensure dependencies are properly set
 
+    // Step 2: Use applyTimeoutLogic in generatePlay
     const generatePlay = useCallback((state: GameState): GameState => {
         if (!homeTeam || !awayTeam) return state;
 
-        // Apply timeouts logic
-        state = useTimeout(state);
+        // Apply timeouts logic using applyTimeoutLogic
+        state = applyTimeoutLogic(state);
 
         // Handle special play types
-        if (state.playType === 'kickoff') return kickoff(state);
-        if (state.playType === 'extraPoint') return extraPoint(state);
-        if (state.playType === 'twoPointConversion') return twoPointConversion(state);
+        if (state.playType === "kickoff") return kickoff(state);
+        if (state.playType === "extraPoint") return extraPoint(state);
+        if (state.playType === "twoPointConversion") return twoPointConversion(state);
 
-        const offenseTeam = state.possession === 'home' ? homeTeam : awayTeam;
-        const defenseTeam = state.possession === 'home' ? awayTeam : homeTeam;
+        const offenseTeam = state.possession === "home" ? homeTeam : awayTeam;
+        const defenseTeam = state.possession === "home" ? awayTeam : homeTeam;
 
         // Define play options and select one
-        const playOptions = ['run', 'shortPass', 'longPass', 'sack'];
+        const playOptions = ["run", "shortPass", "longPass", "sack"];
         const playWeights = [0.4, 0.3, 0.2, 0.1];
         const selectedPlay = weightedRandomChoice(playOptions, playWeights);
 
         let yards = 0;
         let turnover = false;
-        let commentary = '';
+        let commentary = "";
 
         const offensivePlayer = getRandomPlayer();
         const defensivePlayer = getRandomPlayer();
@@ -386,27 +394,27 @@ const Simulation: React.FC = () => {
         const playSuccess = Math.random() * (offenseRating + defenseRating) < offenseRating;
 
         switch (selectedPlay) {
-            case 'run':
+            case "run":
                 yards = playSuccess ? Math.floor(Math.random() * 8) + 1 : Math.floor(Math.random() * 3) - 2;
                 commentary = yards > 0
                     ? `${offenseTeam.name}'s ${offensivePlayer} rushes for a gain of ${yards} yards.`
-                    : `${defenseTeam.name}'s defense stops ${offenseTeam.name}'s ${offensivePlayer} for a loss of ${Math.abs(yards)} yards.`;
+                    : `${defenseTeam.name}'s defense stops ${offensivePlayer} for a loss of ${Math.abs(yards)} yards.`;
                 break;
-            case 'shortPass':
+            case "shortPass":
                 yards = playSuccess ? Math.floor(Math.random() * 12) + 3 : 0;
                 turnover = !playSuccess && Math.random() < 0.1;
                 commentary = yards > 0
                     ? `${offenseTeam.name}'s QB completes a short pass to ${offensivePlayer} for ${yards} yards.`
                     : `Incomplete pass by ${offenseTeam.name}'s QB, intended for ${offensivePlayer}.`;
                 break;
-            case 'longPass':
+            case "longPass":
                 yards = playSuccess ? Math.floor(Math.random() * 30) + 15 : 0;
                 turnover = !playSuccess && Math.random() < 0.15;
                 commentary = yards > 0
                     ? `${offenseTeam.name}'s QB airs it out and connects with ${offensivePlayer} for a big gain of ${yards} yards!`
                     : `${offenseTeam.name}'s QB's deep pass, intended for ${offensivePlayer}, falls incomplete.`;
                 break;
-            case 'sack':
+            case "sack":
                 yards = -Math.floor(Math.random() * 8) - 1;
                 turnover = Math.random() < 0.05;
                 commentary = `Sack! ${defenseTeam.name}'s ${defensivePlayer} takes down the quarterback for a loss of ${Math.abs(yards)} yards.`;
@@ -426,27 +434,28 @@ const Simulation: React.FC = () => {
             lastPlay: commentary,
             turnovers: {
                 ...state.turnovers,
-                [state.possession]: turnover ? state.turnovers[state.possession] + 1 : state.turnovers[state.possession]
-            }
+                [state.possession]: turnover
+                    ? state.turnovers[state.possession] + 1
+                    : state.turnovers[state.possession],
+            },
         };
 
         if (turnover) {
             newState = {
                 ...newState,
-                possession: state.possession === 'home' ? 'away' : 'home',
+                possession: state.possession === "home" ? "away" : "home",
                 down: 1,
                 yardsToGo: 10,
-                fieldPosition: 100 - newState.fieldPosition
+                fieldPosition: 100 - newState.fieldPosition,
             };
         } else if (newState.yardsToGo <= 0) {
             newState = {
                 ...newState,
                 down: 1,
-                yardsToGo: 10
+                yardsToGo: 10,
             };
             addCommentary(`${offenseTeam.name} gets a first down!`);
         } else if (newState.down === 4 && newState.yardsToGo > 0) {
-            // If it's 4th down and they haven't made the yardage, handle 4th down scenario
             newState = handleFourthDown(newState);
         }
 
@@ -455,10 +464,10 @@ const Simulation: React.FC = () => {
             commentary += ` Touchdown ${offenseTeam.name}!`;
             newState = {
                 ...newState,
-                homeScore: state.possession === 'home' ? state.homeScore + 6 : state.homeScore,
-                awayScore: state.possession === 'away' ? state.awayScore + 6 : state.awayScore,
-                playType: Math.random() < 0.95 ? 'extraPoint' : 'twoPointConversion',
-                fieldPosition: 98 // Set up for extra point or two-point conversion
+                homeScore: state.possession === "home" ? state.homeScore + 6 : state.homeScore,
+                awayScore: state.possession === "away" ? state.awayScore + 6 : state.awayScore,
+                playType: Math.random() < 0.95 ? "extraPoint" : "twoPointConversion",
+                fieldPosition: 98, // Set up for extra point or two-point conversion
             };
             setGameEvents(prev => [`Touchdown by ${offenseTeam.name}`, ...prev]);
         }
@@ -472,12 +481,23 @@ const Simulation: React.FC = () => {
         addCommentary(commentary);
         return {
             ...newState,
-            driveStatus: updateDriveStatus(newState)
+            driveStatus: updateDriveStatus(newState),
         };
     }, [
-        homeTeam, awayTeam, kickoff, extraPoint, twoPointConversion, getRandomPlayer,
-        handleFourthDown, generateInjury, generatePenalty, generateWeather, updateCrowd,
-        addCommentary, updateDriveStatus, useTimeout
+        homeTeam,
+        awayTeam,
+        kickoff,
+        extraPoint,
+        twoPointConversion,
+        getRandomPlayer,
+        handleFourthDown,
+        generateInjury,
+        generatePenalty,
+        generateWeather,
+        updateCrowd,
+        addCommentary,
+        updateDriveStatus,
+        applyTimeoutLogic // Include applyTimeoutLogic as a dependency
     ]);
 
     const determineWinner = useCallback(() => {
