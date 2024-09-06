@@ -151,7 +151,7 @@ h1, h2, h3 {
 }
 
 .animate-coin-toss {
-  animation: coin-toss 1.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: coin-toss 1.0s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
 

@@ -37,21 +37,34 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 <TeamDisplay team={homeTeam} />
 
                 {/* Timer & Quarter */}
-                <div className="text-center relative">
-                    {/* Outer frame with rustic sports black background */}
-                    <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg p-1.5 sm:p-2 md:p-3 shadow-2xl border-2 sm:border-4 border-gray-800 transform transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.8)]">
-                        {/* Inner glowing edges and timer with a more intense glowing effect */}
-                        <div className="bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-lg shadow-inner border-2 border-gray-700 p-1 sm:p-2">
-                            <span className="font-['Digital-7'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-yellow-300 tracking-wider drop-shadow-[0_0_10px_rgba(255,255,0,0.7)]">
+                <div className="text-center relative w-full max-w-[140px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px] mx-auto">
+                    {/* Outer frame with enhanced 3D effect */}
+                    <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-2 sm:p-3 md:p-4 lg:p-5
+                        shadow-[0_4px_6px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]
+                        transform transition-all duration-300 
+                        hover:scale-[1.03] hover:shadow-[0_6px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.2)]">
+                        {/* Inner display with refined glowing effect */}
+                        <div className="bg-black bg-opacity-80 rounded-md p-1 sm:p-2 md:p-3 
+                            flex flex-col items-center justify-center
+                            border border-gray-700 shadow-inner">
+                            <span className="font-['Digital-7'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 
+                                 text-yellow-300 tracking-wider leading-none
+                                 drop-shadow-[0_0_7px_rgba(234,179,8,0.7)]">
                                 {gameState.timeLeft}
+                            </span>
+                            <span className="text-[10px] sm:text-xs md:text-sm lg:text-base 
+                                 font-bold text-yellow-500 mt-1 md:mt-2">
+                                Q{gameState.quarter}
                             </span>
                         </div>
                     </div>
-                    {/* Quarter Display with bold, rugged NFL style */}
-                    <span className="inline-block mt-2 sm:mt-3 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-400 bg-black bg-opacity-80 p-1 sm:p-2 rounded-md border border-yellow-600 shadow-lg sm:shadow-2xl transform transition-all hover:scale-110 hover:text-yellow-200 hover:border-yellow-400">
-                        Q{gameState.quarter}
-                    </span>
+                    {/* Enhanced bottom glow effect */}
+                    <div className="absolute -bottom-1 sm:-bottom-2 left-1/2 transform -translate-x-1/2 
+                        w-4/5 h-0.5 sm:h-1 md:h-1.5
+                        bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 
+                        rounded-full opacity-60 blur-[2px] sm:blur-[3px]"></div>
                 </div>
+
 
                 {/* Away Team */}
                 <TeamDisplay team={awayTeam} />

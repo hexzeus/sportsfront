@@ -118,7 +118,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
             addCommentary(`${receiveTeamName} will receive the opening kickoff. ${kickTeamName} will kick off to start the game.`);
 
             setShowCoinAnimation(false);
-        }, 1500); // Slightly longer timeout for more suspense
+        }, 1000); // Slightly longer timeout for more suspense
     }, [homeTeam, awayTeam, updateGameState, addCommentary, setShowCoinAnimation]);
 
     const kickoff = useCallback((state: GameState): GameState => {
