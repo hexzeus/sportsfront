@@ -172,7 +172,7 @@ const HomePage: React.FC = () => {
                     className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 lg:px-10 lg:py-6 overflow-hidden text-base sm:text-lg lg:text-xl font-extrabold uppercase tracking-widest transition-all duration-700 ease-out bg-gradient-to-r from-blue-900 via-steel-700 to-gray-500 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 hover:-translate-y-2 border-t-4 border-b-4 border-gray-900"
                 >
                     {/* Smoke Effect */}
-                    <span className="absolute inset-0 w-full h-full opacity-20 bg-[url('/path-to-smoke-image.png')] bg-cover bg-center pointer-events-none"></span>
+                    <span className="absolute inset-0 w-full h-full opacity-20 bg-[url('/smoke.png')] bg-cover bg-center pointer-events-none"></span>
 
                     {/* 3D and Rustic Edge */}
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-b from-gray-800 via-black to-gray-900 opacity-90 rounded-full pointer-events-none"></span>
