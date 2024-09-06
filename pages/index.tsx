@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
 import { Lock, Flame, Trophy, ArrowRight, Hammer } from 'lucide-react';
-import Simulation from '../components/Simulation';
+import Simulation2 from '../components/Simulation2';
 import SportsAnalysisButton from '../components/SportsAnalysisButton';
 
 const HomePage: React.FC = () => {
@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
                 </Link>
 
                 {/* Simulation and Sports Analysis Button components */}
-                <Simulation />
+                <Simulation2 />
                 <SportsAnalysisButton />
             </main>
 
