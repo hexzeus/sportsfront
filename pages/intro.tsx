@@ -27,28 +27,24 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
         };
     }, [onComplete]);
 
-    const iconClasses =
-        "w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-gray-400 transition-all duration-500 ease-in-out transform hover:scale-110 hover:text-blue-400";
+    const iconClasses = "w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-gray-400 transition-all duration-500 ease-in-out hover:text-yellow-500";
 
     return (
         <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 overflow-hidden">
-                {/* Updated background gradient to match HomePage */}
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-dark-blue to-dark-gray h-full"></div>
-                {/* SVG Grid Pattern */}
                 <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
                     <pattern id="sportsGrid" width="50" height="50" patternUnits="userSpaceOnUse">
                         <rect width="50" height="50" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1.5" />
                     </pattern>
                     <rect width="100%" height="100%" fill="url(#sportsGrid)" />
                 </svg>
-                {/* Overlay to match HomePage */}
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-transparent to-slate-900/30 h-full"></div>
             </div>
 
             {/* Content */}
-            <div className="relative z-10 text-center space-y-4 sm:space-y-6 transform transition-all duration-1000 ease-out px-4 max-w-screen-md mx-auto">
+            <div className="relative z-10 text-center space-y-4 sm:space-y-6 px-4 max-w-screen-md mx-auto">
                 {/* Logo */}
                 <div className="relative mx-auto w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 mb-6 sm:mb-8 animate-pulse-logo">
                     <Image
@@ -61,26 +57,16 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
                 </div>
 
                 {/* Title */}
-                <h1
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-steel-gray to-gray-200 uppercase tracking-tight drop-shadow-3xl shadow-black transform-gpu perspective-1000 transition duration-500 ease-in-out"
-                    style={{
-                        fontFamily: 'Impact, sans-serif',
-                        textShadow: '3px 3px 20px rgba(0, 0, 0, 0.9), -3px -3px 20px rgba(0, 0, 0, 0.6)',
-                        letterSpacing: '-0.07em',
-                    }}
-                >
-                    Lock & Hammer
-                    <span className="block h-1 w-full bg-gradient-to-r from-blue-400 via-steel-gray to-gray-200 mt-3"></span>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight">
+                    <span className="text-shadow-metallic bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 bg-clip-text text-transparent animate-gradient-shine">
+                        Lock & Hammer
+                    </span>
+                    <span className="block h-1 w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 rounded-lg shadow-sm mt-3"></span>
                 </h1>
 
                 {/* Subtitle */}
-                <p
-                    className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md"
-                    style={{ fontFamily: 'Arial Black, sans-serif' }}
-                >
-                    <span className="text-blue-400">DOMINATE.</span>{' '}
-                    <span className="text-steel-gray">CRUSH.</span>{' '}
-                    <span className="text-gray-200">CONQUER.</span>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 font-bold tracking-wide leading-tight max-w-screen-sm md:max-w-screen-md">
+                    <span className="text-yellow-500">DOMINATE.</span> <span className="text-red-500">CRUSH.</span> <span className="text-gray-300">CONQUER.</span>
                 </p>
 
                 {/* Icons */}
@@ -88,7 +74,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
                     {[Lock, Hammer, Trophy].map((Icon, index) => (
                         <Icon
                             key={index}
-                            className={`${iconClasses} ${animated ? 'animate-pulse' : ''}`}
+                            className={`${iconClasses} animate-pulse`}
                             style={{ animationDelay: `${index * 150}ms` }}
                         />
                     ))}
@@ -102,10 +88,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
                             style={{ width: `${loadingProgress}%` }}
                         ></div>
                     </div>
-                    <p
-                        className="text-xl sm:text-2xl font-bold text-gray-300 mt-2"
-                        style={{ fontFamily: 'Impact, sans-serif' }}
-                    >
+                    <p className="text-xl sm:text-2xl font-bold text-gray-300 mt-2">
                         {loadingProgress}%
                     </p>
                 </div>
@@ -117,8 +100,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
                     animation: pulse 3s ease-in-out infinite, float 6s ease-in-out infinite;
                 }
                 @keyframes pulse {
-                    0%,
-                    100% {
+                    0%, 100% {
                         opacity: 1;
                     }
                     50% {

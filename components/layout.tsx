@@ -159,15 +159,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {[Lock, Hammer, Trophy].map((Icon, index) => (
                     <motion.div
                         key={index}
-                        whileHover={{ scale: 1.2, rotate: 15 }}
+                        whileHover={{ scale: 1.2 }} // Removed rotate for a more subtle, professional feel
                         whileTap={{ scale: 0.8 }}
-                        className="p-2 bg-gradient-to-br from-zinc-800/80 to-dark-blue/80 rounded-full shadow-lg backdrop-blur-sm"
-                        style={{ animationDelay: `${index * 150}ms` }}
+                        className="p-2 bg-gradient-to-br from-zinc-800/80 to-dark-blue/80 rounded-full shadow-lg backdrop-blur-sm animate-pulse"
+                        style={{ animationDelay: `${index * 150}ms` }} // Same delay as the other icons
                     >
                         <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-yellow-400' : 'text-green-500'}`} />
                     </motion.div>
                 ))}
             </motion.div>
+
         </div>
     );
 }
