@@ -15,6 +15,8 @@ interface GameState {
     quarter: number;
     timeLeft: string;
     possession: 'home' | 'away';
+    down: number;  // New down property
+    yardsToGo: number;  // New yardage property
     penalties: { home: number; away: number };
     turnovers: { home: number; away: number };
     timeoutsLeft: { home: number; away: number };
@@ -65,6 +67,14 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 <p>Possession: {gameState.possession === 'home' ? homeTeam?.abbreviation : awayTeam?.abbreviation}</p>
             </div>
 
+            {/* Down & Yardage */}
+            <div className="text-center text-xl sm:text-2xl md:text-3xl font-bold text-blue-300 mt-4">
+                <p>
+                    {/* Converting down to readable format */}
+                    {`${gameState.down}${['st', 'nd', 'rd', 'th'][gameState.down - 1] || 'th'} & ${gameState.yardsToGo}`}
+                </p>
+            </div>
+
             {/* Penalties and Turnovers */}
             <div className="flex justify-between text-xs sm:text-sm md:text-base text-gray-400 px-4">
                 <span>Penalties: {gameState.penalties.home} - {gameState.penalties.away}</span>
@@ -74,7 +84,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
             {/* Timeouts with Tooltip */}
             <div className="flex justify-between items-center text-xs sm:text-sm md:text-base text-gray-300 px-4">
                 <div className="flex items-center space-x-1 relative group">
-                    <Flag className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
                     <span className="text-gray-400">TO</span>
                     <span className="text-yellow-500"> {gameState.timeoutsLeft.home}</span>
                     <span className="text-gray-300">(Home)</span>
@@ -86,7 +96,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 </div>
 
                 <div className="flex items-center space-x-1 relative group">
-                    <Flag className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
                     <span className="text-gray-400">TO</span>
                     <span className="text-yellow-500"> {gameState.timeoutsLeft.away}</span>
                     <span className="text-gray-300">(Away)</span>
