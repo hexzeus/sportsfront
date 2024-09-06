@@ -53,18 +53,14 @@ const GameLogic: React.FC<GameLogicProps> = ({
     setCrowd,
     setShowCoinAnimation
 }) => {
-    // Enhanced getRandomPlayer with dynamic player names and numbers
+    // Enhanced getRandomPlayer with only positions and numbers
     const getRandomPlayer = useCallback(() => {
         const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'P', 'CB', 'S', 'LB', 'DE', 'DT'];
-        const firstNames = ['Mike', 'John', 'Aaron', 'Chris', 'David', 'Tyler', 'Jamal', 'Trey'];
-        const lastNames = ['Smith', 'Johnson', 'Brown', 'Williams', 'Jones', 'Taylor', 'Miller', 'Davis'];
 
         const position = positions[Math.floor(Math.random() * positions.length)];
         const number = Math.floor(Math.random() * 99) + 1;
-        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
 
-        return `#${number} ${firstName} ${lastName} (${position})`;
+        return `#${number} (${position})`;
     }, []);
 
     // Enhanced updateDriveStatus with pro NFL commentary
@@ -174,7 +170,6 @@ const GameLogic: React.FC<GameLogicProps> = ({
         return newState;
     }, [homeTeam, awayTeam, addCommentary]);
 
-
     const twoPointConversion = useCallback((state: GameState): GameState => {
         const scoringTeam = state.possession === 'home' ? homeTeam : awayTeam;
         const offenseRating = scoringTeam?.offense || 80;
@@ -220,7 +215,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
                     possession: state.possession === 'home' ? 'away' : 'home',
                     down: 1,
                     yardsToGo: 10,
-                    fieldPosition: 35,
+                    fieldPosition: 35, // Reset to kickoff
                 };
             } else {
                 addCommentary(`${currentTeam?.name} lines up for a field goal... but it's no good! The kick sails wide.`);
@@ -537,7 +532,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
                 yards = playSuccess ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 3) - 2;
                 commentary = playSuccess
                     ? `${offenseTeam.name}'s ${offensivePlayer} powers through for ${yards} yards!`
-                    : `${defenseTeam.name} stacks the line! ${offensivePlayer} is stopped for a loss of ${Math.abs(yards)} yards.`;
+                    : `${defenseTeam.name} stuffs the run! ${offensivePlayer} is stopped for a loss of ${Math.abs(yards)} yards.`;
                 break;
 
             case "shortPass":
@@ -553,7 +548,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
                 yards = playSuccess ? Math.floor(Math.random() * 40) + 15 : 0;
                 turnover = !playSuccess && Math.random() < 0.15;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s QB launches it deep! ${offensivePlayer} pulls it in for ${yards} yards!`
+                    ? `${offenseTeam.name}'s QB launches it deep! ${offensivePlayer} hauls it in for ${yards} yards!`
                     : `${defenseTeam.name} shuts down the deep pass attempt! Incomplete.`;
                 if (turnover) commentary += ` Interception by ${defensivePlayer} from ${defenseTeam.name}!`;
                 break;
@@ -576,16 +571,20 @@ const GameLogic: React.FC<GameLogicProps> = ({
                 break;
         }
 
-        // Handle turnovers
+        // Update the field position within limits (0-100 yards)
+        let newFieldPosition = Math.min(Math.max(state.fieldPosition + yards, 0), 100);
+
+        // Handle turnovers (change possession and adjust field position)
         if (turnover) {
             commentary += ` Turnover! ${defenseTeam.name} takes over on offense.`;
+            newFieldPosition = 100 - newFieldPosition;  // Flip field position
             addEvent(`Turnover by ${offenseTeam.name}`);
         }
 
         // Update game state
         let newState = {
             ...state,
-            fieldPosition: Math.min(Math.max(state.fieldPosition + yards, 0), 100),
+            fieldPosition: newFieldPosition,
             yardsToGo: Math.max(state.yardsToGo - yards, 0),
             down: turnover ? 1 : Math.min(state.down + 1, 4),
             lastPlay: commentary,
@@ -597,49 +596,40 @@ const GameLogic: React.FC<GameLogicProps> = ({
             },
         };
 
-        // Handle turnover logic
-        if (turnover) {
-            newState = {
-                ...newState,
-                possession: state.possession === "home" ? "away" : "home",
-                down: 1,
-                yardsToGo: 10,
-                fieldPosition: 100 - newState.fieldPosition,
-            };
-        }
-        // First down
-        else if (newState.yardsToGo <= 0) {
+        // Handle first down logic
+        if (newState.yardsToGo <= 0) {
             newState = {
                 ...newState,
                 down: 1,
                 yardsToGo: 10,
             };
-            addCommentary(`${offenseTeam.name} converts for a first down! The drive continues.`);
+            addCommentary(`${offenseTeam.name} converts for a first down!`);
         }
+
         // Fourth down logic
-        else if (newState.down === 4 && newState.yardsToGo > 0) {
+        if (newState.down === 4 && newState.yardsToGo > 0) {
             newState = handleFourthDown(newState);
         }
 
-        // Touchdown scenario
+        // Handle touchdown logic
         if (newState.fieldPosition >= 100) {
-            commentary += ` Touchdown ${offenseTeam.name}! The fans are going wild!`;
+            commentary += ` Touchdown ${offenseTeam.name}! The crowd is going wild!`;
             newState = {
                 ...newState,
                 homeScore: state.possession === "home" ? state.homeScore + 6 : state.awayScore + 6,
                 playType: Math.random() < 0.95 ? "extraPoint" : "twoPointConversion",
-                fieldPosition: 98, // Set up for extra point or two-point conversion
+                fieldPosition: 98, // Reset for extra point or two-point conversion
             };
             addEvent(`Touchdown by ${offenseTeam.name}`);
         }
 
-        // Random events
+        // Handle random events (injury, penalty, weather changes)
         if (Math.random() < 0.05) generateInjury(state.possession);
         if (Math.random() < 0.1) newState = generatePenalty(newState);
         if (Math.random() < 0.02) generateWeather();
         updateCrowd(newState);
 
-        // Add commentary and return updated state
+        // Add final commentary and return updated state
         addCommentary(commentary);
         return {
             ...newState,

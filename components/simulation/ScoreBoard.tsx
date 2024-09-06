@@ -20,6 +20,7 @@ interface GameState {
     penalties: { home: number; away: number };
     turnovers: { home: number; away: number };
     timeoutsLeft: { home: number; away: number };
+    fieldPosition: number;
 }
 
 interface ScoreBoardProps {
@@ -58,19 +59,18 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
             </div>
 
             {/* Score Display */}
-            <div className="grid grid-cols-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold">
-                <span className="text-center" style={{ color: homeTeam?.color }}>
+            <div className="grid grid-cols-3 items-center gap-4">
+                <span className="text-center font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl" style={{ color: homeTeam?.color }}>
                     {gameState.homeScore}
                 </span>
-                {/* Smaller, more professional "VS" */}
-                <span className="text-center text-yellow-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-widest">
+                {/* Professional, smaller "VS" */}
+                <span className="text-center text-gray-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-wider">
                     VS
                 </span>
-                <span className="text-center" style={{ color: awayTeam?.color }}>
+                <span className="text-center font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl" style={{ color: awayTeam?.color }}>
                     {gameState.awayScore}
                 </span>
             </div>
-
 
             {/* Possession */}
             <div className="text-center text-sm sm:text-base md:text-lg mt-2 text-gray-300">
@@ -78,10 +78,10 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
             </div>
 
             {/* Down & Yardage */}
-            <div className="text-center text-xl sm:text-2xl md:text-3xl font-bold text-blue-300 mt-4">
-                <p>
-                    {/* Converting down to readable format */}
-                    {`${gameState.down}${['st', 'nd', 'rd', 'th'][gameState.down - 1] || 'th'} & ${gameState.yardsToGo}`}
+            <div className="text-center text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-100 tracking-wide mt-2">
+                <p className="bg-gray-900 p-3 rounded-md shadow-md border-t-4 border-yellow-500 inline-flex items-center justify-center space-x-2 mx-auto max-w-full">
+                    <span>{`${gameState.down}${['st', 'nd', 'rd', 'th'][gameState.down - 1] || 'th'} & ${gameState.yardsToGo}`}</span>
+                    <span className="text-yellow-400">{`at ${gameState.possession === 'home' ? 'HOME' : 'AWAY'} ${gameState.fieldPosition} yd line`}</span>
                 </p>
             </div>
 
