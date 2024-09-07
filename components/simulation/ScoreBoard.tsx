@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Trophy, Zap } from 'lucide-react';
+import { Trophy, Hammer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TeamInfo from './TeamInfo'; // Import the new TeamInfo component
 
@@ -100,7 +100,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                     ) : (
                         <h2 className="text-3xl font-semibold text-yellow-400 mb-4">It&#39;s a Tie!</h2>
                     )}
-                    <Zap className="text-red-500 w-16 h-16 mt-6 animate-spin" />
+                    <Hammer className="text-red-500 w-16 h-16 mt-6 animate-spin" />
                 </div>
             )}
 
