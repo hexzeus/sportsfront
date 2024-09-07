@@ -278,20 +278,5 @@ h1, h2, h3 {
   border-radius: 10px;
 }
 
-@keyframes pulseEffect {
-  0% {
-      opacity: 1;
-  }
-  50% {
-      opacity: 0.6;
-  }
-  100% {
-      opacity: 1;
-  }
-}
-
-.animate-pulse {
-  animation: pulseEffect 1s infinite;
-}
 
 
