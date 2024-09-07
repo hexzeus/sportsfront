@@ -37,13 +37,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
+    // Navbar Container with Opacity Changes
     const NavbarContainer = ({ children }: { children: React.ReactNode }) => (
         <motion.nav
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={`fixed w-full z-50 transition-all duration-500 ${isScrolled
-                ? 'bg-gradient-to-r from-zinc-900/90 via-dark-blue/90 to-zinc-800/90 backdrop-blur-md shadow-lg'
+                ? 'bg-gradient-to-r from-zinc-900/80 via-dark-blue/80 to-zinc-800/80 backdrop-blur-md shadow-xl'
                 : 'bg-transparent'
                 }`}
         >
@@ -51,19 +52,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </motion.nav>
     );
 
+    // Updated NavItem with Spacing and Opacity
     const NavItem = ({ item, mobile = false }: { item: typeof navItems[0]; mobile?: boolean }) => {
         const isActive = router.pathname === item.href;
 
         return (
             <Link href={item.href} passHref legacyBehavior>
                 <motion.a
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300 ${isActive
+                    className={`flex items-center space-x-4 px-5 py-3 rounded-lg text-sm font-bold transition-all duration-300 ${isActive
                         ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white shadow-lg'
-                        : 'text-gray-300 hover:bg-gradient-to-r hover:from-red-600/20 hover:to-orange-500/20 hover:text-white'
+                        : 'text-gray-300 hover:bg-gradient-to-r hover:from-red-600/10 hover:to-orange-500/10 hover:text-white opacity-80 hover:opacity-100'
                         } ${mobile ? 'w-full' : ''}`}
-                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                    whileHover={{ scale: 1.1, opacity: 1 }}
                     whileTap={{ scale: 0.95 }}
-                    // If mobile, close the menu when an item is clicked
                     onClick={() => mobile && setIsMobileMenuOpen(false)}
                 >
                     <item.icon className="w-5 h-5" />

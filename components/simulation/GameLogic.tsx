@@ -54,13 +54,66 @@ const GameLogic: React.FC<GameLogicProps> = ({
     setShowCoinAnimation
 }) => {
     // Enhanced getRandomPlayer with only positions and numbers
-    const getRandomPlayer = useCallback(() => {
-        const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'P', 'CB', 'S', 'LB', 'DE', 'DT'];
+    const getRandomPlayer = useCallback((team: 'offense' | 'defense') => {
+        const positions = {
+            offense: ['QB', 'RB', 'WR', 'TE', 'OL'],
+            defense: ['DL', 'LB', 'DB'],
+            specialTeams: ['K', 'P']
+        };
 
-        const position = positions[Math.floor(Math.random() * positions.length)];
-        const number = Math.floor(Math.random() * 99) + 1;
+        const selectedPositions = team === 'offense'
+            ? [...positions.offense, ...positions.specialTeams]
+            : [...positions.defense, ...positions.specialTeams];
 
-        return `#${number} (${position})`;
+        const position = selectedPositions[Math.floor(Math.random() * selectedPositions.length)];
+
+        // Assign numbers based on NFL rules
+        let number;
+        switch (position) {
+            case 'QB':
+            case 'K':
+            case 'P':
+                number = Math.floor(Math.random() * 19) + 1; // 1-19
+                break;
+            case 'RB':
+            case 'DB':
+                number = Math.floor(Math.random() * 30) + 20; // 20-49
+                break;
+            case 'WR':
+                number = Math.random() < 0.5
+                    ? Math.floor(Math.random() * 10) + 10  // 10-19
+                    : Math.floor(Math.random() * 10) + 80; // 80-89
+                break;
+            case 'TE':
+            case 'LB':
+                {
+                    const ranges = [
+                        { min: 40, max: 49 },
+                        { min: 50, max: 59 },
+                        { min: 80, max: 89 }
+                    ];
+                    const selectedRange = ranges[Math.floor(Math.random() * ranges.length)];
+                    number = Math.floor(Math.random() * (selectedRange.max - selectedRange.min + 1)) + selectedRange.min;
+                }
+                break;
+            case 'OL':
+                number = Math.floor(Math.random() * 30) + 50; // 50-79
+                break;
+            case 'DL':
+                {
+                    const ranges = [
+                        { min: 50, max: 79 },
+                        { min: 90, max: 99 }
+                    ];
+                    const selectedRange = ranges[Math.floor(Math.random() * ranges.length)];
+                    number = Math.floor(Math.random() * (selectedRange.max - selectedRange.min + 1)) + selectedRange.min;
+                }
+                break;
+            default:
+                number = Math.floor(Math.random() * 99) + 1; // 1-99 (fallback)
+        }
+
+        return `#${number} ${position}`;
     }, []);
 
     // Enhanced updateDriveStatus with pro NFL commentary
@@ -71,23 +124,35 @@ const GameLogic: React.FC<GameLogicProps> = ({
         const down = `${state.down}${['st', 'nd', 'rd'][state.down - 1] || 'th'}`;
         const driveStr = `${currentTeam?.name} ${down} & ${state.yardsToGo} at ${side} ${yardLine}`;
 
-        // Enhanced commentary based on game situations
+        // Add more varied and exciting commentary
         if (yardLine <= 20) {
-            addCommentary(`${currentTeam?.name} is in the red zone! They're threatening to score.`);
+            addCommentary(`${currentTeam?.name} is in the red zone! The pressure is on to convert this opportunity into points.`);
         }
 
         if (yardLine <= 10) {
-            addCommentary(`${currentTeam?.name} is knocking on the door! Only ${yardLine} yards to go.`);
+            addCommentary(`${currentTeam?.name} is knocking on the door! First and goal from the ${yardLine}.`);
         }
 
         if (state.yardsToGo <= 1) {
-            addCommentary(`${currentTeam?.name} faces a crucial ${down} and short. Every inch counts.`);
-        } else if (state.down === 4 && state.yardsToGo > 5) {
-            addCommentary(`${currentTeam?.name} faces a challenging ${down} and long. A gutsy call if they go for it!`);
+            addCommentary(`It's ${down} and inches for ${currentTeam?.name}. This is a crucial play that could swing the momentum.`);
+        } else if (state.down === 3 && state.yardsToGo > 7) {
+            addCommentary(`${currentTeam?.name} faces a challenging ${down} and long. The defense will be looking to force a punt here.`);
         }
 
-        if (state.down === 4 && state.fieldPosition > 50 && state.yardsToGo <= 3) {
-            addCommentary(`It's 4th and short, and ${currentTeam?.name} is going for it! This could be a game-changer.`);
+        if (state.down === 4) {
+            if (state.fieldPosition > 65 && state.yardsToGo <= 3) {
+                addCommentary(`${currentTeam?.name} is in no man's land. Will they go for it or attempt a long field goal?`);
+            } else if (state.fieldPosition <= 40) {
+                addCommentary(`${currentTeam?.name} is likely to punt here, but don't rule out a surprise play.`);
+            }
+        }
+
+        // Add time-based commentary
+        const [minutes, seconds] = state.timeLeft.split(':').map(Number);
+        if (state.quarter === 2 && minutes < 2) {
+            addCommentary(`Two-minute warning approaching. ${currentTeam?.name} needs to manage the clock wisely.`);
+        } else if (state.quarter === 4 && minutes < 5) {
+            addCommentary(`We're in crunch time now. Every play could be the difference between victory and defeat.`);
         }
 
         return driveStr;
@@ -123,11 +188,25 @@ const GameLogic: React.FC<GameLogicProps> = ({
 
     const kickoff = useCallback((state: GameState): GameState => {
         const kickingTeam = state.possession === 'home' ? awayTeam : homeTeam;
-        const kickDistance = Math.floor(Math.random() * 15) + 65; // Slightly longer kicks for realism
-        const returnDistance = Math.floor(Math.random() * 30); // Return between 0 to 30 yards
-        const newFieldPosition = Math.min(Math.max(20, 100 - kickDistance + returnDistance), 50); // Ensure at least 20-yard line start
-
         const receivingTeam = state.possession === 'home' ? homeTeam : awayTeam;
+        const kicker = getRandomPlayer('offense').replace(/[#()]|QB|RB|WR|TE|OT|OG|C/g, 'K');
+        const returner = getRandomPlayer('offense').replace(/[#()]|QB|OT|OG|C/g, 'KR');
+
+        const kickDistance = Math.floor(Math.random() * 10) + 65; // Kicks typically travel 65-75 yards
+        const isTouchback = kickDistance >= 75 || Math.random() < 0.4; // Touchback probability
+
+        let returnDistance = 0;
+        let newFieldPosition = 25; // Default touchback position
+        let commentary = `${kickingTeam?.name}'s ${kicker} kicks off`;
+
+        if (!isTouchback) {
+            returnDistance = Math.floor(Math.random() * 30); // Return between 0 to 30 yards
+            newFieldPosition = Math.min(Math.max(100 - kickDistance + returnDistance, 1), 50); // Ensure realistic field position
+            commentary += ` ${kickDistance} yards to the ${returnDistance === 0 ? 'end zone' : receivingTeam?.name + "'s " + (100 - kickDistance) + ' yard line'}.`;
+            commentary += ` ${receivingTeam?.name}'s ${returner} returns it ${returnDistance} yards.`;
+        } else {
+            commentary += ` deep into the end zone. ${receivingTeam?.name}'s ${returner} takes a knee. Touchback.`;
+        }
 
         const newState: GameState = {
             ...state,
@@ -138,20 +217,21 @@ const GameLogic: React.FC<GameLogicProps> = ({
             playType: 'normal'
         };
 
-        // Commentary Improvements
-        const kickDistanceStr = `${kickDistance}-yard kick`;
-        const returnDistanceStr = returnDistance > 0 ? `returned for ${returnDistance} yards` : 'no return on the play';
-        addCommentary(`${kickingTeam?.name} kicks off. The ball travels ${kickDistanceStr}, ${returnDistanceStr}.`);
-        addCommentary(`${receivingTeam?.name} will start their drive from the ${newFieldPosition}-yard line.`);
+        addCommentary(commentary);
+        addEvent(`Kickoff: ${kickingTeam?.name} to ${receivingTeam?.name}. ${isTouchback ? 'Touchback' : 'Returned to the ' + newFieldPosition + ' yard line.'}`);
 
         return newState;
-    }, [homeTeam, awayTeam, addCommentary]);
+    }, [homeTeam, awayTeam, getRandomPlayer, addCommentary, addEvent]);
 
+    // Example usage in extraPoint function
     const extraPoint = useCallback((state: GameState): GameState => {
-        const scoringTeam = state.possession === 'home' ? homeTeam : awayTeam;
+        const scoringTeam = state.possession === "home" ? homeTeam : awayTeam;
+        const kicker = getRandomPlayer('offense');
         const specialTeamsRating = scoringTeam?.specialTeams || 80;
-        const successRate = specialTeamsRating / 100;
+        const successRate = (specialTeamsRating / 100) * 0.95; // NFL extra point success rate is around 95%
         const kickSuccess = Math.random() < successRate;
+
+        let commentary = `${scoringTeam?.name}'s ${kicker} lines up for the extra point...`;
 
         const newState: GameState = {
             ...state,
@@ -162,19 +242,31 @@ const GameLogic: React.FC<GameLogicProps> = ({
         };
 
         if (kickSuccess) {
-            addCommentary(`The kick is up... and it's good! ${scoringTeam?.name} extends their lead with an extra point.`);
+            commentary += " The kick is up and it's good! Extra point is successful.";
         } else {
-            addCommentary(`The kick is up... and it's wide right! No extra point for ${scoringTeam?.name}.`);
+            const missType = Math.random() < 0.5 ? "wide right" : "wide left";
+            commentary += ` The kick is ${missType}! Extra point is no good.`;
         }
 
+        addCommentary(commentary);
+        addEvent(`Extra point attempt by ${scoringTeam?.name}: ${kickSuccess ? 'Successful' : 'Missed'}`);
+
         return newState;
-    }, [homeTeam, awayTeam, addCommentary]);
+    }, [homeTeam, awayTeam, getRandomPlayer, addCommentary, addEvent]);
 
     const twoPointConversion = useCallback((state: GameState): GameState => {
-        const scoringTeam = state.possession === 'home' ? homeTeam : awayTeam;
+        const scoringTeam = state.possession === "home" ? homeTeam : awayTeam;
+        const defendingTeam = state.possession === "home" ? awayTeam : homeTeam;
         const offenseRating = scoringTeam?.offense || 80;
-        const successRate = offenseRating / 200;
+        const defenseRating = defendingTeam?.defense || 80;
+        const successRate = (offenseRating / (offenseRating + defenseRating)) * 0.5; // NFL 2-point conversion success rate is around 50%
         const conversionSuccess = Math.random() < successRate;
+
+        const playTypes = ['run', 'short pass', 'play action pass'];
+        const selectedPlay = playTypes[Math.floor(Math.random() * playTypes.length)];
+        const offensivePlayer = getRandomPlayer('offense');
+
+        let commentary = `${scoringTeam?.name} is going for two! They line up in a ${selectedPlay} formation...`;
 
         const newState: GameState = {
             ...state,
@@ -185,120 +277,182 @@ const GameLogic: React.FC<GameLogicProps> = ({
         };
 
         if (conversionSuccess) {
-            addCommentary(`The offense goes for two... and they get it! ${scoringTeam?.name} pulls off the two-point conversion.`);
+            commentary += ` The ${selectedPlay} is successful! ${offensivePlayer} finds the end zone. Two-point conversion is good!`;
         } else {
-            addCommentary(`The offense goes for two... but they're stopped short! No two points for ${scoringTeam?.name}.`);
+            commentary += ` The defense holds strong! ${defendingTeam?.name} stops the ${selectedPlay} attempt short of the goal line.`;
         }
 
+        addCommentary(commentary);
+        addEvent(`Two-point conversion attempt by ${scoringTeam?.name}: ${conversionSuccess ? 'Successful' : 'Failed'}`);
+
         return newState;
-    }, [homeTeam, awayTeam, addCommentary]);
+    }, [homeTeam, awayTeam, getRandomPlayer, addCommentary, addEvent]);
 
 
     const handleFourthDown = useCallback((state: GameState): GameState => {
         const currentTeam = state.possession === 'home' ? homeTeam : awayTeam;
-        const fieldGoalRange = 65;
-        const shortYards = 3;
+        const fieldGoalRange = 63; // Realistic maximum field goal range
+        const shortYards = 2;
+        const mediumYards = 5;
 
-        // Simulate field goal if in range
-        if (state.fieldPosition > fieldGoalRange && state.yardsToGo <= shortYards) {
-            const specialTeamsRating = currentTeam?.specialTeams || 80;
-            const successRate = specialTeamsRating / 100;
-            const fieldGoalSuccess = Math.random() < successRate;
+        const timeRemaining = parseInt(state.timeLeft.split(':')[0]) * 60 + parseInt(state.timeLeft.split(':')[1]);
+        const scoreDifference = state.possession === 'home' ? state.homeScore - state.awayScore : state.awayScore - state.homeScore;
 
-            if (fieldGoalSuccess) {
-                addCommentary(`${currentTeam?.name} lines up for a field goal... and it's good! They add three more points.`);
-                return {
-                    ...state,
-                    homeScore: state.possession === 'home' ? state.homeScore + 3 : state.homeScore,
-                    awayScore: state.possession === 'away' ? state.awayScore + 3 : state.awayScore,
-                    playType: 'normal',  // Reset to normal to avoid extra point logic issues
-                    possession: state.possession === 'home' ? 'away' : 'home',
-                    down: 1,
-                    yardsToGo: 10,
-                    fieldPosition: 35, // Reset for kickoff
-                };
-            } else {
-                addCommentary(`${currentTeam?.name} lines up for a field goal... but it's no good! The kick sails wide.`);
-                return {
-                    ...state,
-                    playType: 'normal',  // Ensure playType is reset
-                    possession: state.possession === 'home' ? 'away' : 'home',
-                    down: 1,
-                    yardsToGo: 10,
-                    fieldPosition: 100 - state.fieldPosition,
-                };
+        // Enhanced decision-making process
+        const makeDecision = () => {
+            if (state.fieldPosition >= 60 && state.fieldPosition < fieldGoalRange) {
+                return Math.random() < 0.9 ? 'fieldGoal' : 'goForIt';
             }
-        }
-
-        // Simulate punt
-        if (state.fieldPosition < fieldGoalRange || state.yardsToGo > shortYards) {
-            const puntDistance = Math.floor(Math.random() * 20) + 40;
-            const newFieldPosition = Math.max(20, Math.min(100 - state.fieldPosition - puntDistance, 80));
-            addCommentary(`${currentTeam?.name} punts the ball. The receiving team will start at their own ${newFieldPosition}-yard line.`);
-
-            return {
-                ...state,
-                playType: 'normal',  // Reset playType after punt
-                fieldPosition: newFieldPosition,
-                possession: state.possession === 'home' ? 'away' : 'home',
-                down: 1,
-                yardsToGo: 10,
-            };
-        }
-
-        // Turnover on downs
-        addCommentary(`${currentTeam?.name} goes for it on 4th down... and they don't get it! Turnover on downs.`);
-        return {
-            ...state,
-            playType: 'normal',  // Reset playType after turnover on downs
-            possession: state.possession === 'home' ? 'away' : 'home',
-            down: 1,
-            yardsToGo: 10,
-            fieldPosition: 100 - state.fieldPosition,  // Flip the field position
+            if (state.yardsToGo <= shortYards && state.fieldPosition > 45) {
+                return Math.random() < 0.7 ? 'goForIt' : 'punt';
+            }
+            if (scoreDifference < 0 && timeRemaining < 300) {
+                return Math.random() < 0.8 ? 'goForIt' : 'fieldGoal';
+            }
+            if (state.fieldPosition < 40 && state.yardsToGo > mediumYards) {
+                return 'punt';
+            }
+            return Math.random() < 0.1 ? 'goForIt' : 'punt';
         };
+
+        const decision = makeDecision();
+
+        switch (decision) {
+            case 'fieldGoal':
+                const fieldGoalDistance = 100 - state.fieldPosition + 17; // Add 17 for end zone and snap
+                const specialTeamsRating = currentTeam?.specialTeams || 80;
+                const successRate = Math.max((specialTeamsRating / 100) - (fieldGoalDistance - 20) * 0.01, 0.1);
+                const fieldGoalSuccess = Math.random() < successRate;
+
+                addCommentary(`${currentTeam?.name} is sending out the field goal unit for a ${fieldGoalDistance}-yard attempt.`);
+
+                if (fieldGoalSuccess) {
+                    addCommentary(`The kick is up... and it's GOOD! ${currentTeam?.name} adds three points to the board!`);
+                    return {
+                        ...state,
+                        homeScore: state.possession === 'home' ? state.homeScore + 3 : state.homeScore,
+                        awayScore: state.possession === 'away' ? state.awayScore + 3 : state.awayScore,
+                        playType: 'kickoff',
+                        possession: state.possession === 'home' ? 'away' : 'home',
+                        down: 1,
+                        yardsToGo: 10,
+                        fieldPosition: 35, // Reset for kickoff
+                    };
+                } else {
+                    addCommentary(`The kick is up... but it's wide! No good from ${fieldGoalDistance} yards.`);
+                    return {
+                        ...state,
+                        playType: 'normal',
+                        possession: state.possession === 'home' ? 'away' : 'home',
+                        down: 1,
+                        yardsToGo: 10,
+                        fieldPosition: 100 - state.fieldPosition,
+                    };
+                }
+
+            case 'punt':
+                const puntDistance = Math.floor(Math.random() * 20) + 35; // 35-55 yard punt
+                const newFieldPosition = Math.max(20, Math.min(100 - state.fieldPosition - puntDistance, 80));
+                const returnDistance = Math.floor(Math.random() * 15);
+                const finalPosition = Math.max(1, newFieldPosition - returnDistance);
+
+                addCommentary(`${currentTeam?.name} brings out the punting unit. The punt travels ${puntDistance} yards.`);
+                if (returnDistance > 0) {
+                    addCommentary(`The return man brings it back ${returnDistance} yards.`);
+                }
+
+                return {
+                    ...state,
+                    playType: 'normal',
+                    fieldPosition: finalPosition,
+                    possession: state.possession === 'home' ? 'away' : 'home',
+                    down: 1,
+                    yardsToGo: 10,
+                };
+
+            case 'goForIt':
+                addCommentary(`${currentTeam?.name} is keeping the offense on the field! They're going for it on 4th and ${state.yardsToGo}!`);
+                const conversionSuccess = Math.random() < 0.45; // NFL 4th down conversion rate is around 45%
+
+                if (conversionSuccess) {
+                    const yardsGained = Math.floor(Math.random() * 10) + state.yardsToGo;
+                    addCommentary(`They convert! Gain of ${yardsGained} yards and a fresh set of downs.`);
+                    return {
+                        ...state,
+                        fieldPosition: Math.min(state.fieldPosition + yardsGained, 100),
+                        down: 1,
+                        yardsToGo: 10,
+                    };
+                } else {
+                    addCommentary(`The defense holds! Turnover on downs.`);
+                    return {
+                        ...state,
+                        playType: 'normal',
+                        possession: state.possession === 'home' ? 'away' : 'home',
+                        down: 1,
+                        yardsToGo: 10,
+                        fieldPosition: 100 - state.fieldPosition,
+                    };
+                }
+
+            default:
+                return state;
+        }
     }, [homeTeam, awayTeam, addCommentary]);
 
     const generateWeather = useCallback(() => {
-        // Enhanced weather conditions with varying intensity
         const conditions = [
-            { type: 'Clear', impact: 0 },
-            { type: 'Cloudy', impact: 1 },
-            { type: 'Rainy', impact: 3 },
-            { type: 'Windy', impact: 2 },
-            { type: 'Snowy', impact: 4 },
-            { type: 'Thunderstorm', impact: 5 }
+            { type: 'Clear', description: 'perfect conditions', commentary: "It's a beautiful day for football! Clear skies and perfect visibility." },
+            { type: 'Partly Cloudy', description: 'comfortable playing conditions', commentary: "Some clouds in the sky, but overall great conditions for today's game." },
+            { type: 'Overcast', description: 'grey skies', commentary: "The sky is overcast, creating a dramatic backdrop for today's matchup." },
+            { type: 'Light Rain', description: 'a slight drizzle', commentary: "A light rain is falling. The ball might get a bit slippery, but nothing these pros can't handle." },
+            { type: 'Heavy Rain', description: 'pouring rain', commentary: "It's really coming down out there! Expect a lot of running plays and potential turnovers in these wet conditions." },
+            { type: 'Windy', description: 'gusty conditions', commentary: "The wind is whipping through the stadium. Kickers and quarterbacks will need to adjust their game." },
+            { type: 'Snow', description: 'winter wonderland', commentary: "Snow is falling! We're in for a classic cold-weather football game. Footing could be an issue." },
+            { type: 'Fog', description: 'reduced visibility', commentary: "A thick fog has rolled in. Visibility is limited, which could lead to some interesting plays." },
+            { type: 'Hot', description: 'scorching heat', commentary: "It's a scorcher today! The heat will definitely be a factor, especially in the later quarters." },
+            { type: 'Cold', description: 'frigid temperatures', commentary: "Brrr! It's freezing out there. Players will need to stay active to keep warm in these conditions." }
         ];
 
-        // Randomly select a weather condition
         const selectedCondition = conditions[Math.floor(Math.random() * conditions.length)];
-        const { type: newWeather, impact } = selectedCondition;
+        const { type: newWeather, description, commentary } = selectedCondition;
 
-        // Set the new weather state
         setWeather(newWeather);
 
-        // Generate dynamic commentary based on the weather's intensity and impact
-        if (impact === 0) {
-            addCommentary(`It's a perfect day for football! The weather is ${newWeather.toLowerCase()} with no impact on the game.`);
-        } else if (impact === 1) {
-            addCommentary(`The skies are ${newWeather.toLowerCase()}, but it won't affect the players much. Expect smooth gameplay.`);
-        } else if (impact === 2) {
-            addCommentary(`The wind is picking up! ${newWeather.toLowerCase()} conditions could make long passes tricky.`);
-        } else if (impact === 3) {
-            addCommentary(`It's getting wet out there! ${newWeather.toLowerCase()} weather will make the field slick, and ball control might become a challenge.`);
-        } else if (impact === 4) {
-            addCommentary(`Snow is starting to fall! The ${newWeather.toLowerCase()} conditions will slow things down, making every yard count.`);
-        } else if (impact === 5) {
-            addCommentary(`Brace yourselves, a ${newWeather.toLowerCase()} is rolling in! The conditions are intense, making every play even more unpredictable.`);
+        addCommentary(`Weather update: We're seeing ${description} here at the stadium.`);
+        addCommentary(commentary);
+
+        // Add some additional commentary based on the weather type
+        switch (newWeather) {
+            case 'Heavy Rain':
+            case 'Snow':
+                addCommentary("Ball security will be crucial in these conditions. We might see more conservative play-calling from both teams.");
+                break;
+            case 'Windy':
+                addCommentary("The wind could play havoc with the passing and kicking game. Field position might be more important than ever.");
+                break;
+            case 'Fog':
+                addCommentary("The reduced visibility might lead to some miscommunications. Both quarterbacks will need to be extra careful with their throws.");
+                break;
+            case 'Hot':
+                addCommentary("Hydration and player rotation will be key in this heat. The team with better conditioning might have an edge in the fourth quarter.");
+                break;
+            case 'Cold':
+                addCommentary("In this cold, we might see more running plays and shorter passes. It's tough to grip the ball when it's this chilly.");
+                break;
         }
+
     }, [setWeather, addCommentary]);
 
     // Hook to trigger weather change at the start of each quarter
     useEffect(() => {
-        // Weather changes at the start of each quarter
-        if (gameState.quarter === 1 || gameState.quarter > 1) {
+        if (gameState.quarter === 1) {
+            generateWeather(); // Initial weather for the game
+        } else if (gameState.quarter > 1 && Math.random() < 0.3) { // 30% chance of weather change each quarter
+            addCommentary("Looks like the weather is changing as we start the new quarter.");
             generateWeather();
         }
-    }, [gameState.quarter, generateWeather]);
+    }, [gameState.quarter, generateWeather, addCommentary]);
 
     const updateCrowd = useCallback((state: GameState) => {
         // Higher excitement for close games and bigger spikes for major moments (like touchdowns)
@@ -338,13 +492,16 @@ const GameLogic: React.FC<GameLogicProps> = ({
     }, [setCrowd, addCommentary]);
 
     const generateInjury = useCallback((team: 'home' | 'away') => {
-        const player = getRandomPlayer();
+        const player = getRandomPlayer(team === 'home' ? 'offense' : 'defense');
 
         // Injury types and recovery times
         const injuryTypes = [
-            { type: 'minor', description: 'sprain', recoveryTime: 'few plays' },
-            { type: 'serious', description: 'torn ligament', recoveryTime: 'rest of the game' },
-            { type: 'moderate', description: 'bruised ribs', recoveryTime: 'quarter or more' }
+            { type: 'minor', description: 'ankle sprain', recoveryTime: 'few plays' },
+            { type: 'minor', description: 'cramping', recoveryTime: 'few plays' },
+            { type: 'moderate', description: 'hamstring strain', recoveryTime: 'quarter or more' },
+            { type: 'moderate', description: 'concussion protocol', recoveryTime: 'rest of the game' },
+            { type: 'serious', description: 'knee injury', recoveryTime: 'rest of the game' },
+            { type: 'serious', description: 'shoulder dislocation', recoveryTime: 'rest of the game' }
         ];
 
         // Randomly choose injury severity and type
@@ -357,13 +514,14 @@ const GameLogic: React.FC<GameLogicProps> = ({
         const teamName = team === 'home' ? homeTeam?.name : awayTeam?.name;
 
         // Expert NFL-style commentary
-        let commentary = `${teamName}'s ${player} is down on the field!`;
+        let commentary = `We have an injury on the field. ${teamName}'s ${player} is down and the medical staff is rushing out.`;
+
         if (injury.type === 'minor') {
-            commentary += ` It's a ${injury.description}. Looks like they'll be back in action after a ${injury.recoveryTime}.`;
+            commentary += ` It looks like a ${injury.description}. The training staff is working on ${player}, and we expect them back in the game after a ${injury.recoveryTime}.`;
         } else if (injury.type === 'moderate') {
-            commentary += ` Ouch, that looks like a ${injury.description}. ${player} will be out for at least a ${injury.recoveryTime}.`;
+            commentary += ` This could be serious. It appears to be a ${injury.description}. ${player} is being helped off the field and might be out for a ${injury.recoveryTime}.`;
         } else {
-            commentary += ` Oh no, it's a ${injury.description}! Medical staff are on the field, and it looks like ${player} is out for the ${injury.recoveryTime}.`;
+            commentary += ` This doesn't look good, folks. The medical team is very concerned about a possible ${injury.description}. It's likely that ${player} will be out for the ${injury.recoveryTime}.`;
         }
 
         // Add injury event and commentary
@@ -497,10 +655,31 @@ const GameLogic: React.FC<GameLogicProps> = ({
         return options[options.length - 1]; // Fallback
     };
 
+    // Add this new function to handle timeout usage
+    const useTimeout = useCallback((state: GameState, team: 'home' | 'away'): GameState => {
+        if (state.timeoutsLeft[team] > 0) {
+            const newTimeoutsLeft = {
+                ...state.timeoutsLeft,
+                [team]: state.timeoutsLeft[team] - 1
+            };
+
+            const teamName = team === 'home' ? homeTeam?.name : awayTeam?.name;
+            addCommentary(`${teamName} calls a timeout. They have ${newTimeoutsLeft[team]} timeouts remaining.`);
+
+            return {
+                ...state,
+                timeoutsLeft: newTimeoutsLeft
+            };
+        } else {
+            addCommentary(`${team === 'home' ? homeTeam?.name : awayTeam?.name} wanted to call a timeout, but they have none left!`);
+            return state;
+        }
+    }, [homeTeam, awayTeam, addCommentary]);
+
     const generatePlay = useCallback((state: GameState): GameState => {
         if (!homeTeam || !awayTeam) return state;
 
-        // Handle special play types (kickoff, extra point, two-point conversion)
+        // Handle special play types
         if (state.playType === "kickoff") return kickoff(state);
         if (state.playType === "extraPoint") return extraPoint(state);
         if (state.playType === "twoPointConversion") return twoPointConversion(state);
@@ -508,11 +687,38 @@ const GameLogic: React.FC<GameLogicProps> = ({
         const offenseTeam = state.possession === "home" ? homeTeam : awayTeam;
         const defenseTeam = state.possession === "home" ? awayTeam : homeTeam;
 
-        // Dynamic play options and their base weights
-        const playOptions = ["run", "shortPass", "longPass", "sack", "fumble", "interception"];
-        const playWeights = [0.35, 0.3, 0.15, 0.1, 0.05, 0.05];
+        // Check for potential timeout usage before the play
+        const shouldUseTimeout = (team: 'home' | 'away') => {
+            const [minutes, seconds] = state.timeLeft.split(':').map(Number);
+            const timeRemaining = minutes * 60 + seconds;
+            const losing = (team === 'home' && state.homeScore < state.awayScore) ||
+                (team === 'away' && state.awayScore < state.homeScore);
+            const closeGame = Math.abs(state.homeScore - state.awayScore) <= 8;
+            const criticalTime = state.quarter === 4 && timeRemaining < 120; // Last 2 minutes
+            return losing && closeGame && criticalTime && state.timeoutsLeft[team] > 0;
+        };
 
-        // Generate the play selection using weighted randomness
+        if (shouldUseTimeout(state.possession === 'home' ? 'away' : 'home')) {
+            const timeoutTeam = state.possession === 'home' ? 'away' : 'home';
+            state = useTimeout(state, timeoutTeam);
+            addCommentary(`${timeoutTeam === 'home' ? homeTeam.name : awayTeam.name} calls a timeout to stop the clock!`);
+        }
+
+        // Dynamic play options and weights
+        const playOptions = ["run", "shortPass", "longPass", "screenPass"];
+        let playWeights = [0.4, 0.3, 0.2, 0.1];
+
+        // Adjust play weights based on game situation
+        const [minutes, seconds] = state.timeLeft.split(':').map(Number);
+        const timeRemaining = minutes * 60 + seconds;
+        if (state.quarter === 4 && timeRemaining < 120 && Math.abs(state.homeScore - state.awayScore) <= 8) {
+            // More passing in close games near the end
+            playWeights = [0.2, 0.4, 0.3, 0.1];
+        } else if (state.yardsToGo <= 3) {
+            // More running on short yardage situations
+            playWeights = [0.6, 0.2, 0.1, 0.1];
+        }
+
         const selectedPlay = weightedRandomChoice(
             playOptions, playWeights,
             state.down, state.yardsToGo, state.fieldPosition,
@@ -522,71 +728,60 @@ const GameLogic: React.FC<GameLogicProps> = ({
         let yards = 0;
         let turnover = false;
         let commentary = "";
+        let clockStops = false;
 
-        const offensivePlayer = getRandomPlayer();
-        const defensivePlayer = getRandomPlayer();
+        const offensivePlayer = getRandomPlayer('offense');
+        const defensivePlayer = getRandomPlayer('defense');
 
-        const offenseRating = offenseTeam.offense;
-        const defenseRating = defenseTeam.defense;
-        const playSuccess = Math.random() * (offenseRating + defenseRating) < offenseRating;
+        const playSuccess = Math.random() < (offenseTeam.offense / (offenseTeam.offense + defenseTeam.defense));
 
-        // Play execution and detailed commentary
+        // Play execution
         switch (selectedPlay) {
             case "run":
-                yards = playSuccess ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 3) - 2;
+                yards = playSuccess ? Math.floor(Math.random() * 8) + 1 : Math.floor(Math.random() * 3) - 1;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s ${offensivePlayer} powers through for ${yards} yards!`
-                    : `${defenseTeam.name} stuffs the run! ${offensivePlayer} is stopped for a loss of ${Math.abs(yards)} yards.`;
+                    ? `${offenseTeam.name}'s ${offensivePlayer} finds a gap and gains ${yards} yards.`
+                    : `${defenseTeam.name}'s defense stops ${offensivePlayer} for ${yards < 0 ? 'a loss of ' + Math.abs(yards) : 'no gain'}.`;
                 break;
 
             case "shortPass":
-                yards = playSuccess ? Math.floor(Math.random() * 15) + 3 : 0;
-                turnover = !playSuccess && Math.random() < 0.1;
+                yards = playSuccess ? Math.floor(Math.random() * 12) + 3 : 0;
+                clockStops = !playSuccess;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s QB zips it to ${offensivePlayer} for a gain of ${yards} yards.`
-                    : `Pressure by ${defenseTeam.name}! The pass falls incomplete.`;
-                if (turnover) commentary += ` Interception by ${defensivePlayer} from ${defenseTeam.name}!`;
+                    ? `${offenseTeam.name}'s QB completes a pass to ${offensivePlayer} for a gain of ${yards} yards.`
+                    : `The pass falls incomplete, intended for ${offensivePlayer}.`;
                 break;
 
             case "longPass":
-                yards = playSuccess ? Math.floor(Math.random() * 40) + 15 : 0;
+                yards = playSuccess ? Math.floor(Math.random() * 30) + 15 : 0;
+                clockStops = !playSuccess;
                 turnover = !playSuccess && Math.random() < 0.15;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s QB launches it deep! ${offensivePlayer} hauls it in for ${yards} yards!`
-                    : `${defenseTeam.name} shuts down the deep pass attempt! Incomplete.`;
-                if (turnover) commentary += ` Interception by ${defensivePlayer} from ${defenseTeam.name}!`;
+                    ? `${offenseTeam.name}'s QB launches a deep ball and connects with ${offensivePlayer} for a ${yards}-yard gain!`
+                    : `The deep pass intended for ${offensivePlayer} falls incomplete.`;
+                if (turnover) commentary += ` Intercepted by ${defensivePlayer} of ${defenseTeam.name}!`;
                 break;
 
-            case "sack":
-                yards = -Math.floor(Math.random() * 10) - 1;
-                turnover = Math.random() < 0.05;
-                commentary = `Sack! ${defensivePlayer} from ${defenseTeam.name} drops the QB for a loss of ${Math.abs(yards)} yards.`;
-                if (turnover) commentary += ` The ball is loose! ${defenseTeam.name} recovers!`;
-                break;
-
-            case "fumble":
-                turnover = true;
-                commentary = `Fumble! ${offenseTeam.name}'s ${offensivePlayer} coughs up the ball! ${defenseTeam.name} recovers!`;
-                break;
-
-            case "interception":
-                turnover = true;
-                commentary = `Interception! ${defensivePlayer} from ${defenseTeam.name} snatches the ball out of the air! What a play!`;
+            case "screenPass":
+                yards = playSuccess ? Math.floor(Math.random() * 15) + 1 : Math.floor(Math.random() * 3) - 2;
+                commentary = playSuccess
+                    ? `Screen pass to ${offensivePlayer} gains ${yards} yards.`
+                    : `Screen pass to ${offensivePlayer} is sniffed out by the defense for ${yards < 0 ? 'a loss of ' + Math.abs(yards) : 'no gain'}.`;
                 break;
         }
 
-        // Update the field position within limits (0-100 yards)
+        // Update field position
         let newFieldPosition = Math.min(Math.max(state.fieldPosition + yards, 0), 100);
 
-        // Handle turnovers (change possession and adjust field position)
+        // Handle turnovers
         if (turnover) {
             commentary += ` Turnover! ${defenseTeam.name} takes over on offense.`;
-            newFieldPosition = 100 - newFieldPosition;  // Flip field position
+            newFieldPosition = 100 - newFieldPosition;
             addEvent(`Turnover by ${offenseTeam.name}`);
         }
 
         // Update game state
-        let newState = {
+        let newState: GameState = {
             ...state,
             fieldPosition: newFieldPosition,
             yardsToGo: Math.max(state.yardsToGo - yards, 0),
@@ -594,20 +789,14 @@ const GameLogic: React.FC<GameLogicProps> = ({
             lastPlay: commentary,
             turnovers: {
                 ...state.turnovers,
-                [state.possession]: turnover
-                    ? state.turnovers[state.possession] + 1
-                    : state.turnovers[state.possession],
+                [state.possession]: turnover ? state.turnovers[state.possession] + 1 : state.turnovers[state.possession],
             },
         };
 
-        // Handle first down logic
+        // First down logic
         if (newState.yardsToGo <= 0) {
-            newState = {
-                ...newState,
-                down: 1,
-                yardsToGo: 10,
-            };
-            addCommentary(`${offenseTeam.name} converts for a first down!`);
+            newState = { ...newState, down: 1, yardsToGo: 10 };
+            addCommentary(`${offenseTeam.name} picks up a first down!`);
         }
 
         // Fourth down logic
@@ -615,25 +804,41 @@ const GameLogic: React.FC<GameLogicProps> = ({
             newState = handleFourthDown(newState);
         }
 
-        // Handle touchdown logic
+        // Touchdown logic
         if (newState.fieldPosition >= 100) {
-            commentary += ` Touchdown ${offenseTeam.name}! The crowd is going wild!`;
+            commentary += ` Touchdown ${offenseTeam.name}! ${offensivePlayer} scores!`;
             newState = {
                 ...newState,
-                homeScore: state.possession === "home" ? state.homeScore + 6 : state.awayScore + 6,
-                playType: Math.random() < 0.95 ? "extraPoint" : "twoPointConversion",
-                fieldPosition: 98, // Reset for extra point or two-point conversion
+                homeScore: state.possession === "home" ? newState.homeScore + 6 : newState.homeScore,
+                awayScore: state.possession === "away" ? newState.awayScore + 6 : newState.awayScore,
+                playType: Math.random() < 0.98 ? "extraPoint" : "twoPointConversion",
+                fieldPosition: 98,
             };
-            addEvent(`Touchdown by ${offenseTeam.name}`);
+            addEvent(`Touchdown by ${offenseTeam.name} - ${offensivePlayer}`);
         }
 
-        // Handle random events (injury, penalty, weather changes)
+        // Handle clock management
+        if (!clockStops && newState.playType === 'normal') {
+            const [currentMinutes, currentSeconds] = newState.timeLeft.split(':').map(Number);
+            let newSeconds = currentSeconds - 40; // Average play duration
+            let newMinutes = currentMinutes;
+
+            if (newSeconds < 0) {
+                newMinutes--;
+                newSeconds += 60;
+            }
+
+            if (newMinutes >= 0) {
+                newState.timeLeft = `${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')}`;
+            }
+        }
+
+        // Random events
         if (Math.random() < 0.05) generateInjury(state.possession);
         if (Math.random() < 0.1) newState = generatePenalty(newState);
         if (Math.random() < 0.02) generateWeather();
         updateCrowd(newState);
 
-        // Add final commentary and return updated state
         addCommentary(commentary);
         return {
             ...newState,
@@ -654,6 +859,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
         addCommentary,
         addEvent,
         updateDriveStatus,
+        useTimeout,
     ]);
 
     const updateGameTimer = useCallback(() => {
