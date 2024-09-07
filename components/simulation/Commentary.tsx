@@ -10,7 +10,11 @@ const Commentary: React.FC<CommentaryProps> = ({ commentary }) => {
 
     useEffect(() => {
         if (commentaryRef.current) {
-            commentaryRef.current.scrollTop = commentaryRef.current.scrollHeight;
+            // Scroll to the bottom when new commentary is added
+            commentaryRef.current.scrollTo({
+                top: commentaryRef.current.scrollHeight,
+                behavior: 'smooth',  // Smooth scrolling for better UX
+            });
         }
     }, [commentary]);
 

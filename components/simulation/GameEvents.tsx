@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Activity } from 'lucide-react';
 
 interface GameEventsProps {
@@ -6,6 +6,18 @@ interface GameEventsProps {
 }
 
 const GameEvents: React.FC<GameEventsProps> = ({ events }) => {
+    const eventsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (eventsRef.current) {
+            // Scroll to the bottom when new events are added
+            eventsRef.current.scrollTo({
+                top: eventsRef.current.scrollHeight,
+                behavior: 'smooth',
+            });
+        }
+    }, [events]);
+
     return (
         <div className="bg-gradient-to-r from-black via-gray-900 to-black w-full p-3 sm:p-4 rounded-lg shadow-md border-t-4 border-b-4 border-green-500">
             <div className="flex items-center justify-between mb-2">
@@ -18,7 +30,10 @@ const GameEvents: React.FC<GameEventsProps> = ({ events }) => {
                 <span className="text-gray-400 text-xs sm:text-sm">Live</span>
             </div>
 
-            <div className="h-28 sm:h-36 overflow-y-auto text-xs sm:text-sm text-gray-300 space-y-2 pr-2 custom-scrollbar">
+            <div
+                ref={eventsRef}
+                className="h-28 sm:h-36 overflow-y-auto text-xs sm:text-sm text-gray-300 space-y-2 pr-2 custom-scrollbar"
+            >
                 {events.map((event, index) => (
                     <div
                         key={index}
