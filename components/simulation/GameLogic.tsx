@@ -54,25 +54,25 @@ const GameLogic: React.FC<GameLogicProps> = ({
     setShowCoinAnimation
 }) => {
     // Enhanced getRandomPlayer with only positions and numbers
-    const getRandomPlayer = useCallback((team: 'offense' | 'defense') => {
+    const getRandomPlayer = useCallback((team: 'offense' | 'defense', role?: 'QB' | 'RB' | 'WR' | 'TE' | 'OL' | 'K' | 'P' | 'DL' | 'LB' | 'DB') => {
         const positions = {
             offense: ['QB', 'RB', 'WR', 'TE', 'OL'],
             defense: ['DL', 'LB', 'DB'],
             specialTeams: ['K', 'P']
         };
 
-        const selectedPositions = team === 'offense'
-            ? [...positions.offense, ...positions.specialTeams]
-            : [...positions.defense, ...positions.specialTeams];
-
-        const position = selectedPositions[Math.floor(Math.random() * selectedPositions.length)];
+        let position: string;
+        if (role) {
+            position = role;
+        } else {
+            const selectedPositions = team === 'offense' ? positions.offense : positions.defense;
+            position = selectedPositions[Math.floor(Math.random() * selectedPositions.length)];
+        }
 
         // Assign numbers based on NFL rules
         let number;
         switch (position) {
             case 'QB':
-            case 'K':
-            case 'P':
                 number = Math.floor(Math.random() * 19) + 1; // 1-19
                 break;
             case 'RB':
@@ -108,6 +108,10 @@ const GameLogic: React.FC<GameLogicProps> = ({
                     const selectedRange = ranges[Math.floor(Math.random() * ranges.length)];
                     number = Math.floor(Math.random() * (selectedRange.max - selectedRange.min + 1)) + selectedRange.min;
                 }
+                break;
+            case 'K':
+            case 'P':
+                number = Math.floor(Math.random() * 19) + 1; // 1-19
                 break;
             default:
                 number = Math.floor(Math.random() * 99) + 1; // 1-99 (fallback)
@@ -704,19 +708,38 @@ const GameLogic: React.FC<GameLogicProps> = ({
             addCommentary(`${timeoutTeam === 'home' ? homeTeam.name : awayTeam.name} calls a timeout to stop the clock!`);
         }
 
-        // Dynamic play options and weights
-        const playOptions = ["run", "shortPass", "longPass", "screenPass"];
-        let playWeights = [0.4, 0.3, 0.2, 0.1];
+        // Enhanced play selection logic
+        const playOptions = ["run", "shortPass", "mediumPass", "longPass", "screenPass", "playAction"];
+        let playWeights = [0.3, 0.25, 0.2, 0.1, 0.1, 0.05];
 
-        // Adjust play weights based on game situation
         const [minutes, seconds] = state.timeLeft.split(':').map(Number);
         const timeRemaining = minutes * 60 + seconds;
-        if (state.quarter === 4 && timeRemaining < 120 && Math.abs(state.homeScore - state.awayScore) <= 8) {
-            // More passing in close games near the end
-            playWeights = [0.2, 0.4, 0.3, 0.1];
+        const scoreDifference = state.possession === 'home' ?
+            state.homeScore - state.awayScore :
+            state.awayScore - state.homeScore;
+
+        // Adjust play weights based on game situation
+        if (state.quarter === 4 && timeRemaining < 120 && scoreDifference <= 0) {
+            // Trailing team in last 2 minutes: more passing
+            playWeights = [0.1, 0.3, 0.25, 0.15, 0.1, 0.1];
+        } else if (state.quarter === 4 && timeRemaining < 240 && scoreDifference > 0) {
+            // Leading team in last 4 minutes: more running to kill clock
+            playWeights = [0.5, 0.2, 0.1, 0.05, 0.1, 0.05];
         } else if (state.yardsToGo <= 3) {
-            // More running on short yardage situations
-            playWeights = [0.6, 0.2, 0.1, 0.1];
+            // Short yardage: more running and short passes
+            playWeights = [0.4, 0.3, 0.1, 0.05, 0.1, 0.05];
+        } else if (state.yardsToGo >= 10) {
+            // Long yardage: more passing
+            playWeights = [0.15, 0.3, 0.25, 0.15, 0.1, 0.05];
+        }
+
+        // Adjust weights based on field position
+        if (state.fieldPosition <= 20) {
+            // Deep in own territory: more conservative
+            playWeights = playWeights.map((w, i) => i === 0 || i === 1 ? w * 1.2 : w * 0.8);
+        } else if (state.fieldPosition >= 80) {
+            // Red zone: more running and short passes
+            playWeights = [0.35, 0.3, 0.15, 0.05, 0.1, 0.05];
         }
 
         const selectedPlay = weightedRandomChoice(
@@ -730,34 +753,75 @@ const GameLogic: React.FC<GameLogicProps> = ({
         let commentary = "";
         let clockStops = false;
 
-        const offensivePlayer = getRandomPlayer('offense');
+        // Enhanced player selection
+        const getOffensivePlayer = (playType: string) => {
+            switch (playType) {
+                case "run":
+                    return getRandomPlayer('offense', 'RB');
+                case "shortPass":
+                case "mediumPass":
+                case "longPass":
+                    return Math.random() < 0.7 ?
+                        getRandomPlayer('offense', 'WR') :
+                        getRandomPlayer('offense', 'TE');
+                case "screenPass":
+                    return Math.random() < 0.6 ?
+                        getRandomPlayer('offense', 'RB') :
+                        getRandomPlayer('offense', 'WR');
+                case "playAction":
+                    return Math.random() < 0.5 ?
+                        getRandomPlayer('offense', 'WR') :
+                        getRandomPlayer('offense', 'TE');
+                default:
+                    return getRandomPlayer('offense');
+            }
+        };
+
+        const offensivePlayer = getOffensivePlayer(selectedPlay);
         const defensivePlayer = getRandomPlayer('defense');
+        const quarterback = getRandomPlayer('offense', 'QB');
 
         const playSuccess = Math.random() < (offenseTeam.offense / (offenseTeam.offense + defenseTeam.defense));
 
-        // Play execution
+        // Enhanced play execution
         switch (selectedPlay) {
             case "run":
-                yards = playSuccess ? Math.floor(Math.random() * 8) + 1 : Math.floor(Math.random() * 3) - 1;
+                yards = playSuccess ?
+                    Math.floor(Math.random() * 8) + 1 :
+                    Math.floor(Math.random() * 3) - 1;
                 commentary = playSuccess
                     ? `${offenseTeam.name}'s ${offensivePlayer} finds a gap and gains ${yards} yards.`
                     : `${defenseTeam.name}'s defense stops ${offensivePlayer} for ${yards < 0 ? 'a loss of ' + Math.abs(yards) : 'no gain'}.`;
+                if (Math.random() < 0.02) {
+                    turnover = true;
+                    commentary += ` Fumble! ${defenseTeam.name} recovers!`;
+                }
                 break;
 
             case "shortPass":
-                yards = playSuccess ? Math.floor(Math.random() * 12) + 3 : 0;
+                yards = playSuccess ? Math.floor(Math.random() * 10) + 3 : 0;
                 clockStops = !playSuccess;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s QB completes a pass to ${offensivePlayer} for a gain of ${yards} yards.`
-                    : `The pass falls incomplete, intended for ${offensivePlayer}.`;
+                    ? `${quarterback} completes a short pass to ${offensivePlayer} for a gain of ${yards} yards.`
+                    : `${quarterback}'s pass falls incomplete, intended for ${offensivePlayer}.`;
+                break;
+
+            case "mediumPass":
+                yards = playSuccess ? Math.floor(Math.random() * 15) + 10 : 0;
+                clockStops = !playSuccess;
+                turnover = !playSuccess && Math.random() < 0.08;
+                commentary = playSuccess
+                    ? `${quarterback} finds ${offensivePlayer} on a medium route for a ${yards}-yard gain.`
+                    : `The pass to ${offensivePlayer} is broken up by ${defensivePlayer}.`;
+                if (turnover) commentary += ` Intercepted by ${defensivePlayer}!`;
                 break;
 
             case "longPass":
-                yards = playSuccess ? Math.floor(Math.random() * 30) + 15 : 0;
+                yards = playSuccess ? Math.floor(Math.random() * 30) + 20 : 0;
                 clockStops = !playSuccess;
                 turnover = !playSuccess && Math.random() < 0.15;
                 commentary = playSuccess
-                    ? `${offenseTeam.name}'s QB launches a deep ball and connects with ${offensivePlayer} for a ${yards}-yard gain!`
+                    ? `${quarterback} launches a deep ball and connects with ${offensivePlayer} for a ${yards}-yard bomb!`
                     : `The deep pass intended for ${offensivePlayer} falls incomplete.`;
                 if (turnover) commentary += ` Intercepted by ${defensivePlayer} of ${defenseTeam.name}!`;
                 break;
@@ -767,6 +831,16 @@ const GameLogic: React.FC<GameLogicProps> = ({
                 commentary = playSuccess
                     ? `Screen pass to ${offensivePlayer} gains ${yards} yards.`
                     : `Screen pass to ${offensivePlayer} is sniffed out by the defense for ${yards < 0 ? 'a loss of ' + Math.abs(yards) : 'no gain'}.`;
+                break;
+
+            case "playAction":
+                yards = playSuccess ? Math.floor(Math.random() * 20) + 5 : 0;
+                clockStops = !playSuccess;
+                turnover = !playSuccess && Math.random() < 0.1;
+                commentary = playSuccess
+                    ? `${quarterback} sells the play-action and connects with ${offensivePlayer} for a ${yards}-yard gain!`
+                    : `The play-action is well-defended, and the pass to ${offensivePlayer} falls incomplete.`;
+                if (turnover) commentary += ` ${defensivePlayer} reads the play and intercepts the pass!`;
                 break;
         }
 
@@ -817,10 +891,10 @@ const GameLogic: React.FC<GameLogicProps> = ({
             addEvent(`Touchdown by ${offenseTeam.name} - ${offensivePlayer}`);
         }
 
-        // Handle clock management
+        // Enhanced clock management
         if (!clockStops && newState.playType === 'normal') {
             const [currentMinutes, currentSeconds] = newState.timeLeft.split(':').map(Number);
-            let newSeconds = currentSeconds - 40; // Average play duration
+            let newSeconds = currentSeconds - Math.floor(Math.random() * 15) - 30; // 30-45 seconds per play
             let newMinutes = currentMinutes;
 
             if (newSeconds < 0) {
@@ -834,9 +908,9 @@ const GameLogic: React.FC<GameLogicProps> = ({
         }
 
         // Random events
-        if (Math.random() < 0.05) generateInjury(state.possession);
-        if (Math.random() < 0.1) newState = generatePenalty(newState);
-        if (Math.random() < 0.02) generateWeather();
+        if (Math.random() < 0.03) generateInjury(state.possession);
+        if (Math.random() < 0.08) newState = generatePenalty(newState);
+        if (Math.random() < 0.01) generateWeather();
         updateCrowd(newState);
 
         addCommentary(commentary);
