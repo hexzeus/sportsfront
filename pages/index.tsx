@@ -34,7 +34,7 @@ interface GameState {
     yardsToGo: number;
     fieldPosition: number;
     possession: 'home' | 'away';
-    gameStatus: string;
+    gameStatus: 'Not Started' | 'In Progress' | 'Finished' | 'Overtime';
     lastPlay: string;
     driveStatus: string;
     playType: 'normal' | 'kickoff' | 'extraPoint' | 'twoPointConversion';
@@ -44,7 +44,7 @@ interface GameState {
 }
 
 const HomePage: React.FC = () => {
-    const [currentTime, setCurrentTime] = useState<Date | null>(null);
+    const [currentTime, setCurrentTime] = useState<Date | null>(null); // Track current time
     const [teams, setTeams] = useState<Team[]>([]);
     const [homeTeam, setHomeTeam] = useState<Team | null>(null);
     const [awayTeam, setAwayTeam] = useState<Team | null>(null);
@@ -93,6 +93,7 @@ const HomePage: React.FC = () => {
         fetchTeams();
     }, []);
 
+    // Randomly select home and away teams
     useEffect(() => {
         if (teams.length > 0) {
             const selectRandomTeams = () => {
@@ -108,6 +109,7 @@ const HomePage: React.FC = () => {
         }
     }, [teams]);
 
+    // Set and update current time every second
     useEffect(() => {
         setCurrentTime(new Date());
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -132,6 +134,7 @@ const HomePage: React.FC = () => {
             [team]: [...prev[team], injury]
         }));
     }, []);
+
 
     return (
         <div className="min-h-screen flex flex-col justify-between bg-black text-white transition-all duration-1000 opacity-100 overflow-hidden relative">
@@ -204,41 +207,54 @@ const HomePage: React.FC = () => {
                     </span>
                 </Link>
 
-
                 {/* Game Information */}
                 <div className="w-full max-w-4xl space-y-4">
-                    <div className="bg-zinc-800 rounded-lg p-2 sm:p-4 flex flex-wrap justify-between items-center text-xs sm:text-sm">
-                        <div className="flex items-center mb-1 sm:mb-0 w-1/2 sm:w-auto">
-                            <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-orange-500" />
-                            <span>{currentTime?.toLocaleTimeString()}</span>
+                    {/* Top Section with Time, Date, Weather, and Crowd Excitement */}
+                    <div className="bg-zinc-800 rounded-lg p-4 flex flex-wrap justify-between items-center text-xs sm:text-sm md:text-base gap-y-2 md:gap-y-0">
+                        {/* Time */}
+                        <div className="flex items-center space-x-2">
+                            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 animate-pulse" />
+                            <span className="text-gray-300 font-semibold text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-glow-time animate-time-pulse">
+                                {currentTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                            </span>
                         </div>
-                        <div className="flex items-center mb-1 sm:mb-0 w-1/2 sm:w-auto">
-                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-gray-400" />
-                            <span>{currentTime?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+
+                        {/* Date */}
+                        <div className="flex items-center space-x-2">
+                            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+                            <span className="text-gray-300 font-semibold text-sm sm:text-lg">
+                                {currentTime?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                            </span>
                         </div>
+
+                        {/* Weather */}
                         <WeatherInfo weather={weather} />
+
+                        {/* Crowd Excitement */}
                         <CrowdExcitement crowdExcitement={crowd} />
                     </div>
+
 
                     {/* Scoreboard */}
                     <ScoreBoard gameState={gameState} homeTeam={homeTeam} awayTeam={awayTeam} />
 
+                    {/* Grid for Live Commentary, Game Events, and Injuries */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-zinc-800 rounded-lg p-2 sm:p-4">
-                            <h2 className="text-lg sm:text-xl font-bold mb-2 text-gray-200">Live Commentary</h2>
-                            <Commentary commentary={commentary} />
-                        </div>
+                        {/* Live Commentary */}
+                        <Commentary commentary={commentary} />
 
-                        <div className="bg-zinc-800 rounded-lg p-2 sm:p-4">
-                            <h2 className="text-lg sm:text-xl font-bold mb-2 text-gray-200">Game Events</h2>
-                            <GameEvents events={events} />
-                        </div>
+                        {/* Game Events */}
+                        <GameEvents events={events} />
                     </div>
 
-                    <div className="bg-zinc-800 rounded-lg p-2 sm:p-4">
-                        <h2 className="text-lg sm:text-xl font-bold mb-2 text-gray-200">Injuries</h2>
-                        <Injuries homeInjuries={injuries.home} awayInjuries={injuries.away} homeTeamName={homeTeam?.name || 'Home'} awayTeamName={awayTeam?.name || 'Away'} />
-                    </div>
+                    {/* Injuries */}
+                    <Injuries
+                        homeInjuries={injuries.home}
+                        awayInjuries={injuries.away}
+                        homeTeamName={homeTeam?.name || 'Home'}
+                        awayTeamName={awayTeam?.name || 'Away'}
+                    />
+
 
                     {/* Coin Toss Animation */}
                     <CoinTossAnimation showCoinAnimation={showCoinAnimation} />
@@ -271,7 +287,6 @@ const HomePage: React.FC = () => {
             </footer>
         </div>
     );
-
 };
 
 export default HomePage;

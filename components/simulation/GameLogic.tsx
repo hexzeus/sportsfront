@@ -1,32 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
-
-interface Team {
-    name: string;
-    abbreviation: string;
-    color: string;
-    logo: string;
-    offense: number;
-    defense: number;
-    specialTeams: number;
-}
-
-interface GameState {
-    homeScore: number;
-    awayScore: number;
-    quarter: number;
-    timeLeft: string;
-    down: number;
-    yardsToGo: number;
-    fieldPosition: number;
-    possession: 'home' | 'away';
-    gameStatus: string;
-    lastPlay: string;
-    driveStatus: string;
-    playType: 'normal' | 'kickoff' | 'extraPoint' | 'twoPointConversion';
-    timeoutsLeft: { home: number; away: number };
-    penalties: { home: number; away: number };
-    turnovers: { home: number; away: number };
-}
+import { GameState, Team } from '../../lib/types';
+import { timeout } from '../../utils/timeout';
 
 interface GameLogicProps {
     gameState: GameState;
@@ -680,6 +654,7 @@ const GameLogic: React.FC<GameLogicProps> = ({
         }
     }, [homeTeam, awayTeam, addCommentary]);
 
+
     const generatePlay = useCallback((state: GameState): GameState => {
         if (!homeTeam || !awayTeam) return state;
 
@@ -704,7 +679,8 @@ const GameLogic: React.FC<GameLogicProps> = ({
 
         if (shouldUseTimeout(state.possession === 'home' ? 'away' : 'home')) {
             const timeoutTeam = state.possession === 'home' ? 'away' : 'home';
-            state = useTimeout(state, timeoutTeam);
+            // Call the imported timeout function here
+            state = timeout(state, timeoutTeam, addCommentary, homeTeam, awayTeam);
             addCommentary(`${timeoutTeam === 'home' ? homeTeam.name : awayTeam.name} calls a timeout to stop the clock!`);
         }
 
@@ -933,7 +909,6 @@ const GameLogic: React.FC<GameLogicProps> = ({
         addCommentary,
         addEvent,
         updateDriveStatus,
-        useTimeout,
     ]);
 
     const updateGameTimer = useCallback(() => {

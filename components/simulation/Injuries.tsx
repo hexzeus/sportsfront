@@ -12,14 +12,26 @@ const Injuries: React.FC<InjuriesProps> = ({ homeInjuries, awayInjuries, homeTea
     if (homeInjuries.length === 0 && awayInjuries.length === 0) return null;
 
     return (
-        <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 w-full p-3 sm:p-4 rounded-xl shadow-lg border border-zinc-700">
-            <div className="flex items-center mb-2">
-                <Flag className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-red-500" />
-                <span className="text-md sm:text-lg font-bold text-zinc-300">Injuries</span>
+        <div className="bg-gradient-to-r from-black via-gray-900 to-black w-full p-3 sm:p-4 rounded-lg shadow-md border-t-4 border-b-4 border-red-600">
+            <div className="flex items-center space-x-2 mb-2">
+                <Flag className="text-red-600 w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
+                <span className="text-sm sm:text-lg font-semibold text-red-500 uppercase tracking-wider">
+                    Injuries
+                </span>
             </div>
-            <div className="text-xs sm:text-sm text-zinc-300">
-                <p>{homeTeamName}: {homeInjuries.join(', ') || 'None'}</p>
-                <p>{awayTeamName}: {awayInjuries.join(', ') || 'None'}</p>
+
+            <div className="text-xs sm:text-sm text-gray-300 space-y-2">
+                {/* Home Team Injuries */}
+                <div className="bg-gray-800 bg-opacity-60 p-2 rounded-md border-l-4 border-yellow-500">
+                    <p className="font-bold text-yellow-400">{homeTeamName}</p>
+                    <p>{homeInjuries.length > 0 ? homeInjuries.join(', ') : 'No injuries reported'}</p>
+                </div>
+
+                {/* Away Team Injuries */}
+                <div className="bg-gray-800 bg-opacity-60 p-2 rounded-md border-l-4 border-yellow-500">
+                    <p className="font-bold text-yellow-400">{awayTeamName}</p>
+                    <p>{awayInjuries.length > 0 ? awayInjuries.join(', ') : 'No injuries reported'}</p>
+                </div>
             </div>
         </div>
     );
