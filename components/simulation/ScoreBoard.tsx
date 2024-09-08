@@ -155,26 +155,29 @@ const TimerDisplay: React.FC<{ quarter: number; timeLeft: string }> = ({ quarter
     useEffect(() => {
         const timeout = setTimeout(() => {
             setFadeIn(true);
-        }, 500); // Delay the fade-in for a smooth effect
+        }, 500); // Delay the fade-in for smooth effect
 
-        return () => clearTimeout(timeout); // Clean up the timeout on unmount
+        return () => clearTimeout(timeout); // Clean up timeout on unmount
     }, []);
 
     return (
         <div
-            className={`text-center relative w-full max-w-[260px] mx-auto flex justify-center transition-opacity duration-2000 ease-in-out ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
+            className={`text-center relative w-full max-w-[260px] mx-auto flex justify-center transition-opacity duration-2000 ease-in-out ${fadeIn ? 'opacity-100' : 'opacity-0'
+                }`}
         >
-            <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-5 shadow-lg">
-                <div className="bg-black bg-opacity-80 rounded-md p-3 flex flex-col items-center justify-center border border-gray-700 shadow-inner">
-                    <span className="font-['Digital-7'] text-6xl text-yellow-300 tracking-wider leading-none drop-shadow-[0_0_7px_rgba(234,179,8,0.7)]">
+            <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-3 sm:p-5 shadow-lg">
+                <div className="bg-black bg-opacity-80 rounded-md p-2 sm:p-3 flex flex-col items-center justify-center border border-gray-700 shadow-inner">
+                    {/* Responsive font size for timeLeft */}
+                    <span className="font-['Digital-7'] text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-yellow-300 tracking-wider leading-none drop-shadow-[0_0_7px_rgba(234,179,8,0.7)]">
                         {timeLeft}
                     </span>
-                    <span className="text-base font-bold text-yellow-500 mt-2">
+                    {/* Responsive font size for quarter */}
+                    <span className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-yellow-500 mt-1 sm:mt-2">
                         Q{quarter}
                     </span>
                 </div>
             </div>
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4/5 h-1 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-full opacity-60 blur-[3px]"></div>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4/5 h-1 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-full opacity-60 blur-[2px] sm:blur-[3px]"></div>
         </div>
     );
 };
