@@ -155,14 +155,14 @@ const TimerDisplay: React.FC<{ quarter: number; timeLeft: string }> = ({ quarter
     useEffect(() => {
         const timeout = setTimeout(() => {
             setFadeIn(true);
-        }, 1000); // Increased delay to 1000ms for smoother fade-in
+        }, 1000); // Ensuring smooth fade-in to avoid snapping
 
-        return () => clearTimeout(timeout); // Clean up timeout on unmount
+        return () => clearTimeout(timeout); // Cleanup
     }, []);
 
     return (
         <div
-            className={`text-center relative w-full max-w-[260px] mx-auto flex justify-center transition-opacity duration-3000 ease-in-out ${fadeIn ? 'opacity-100' : 'opacity-0'
+            className={`text-center relative w-full max-w-[300px] lg:max-w-[360px] mx-auto flex justify-center transition-opacity duration-2000 ease-in-out ${fadeIn ? 'opacity-100' : 'opacity-0'
                 }`}
         >
             <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-3 sm:p-5 shadow-lg">

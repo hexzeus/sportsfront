@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Ensure this import is from next/image
+import Image from 'next/image';
 import { AlertCircle, Lock, Trophy, ArrowRight, Hammer, Clock, Calendar } from 'lucide-react';
 import axios from 'axios';
 import ScoreBoard from '../components/simulation/ScoreBoard';
@@ -44,7 +44,7 @@ interface GameState {
 }
 
 const HomePage: React.FC = () => {
-    const [currentTime, setCurrentTime] = useState<Date | null>(null); // Track current time
+    const [currentTime, setCurrentTime] = useState<Date | null>(null);
     const [teams, setTeams] = useState<Team[]>([]);
     const [homeTeam, setHomeTeam] = useState<Team | null>(null);
     const [awayTeam, setAwayTeam] = useState<Team | null>(null);
@@ -93,7 +93,6 @@ const HomePage: React.FC = () => {
         fetchTeams();
     }, []);
 
-    // Randomly select home and away teams
     useEffect(() => {
         if (teams.length > 0) {
             const selectRandomTeams = () => {
@@ -109,7 +108,6 @@ const HomePage: React.FC = () => {
         }
     }, [teams]);
 
-    // Set and update current time every second
     useEffect(() => {
         setCurrentTime(new Date());
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -138,7 +136,6 @@ const HomePage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col justify-between bg-black text-white transition-all duration-1000 opacity-100 overflow-hidden relative">
-            {/* Bold Sports-Themed Background */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-dark-blue to-dark-gray h-full"></div>
                 <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
@@ -150,7 +147,6 @@ const HomePage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-transparent to-slate-900/30 h-full"></div>
             </div>
 
-            {/* Main Content */}
             <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8 px-4 sm:px-6 md:px-8 py-8 sm:py-12">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight">
                     <span className="text-shadow-metallic bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 bg-clip-text text-transparent animate-gradient-shine">
@@ -169,88 +165,58 @@ const HomePage: React.FC = () => {
                     <Trophy className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-gray-400 animate-pulse" />
                 </div>
 
-                {/* "Unleash Our Picks" Button */}
                 <Link
                     href="/bets"
                     className="group relative inline-flex items-center justify-center px-6 py-4 sm:px-8 sm:py-5 lg:px-10 lg:py-6 overflow-hidden text-base sm:text-lg lg:text-xl font-extrabold uppercase tracking-widest transition-all duration-700 ease-out bg-gradient-to-r from-blue-900 via-steel-700 to-gray-500 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 hover:-translate-y-2 border-t-4 border-b-4 border-gray-900"
                 >
-                    {/* Smoke Effect */}
                     <span className="absolute inset-0 w-full h-full opacity-20 bg-[url('/smoke.png')] bg-cover bg-center pointer-events-none"></span>
-
-                    {/* 3D and Rustic Edge */}
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-b from-gray-800 via-black to-gray-900 opacity-90 rounded-full pointer-events-none"></span>
-
-                    {/* Smoke Overlay */}
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent to-black opacity-60 transform group-hover:skew-x-0 transition-all duration-700 ease-in-out pointer-events-none"></span>
-
-                    {/* Dynamic Highlight on Hover */}
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-t from-yellow-600/20 to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700 ease-in-out pointer-events-none"></span>
 
-                    {/* Logo, Text, and Icons */}
                     <span className="relative z-10 flex items-center space-x-3 sm:space-x-4">
                         <Image
-                            src="/file.png" // Your brand logo
+                            src="/file.png"
                             alt="Brand Logo"
                             width={35}
                             height={35}
                             className="rounded-full border-2 border-gray-400 shadow-lg transform group-hover:scale-110 transition-transform duration-500"
                         />
-
-                        {/* Button Text */}
                         <span className="font-black tracking-widest text-shadow-md text-gray-200 group-hover:text-white transition-colors duration-300 ease-out">
                             Unleash Our Picks
                         </span>
-
-                        {/* Trophy and ArrowRight Icons */}
                         <Trophy className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-yellow-500 animate-bounce" />
                         <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 ml-1 transform group-hover:translate-x-2 transition-transform duration-300 ease-out text-gray-300" />
                     </span>
                 </Link>
 
-                {/* Game Information */}
                 <div className="w-full max-w-4xl space-y-4">
-                    {/* Top Section with Time, Date, Weather, and Crowd Excitement */}
                     <div className="bg-zinc-800 rounded-lg p-4 flex flex-wrap justify-between items-center text-xs sm:text-sm md:text-base gap-y-2 md:gap-y-0">
-                        {/* Time */}
                         <div className="flex items-center space-x-2">
                             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 animate-pulse" />
                             <span className="text-gray-300 font-semibold text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-2xl text-glow-time animate-time-pulse">
                                 {currentTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                             </span>
                         </div>
-
-                        {/* Date */}
                         <div className="flex items-center space-x-2">
                             <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                             <span className="text-gray-300 font-semibold text-sm sm:text-lg">
                                 {currentTime?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                             </span>
                         </div>
-
-                        {/* Weather */}
                         <WeatherInfo weather={weather} />
-
-                        {/* Crowd Excitement */}
                         <CrowdExcitement crowdExcitement={crowd} />
                     </div>
 
-
-                    {/* Scoreboard */}
                     <div className="w-full max-w-4xl mx-auto space-y-4">
                         <ScoreBoard gameState={gameState} homeTeam={homeTeam} awayTeam={awayTeam} />
                     </div>
 
-
-                    {/* Grid for Live Commentary, Game Events, and Injuries */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Live Commentary */}
                         <Commentary commentary={commentary} />
-
-                        {/* Game Events */}
                         <GameEvents events={events} />
                     </div>
 
-                    {/* Injuries */}
                     <Injuries
                         homeInjuries={injuries.home}
                         awayInjuries={injuries.away}
@@ -258,11 +224,8 @@ const HomePage: React.FC = () => {
                         awayTeamName={awayTeam?.name || 'Away'}
                     />
 
-
-                    {/* Coin Toss Animation */}
                     <CoinTossAnimation showCoinAnimation={showCoinAnimation} />
 
-                    {/* Game Logic */}
                     <GameLogic
                         gameState={gameState}
                         homeTeam={homeTeam}
@@ -276,12 +239,10 @@ const HomePage: React.FC = () => {
                         setShowCoinAnimation={setShowCoinAnimation}
                     />
 
-                    {/* Sports Analysis Button */}
                     <SportsAnalysisButton />
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="relative z-10 w-full text-center py-3 sm:py-4 bg-black/80 backdrop-blur-md">
                 <Link href="/disclaimer" className="flex items-center justify-center text-xs sm:text-sm text-yellow-500 hover:text-blue-400 transition duration-300 animate-pulse">
                     <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
