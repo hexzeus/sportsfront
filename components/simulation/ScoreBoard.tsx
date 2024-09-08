@@ -155,7 +155,7 @@ const TimerDisplay: React.FC<{ quarter: number; timeLeft: string }> = ({ quarter
     useEffect(() => {
         const timeout = setTimeout(() => {
             setFadeIn(true);
-        }, 1000); // Ensuring smooth fade-in to avoid snapping
+        }, 3000); // Ensuring smooth fade-in to avoid snapping
 
         return () => clearTimeout(timeout); // Cleanup
     }, []);
