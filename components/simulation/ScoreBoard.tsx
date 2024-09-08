@@ -49,7 +49,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
         confetti({
             particleCount: 100,
             spread: 70,
-            origin: { y: 0.6 }
+            origin: { y: 0.6 },
         });
 
         let count = 0;
@@ -58,7 +58,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 particleCount: 50,
                 angle: count % 2 === 0 ? 60 : 120,
                 spread: 55,
-                origin: { x: count % 2 === 0 ? 0 : 1 }
+                origin: { x: count % 2 === 0 ? 0 : 1 },
             });
 
             count += 1;
@@ -104,9 +104,8 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
                 </div>
             )}
 
-
             {/* Main Content */}
-            <div className="grid grid-cols-3 items-center">
+            <div className="grid grid-cols-3 items-center justify-items-center">
                 {/* Home Team Info */}
                 <TeamInfo team={homeTeam} timeoutsLeft={gameState.timeoutsLeft.home} side="home" />
 
@@ -149,21 +148,36 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ gameState, homeTeam, awayTeam }
     );
 };
 
-const TimerDisplay: React.FC<{ quarter: number; timeLeft: string }> = ({ quarter, timeLeft }) => (
-    <div className="text-center relative w-full max-w-[140px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px] mx-auto">
-        <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-2 sm:p-3 md:p-4 lg:p-5 shadow-[0_4px_6px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] transform transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.2)]">
-            <div className="bg-black bg-opacity-80 rounded-md p-1 sm:p-2 md:p-3 flex flex-col items-center justify-center border border-gray-700 shadow-inner">
-                <span className="font-['Digital-7'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-yellow-300 tracking-wider leading-none drop-shadow-[0_0_7px_rgba(234,179,8,0.7)]">
-                    {timeLeft}
-                </span>
-                <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-bold text-yellow-500 mt-1 md:mt-2">
-                    Q{quarter}
-                </span>
+// TimerDisplay component with fade-in animation
+const TimerDisplay: React.FC<{ quarter: number; timeLeft: string }> = ({ quarter, timeLeft }) => {
+    const [fadeIn, setFadeIn] = useState(false);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setFadeIn(true);
+        }, 500); // Delay the fade-in for a smooth effect
+
+        return () => clearTimeout(timeout); // Clean up the timeout on unmount
+    }, []);
+
+    return (
+        <div
+            className={`text-center relative w-full max-w-[260px] mx-auto flex justify-center transition-opacity duration-2000 ease-in-out ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
+        >
+            <div className="relative bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-lg p-5 shadow-lg">
+                <div className="bg-black bg-opacity-80 rounded-md p-3 flex flex-col items-center justify-center border border-gray-700 shadow-inner">
+                    <span className="font-['Digital-7'] text-6xl text-yellow-300 tracking-wider leading-none drop-shadow-[0_0_7px_rgba(234,179,8,0.7)]">
+                        {timeLeft}
+                    </span>
+                    <span className="text-base font-bold text-yellow-500 mt-2">
+                        Q{quarter}
+                    </span>
+                </div>
             </div>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4/5 h-1 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-full opacity-60 blur-[3px]"></div>
         </div>
-        <div className="absolute -bottom-1 sm:-bottom-2 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 sm:h-1 md:h-1.5 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 rounded-full opacity-60 blur-[2px] sm:blur-[3px]"></div>
-    </div>
-);
+    );
+};
 
 const ScoreDisplay: React.FC<{ homeScore: number; awayScore: number; homeColor?: string; awayColor?: string }> = ({ homeScore, awayScore, homeColor, awayColor }) => (
     <div className="grid grid-cols-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold">

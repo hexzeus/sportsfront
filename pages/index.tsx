@@ -236,7 +236,10 @@ const HomePage: React.FC = () => {
 
 
                     {/* Scoreboard */}
-                    <ScoreBoard gameState={gameState} homeTeam={homeTeam} awayTeam={awayTeam} />
+                    <div className="w-full max-w-4xl mx-auto space-y-4">
+                        <ScoreBoard gameState={gameState} homeTeam={homeTeam} awayTeam={awayTeam} />
+                    </div>
+
 
                     {/* Grid for Live Commentary, Game Events, and Injuries */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

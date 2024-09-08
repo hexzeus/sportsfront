@@ -154,91 +154,6 @@ h1, h2, h3 {
   animation: coin-toss 1.0s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
-
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap'); /* Another digital font */
-
-/* Unique pulse class for the game timer */
-.pulse-timer {
-  animation: pulse-timer 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-timer {
-  from {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-  to {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8);
-  }
-}
-
-/* Rest of the timer styling */
-.scoreboard {
-  background-color: #0D0D0D;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  border: 3px solid #444;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-  display: inline-block;
-  text-align: center;
-}
-
-.font-digital {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-}
-
-.shadow-timer {
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.85);
-  color: #FFFFFF;
-  letter-spacing: 0.08em;
-}
-
-
-@media (max-width: 640px) {
-  .scoreboard {
-    padding: 0.2em;
-    font-size: 0.8rem;
-  }
-}
-
-/* Custom 3D shadow for the scoreboard frame */
-.shadow-3xl {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.shadow-4xl {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 1), 0 4px 15px rgba(0, 0, 0, 0.9);
-}
-
-/* Glowing shadow for the timer text */
-.shadow-glow {
-  text-shadow: 0 0 8px rgba(255, 255, 200, 0.8), 0 0 15px rgba(255, 255, 200, 0.5);
-}
-
-/* Pulse animation for the timer */
-@keyframes pulse-timer {
-  0%, 100% {
-      transform: scale(1);
-  }
-  50% {
-      transform: scale(1.1);
-  }
-}
-
-.pulse-timer {
-  animation: pulse-timer 1s ease-in-out infinite;
-}
-
-/* Hover effects for subtle 3D scaling */
-.hover\\:scale-105:hover {
-  transform: scale(1.05);
-}
-
-.hover\\:shadow-4xl:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 1), 0 4px 15px rgba(0, 0, 0, 0.9);
-}
-
 /* Time glow effect */
 .text-glow-time {
   color: #f8f9fa;
@@ -246,36 +161,36 @@ h1, h2, h3 {
 }
 
 @keyframes slideIn {
-  0% {
-      opacity: 0;
-      transform: translateX(-30px);
-  }
-  100% {
-      opacity: 1;
-      transform: translateX(0);
-  }
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .animate-slideIn {
-  animation: slideIn 0.5s ease-out;
+    animation: slideIn 0.5s ease-out;
 }
 
 .custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #555 #111;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #111;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #111;
+    background: #111;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 10px;
+    background-color: #555;
+    border-radius: 10px;
 }
 
 
