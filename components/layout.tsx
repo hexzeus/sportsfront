@@ -164,8 +164,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         whileTap={{ scale: 0.8 }}
                         className="p-2 bg-gradient-to-br from-zinc-800/80 to-dark-blue/80 rounded-full shadow-lg backdrop-blur-sm animate-pulse"
                         style={{ animationDelay: `${index * 150}ms` }} // Same delay as the other icons
-                    >
-                        <Icon className={`w-6 h-6 ${index === 0 ? 'text-blue-500' : index === 1 ? 'text-yellow-400' : 'text-green-500'}`} />
+                    ><Icon
+                            className={`w-6 h-6 ${index === 0 ? 'text-yellow-500'  // Yellow for DOMINATE
+                                    : index === 1 ? 'text-red-500'   // Red for CRUSH
+                                        : 'text-gray-300'                // Gray for CONQUER
+                                }`}
+                        />
+
                     </motion.div>
                 ))}
             </motion.div>
