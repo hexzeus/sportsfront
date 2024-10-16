@@ -149,9 +149,13 @@ const HomePage: React.FC = () => {
 
             <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8 px-4 sm:px-6 md:px-8 py-8 sm:py-12">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight">
-                    <span className="text-shadow-metallic bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 bg-clip-text text-transparent animate-gradient-shine">
-                        Lock & Hammer Picks
-                    </span>
+                    <Image
+                        src="/LOCK.png"
+                        alt="Lock & Hammer Picks"
+                        width={1000} // Adjust width as needed
+                        height={300} // Adjust height as needed
+                        className="block mx-auto"
+                    />
                     <span className="block h-1 w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 rounded-lg shadow-sm mt-3"></span>
                 </h1>
 
